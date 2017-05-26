@@ -13,8 +13,8 @@ describe('app', () => {
       });
     });
 
-    it('should contain the starter url', () => {
-      expect(ctrl.url).toBe('https://github.com/preboot/angular-webpack');
+    it('should contain the sample text', () => {
+      expect(ctrl.sample).toBe('angular works!');
     });
   });
 });

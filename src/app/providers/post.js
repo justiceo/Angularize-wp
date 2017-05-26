@@ -1,7 +1,11 @@
+/**
+ * PostService
+ * contains information about the current post (could be page, attachement etc)
+ */
 export default class PostService {
-    constructor($window, $http, $q, $log, Cache) {
+    constructor($window, $q, $log) {
         'ngInject';        
-        angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log, 'Cache': Cache});
+        angular.extend(this, {'$window': $window, '$q': $q, '$log': $log});
         this.$wp = $window.wp_rest_object;
         console.log("$wp", this.$wp);
     }
