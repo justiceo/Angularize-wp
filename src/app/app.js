@@ -17,8 +17,8 @@ const MODULE_NAME = 'app';
 
 angular.module(MODULE_NAME, ['LocalStorageModule'])
   .directive('app', app)
-  .controller('AppCtrl', AppCtrl)
-  //.provider('Cache', Cache)
+  .controller('AppCtrl', AppCtrl)  
+  .service('Cache', Cache)
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider
       .setPrefix(MODULE_NAME)

@@ -1,6 +1,6 @@
 import localStorageService from 'angular-local-storage';
 
-export class Cache {
+export default class Cache {
     constructor(localStorageService) {
         this.storage = localStorageService;
     }
