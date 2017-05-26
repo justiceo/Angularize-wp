@@ -4,6 +4,6 @@ export default class AppCtrl {
     Cache.set("test", "testValue");
     console.log(Cache.get('test'));
     console.log(PostService.the_ID());
-    this.url = 'https://github.com/preboot/angular-webpack';
+    this.sample = 'angular works!';
   }
 }
