@@ -1,11 +1,7 @@
-# angularjs-webpack
+# Angularize
 
-[![Dependency Status](https://david-dm.org/preboot/angularjs-webpack/status.svg)](https://david-dm.org/preboot/angular-webpack#info=dependencies) [![devDependency Status](https://david-dm.org/preboot/angularjs-webpack/dev-status.svg)](https://david-dm.org/preboot/angularjs-webpack#info=devDependencies)
 
-A complete, yet simple, starter for Angular using Webpack.
-
-This workflow serves as a starting point for building Angular 1.x applications using Webpack 2.x. Should be noted that apart from the pre-installed angular package, this workflow is pretty much generic.
-
+### Angular Workflow
 * Heavily commented webpack configuration with reasonable defaults.
 * ES6, and ES7 support with babel.
 * Source maps included in all builds.
@@ -22,11 +18,11 @@ This workflow serves as a starting point for building Angular 1.x applications u
 > Clone/Download the repo then edit `app.js` inside [`/src/app/app.js`](/src/app/app.js)
 
 ```bash
-# clone our repo
-$ git clone https://github.com/preboot/angularjs-webpack.git my-app
+# clone the repo
+$ git clone https://github.com/justiceo/angularize
 
 # change directory to your app
-$ cd my-app
+$ cd angularize
 
 # install the dependencies with npm
 $ npm install
@@ -54,6 +50,7 @@ go to [http://localhost:8080](http://localhost:8080) in your browser.
 What you need to run this app:
 * `node` and `npm` (Use [NVM](https://github.com/creationix/nvm))
 * Ensure you're running Node (`v4.1.x`+) and NPM (`2.14.x`+)
+* Ensure webpack is installed globally or install by running `npm i -g webpack`
 
 ## Installing
 
@@ -67,8 +64,12 @@ After you have installed all dependencies you can now run the app with:
 ```bash
 npm start
 ```
-
 It will start a local server using `webpack-dev-server` which will watch, build (in-memory), and reload for you. The port will be displayed to you as `http://localhost:8080`.
+
+Alternatively, you can generate the plugin files with:
+```bash
+webpack
+```
 
 ## Developing
 
