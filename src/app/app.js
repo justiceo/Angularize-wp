@@ -13,7 +13,7 @@ let app = () => {
 };
 
 class AppCtrl {
-  constructor(Cache) {
+  constructor() {
     //Cache.set("test", "testValue");
     //console.log(Cache.get('test'));
     this.url = 'https://github.com/preboot/angular-webpack';
@@ -25,7 +25,7 @@ const MODULE_NAME = 'app';
 angular.module(MODULE_NAME, ['LocalStorageModule'])
   .directive('app', app)
   .controller('AppCtrl', AppCtrl)
-  .provider('Cache', Cache)
+  //.provider('Cache', Cache)
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider
       .setPrefix(MODULE_NAME)
