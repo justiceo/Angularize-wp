@@ -23,13 +23,7 @@ export default class Ajax {
         var cached = this.Cache.get(url);
         if(cached) return this.$q.resolve(cached);
 
-        return this.$http({
-            url: url,
-            method: 'GET',
-            beforeSend: (xhr) => {
-                xhr.setRequestHeader('X-WP-Nonce', this.$wp.nonce);
-            }
-        }).then(
+        return this.$http.get(url).then(
             success => {
                 this.Cache.set(url, success);
                 return this.$q.resolve(success);
@@ -40,7 +34,46 @@ export default class Ajax {
             }
         )
     }
+
+    post(url, payload) {
+        return this.$http.post(url, payload).then(
+            success => {
+                return this.$q.resolve(success);
+            },
+            error => {
+                this.$log.error("Error requesting " + url, error);
+                return this.$q.reject(error);
+            }
+        )
+    }    
+
+    put(url, payload) {
+        return this.$http.put(url, payload).then(
+            success => {
+                return this.$q.resolve(success);
+            },
+            error => {
+                this.$log.error("Error requesting " + url, error);
+                return this.$q.reject(error);
+            }
+        )
+    }
+
+    delete(url) {
+        return this.$http.delete(url).then(
+            success => {
+                return this.$q.resolve(success);
+            },
+            error => {
+                this.$log.error("Error requesting " + url, error);
+                return this.$q.reject(error);
+            }
+        )
+    }
+
+    
     
     // short-hands
-    get_post(postId) { return this.get(this.postEndpoint) }
+    get_post(postId) { return this.get(this.postEndpoint + "/" + postId) }
+    get_post_categories(postId) { return this.get(this.postEndpoint + "/" + postId + "/categories")}
 }
