@@ -15,7 +15,9 @@ let app = () => {
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, ['LocalStorageModule'])
+angular.module(MODULE_NAME, [
+  LocalStorageModule
+  ])
   .directive('app', app)
   .controller('AppCtrl', AppCtrl)  
   .service('Cache', Cache)
