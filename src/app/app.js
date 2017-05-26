@@ -1,6 +1,7 @@
 import angular from 'angular';
 import LocalStorageModule from 'angular-local-storage';
 import Cache from './providers/cache';
+import AppCtrl from './app.controller';
 
 import '../style/app.css';
 
@@ -11,14 +12,6 @@ let app = () => {
     controllerAs: 'app'
   }
 };
-
-class AppCtrl {
-  constructor() {
-    //Cache.set("test", "testValue");
-    //console.log(Cache.get('test'));
-    this.url = 'https://github.com/preboot/angular-webpack';
-  }
-}
 
 const MODULE_NAME = 'app';
 
