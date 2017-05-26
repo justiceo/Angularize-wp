@@ -1,4 +1,4 @@
-# Angularize
+# Angularize WordPress
 
 
 ### Angular Workflow
