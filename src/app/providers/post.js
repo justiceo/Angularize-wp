@@ -1,3 +1,7 @@
+/**
+ * PostService
+ * contains information about the current post (could be page, attachement etc)
+ */
 export default class PostService {
     constructor($window, $q, $log) {
         'ngInject';        
