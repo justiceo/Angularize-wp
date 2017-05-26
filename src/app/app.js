@@ -1,6 +1,7 @@
 import angular from 'angular';
 import LocalStorageModule from 'angular-local-storage';
 import Cache from './providers/cache';
+import PostService from './providers/post';
 import AppCtrl from './app.controller';
 
 import '../style/app.css';
@@ -21,6 +22,7 @@ angular.module(MODULE_NAME, [
   .directive('app', app)
   .controller('AppCtrl', AppCtrl)  
   .service('Cache', Cache)
+  .service('PostService', PostService)
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider
       .setPrefix(MODULE_NAME)
