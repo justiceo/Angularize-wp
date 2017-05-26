@@ -1,7 +1,7 @@
-import localStorageService from 'angular-local-storage';
-
 export default class Cache {
     constructor(localStorageService) {
+        "ngInject";
+        
         this.storage = localStorageService;
     }
 
