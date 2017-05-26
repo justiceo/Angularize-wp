@@ -17,7 +17,7 @@ License: GPL2
 /*
 The only real function of the script is loading minified angular files into website,
 ensuring that wp-rest-api is installed and enabled, adding, angular hooks to header.php 
-and providing authentication 
+and providing authentication and dumping the object for the current page in the UI
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -47,5 +47,13 @@ function add_meta_tags() {
 // Enque scripts and styles with localization
 add_action('wp_enqueue_scripts', 'enque_scripts'); 
 function enque_scripts() {
-    wp_enqueue_script('ng-script', plugin_dir_url(__FILE__) . '/dist/app.bundle.js', array(), '1.0', true);
+    wp_register_script('ng-script', plugin_dir_url(__FILE__) . '/dist/app.bundle.js', array(), '1.0.0', true);
+    $translation_array = array(
+        'nonce' => wp_create_nonce( 'wp_rest' ),
+        'currentUser' => wp_get_current_user(),
+        'serverTime' => current_time( 'timestamp', $gmt = 1),
+        'postObject' => get_post()
+    )
+    wp_localize_script('ng-script', 'wp_rest_object', $translation_array);
+    wp_enqueue_script('ng-script');
 }
