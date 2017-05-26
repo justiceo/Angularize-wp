@@ -7,7 +7,7 @@ export default class Cache {
 
     get(key, anytime = false) {
         let val = this.storage.get(key);
-        if(anytime || val.expiresIn > Date.now) 
+        if(val && (anytime || val.expiresIn > Date.now)) 
             return val.value;
         return null;
     }
