@@ -74,6 +74,7 @@ export default class Ajax {
     
     
     // short-hands
+    get_posts() { return this.get(this.postEndpoint) }
     get_post(postId) { return this.get(this.postEndpoint + "/" + postId) }
     get_post_categories(postId) { return this.get(this.postEndpoint + "/" + postId + "/categories")}
 }

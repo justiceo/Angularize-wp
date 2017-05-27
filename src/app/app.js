@@ -25,13 +25,12 @@ angular.module(MODULE_NAME, [
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)
-  factory('httpRequestInterceptor', function () {
+  .factory('httpRequestInterceptor', function ($window) {
+    'ngInject';
     return {
       request: function (config) {
-
-        
-        config.headers['X-WP-Nonce'] = 'some data here';
-
+        if($window.wp_rest_object)        
+          config.headers['X-WP-Nonce'] = $window.wp_rest_object.nonce;
         return config;
       }
     };
