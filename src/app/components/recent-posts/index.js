@@ -1,4 +1,4 @@
- export class RecentPosts {
+ export class RecentPostsCtrl {
     constructor(PostService) {
         PostService.get_posts().then(            
             posts => this.posts = posts.slice(0,5)            
@@ -6,8 +6,8 @@
     }
 }
 
-let RecentPostsComponent = {
-    controller: RecentPosts,
+let RecentPosts = {
+    controller: RecentPostsCtrl,
     template: `
     <h2>Recent Posts</h2>
     <ul>
@@ -20,4 +20,4 @@ let RecentPostsComponent = {
     `
 }
 
-export default RecentPostsComponent;
+export default RecentPosts;

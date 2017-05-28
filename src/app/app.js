@@ -1,51 +1,15 @@
-import angular from 'angular';
-import LocalStorageModule from 'angular-local-storage';
-import Cache from './providers/cache';
-import PostService from './providers/post';
-import Ajax from './providers/ajax';
-import AppCtrl from './app.controller';
-import AppComponent from './app.component';
-import RecentPostsComponent from './components/recent-posts/';
-
-import '../style/app.css';
-
-let app = () => {
-  return {
-    template: require('./app.html'),
-    controller: 'AppCtrl',
-    controllerAs: 'app'
-  }
-};
-
-const MODULE_NAME = 'app';
-
-angular.module(MODULE_NAME, [
-  LocalStorageModule
-  ])
-  .component('app', AppComponent)
-  .component('recentPost', RecentPostsComponent)
-  //.directive('app', app)
-  .controller('AppCtrl', AppCtrl)  
-  .service('Cache', Cache)
-  .service('PostService', PostService)
-  .service('Ajax', Ajax)
-  .factory('httpRequestInterceptor', function ($window) {
+export class AppCtrl {
+  constructor(Cache, PostService) {
     'ngInject';
-    return {
-      request: function (config) {
-        if($window.wp_rest_object)        
-          config.headers['X-WP-Nonce'] = $window.wp_rest_object.nonce;
-        return config;
-      }
-    };
-  })
-  .config(function (localStorageServiceProvider, $httpProvider) {
-    localStorageServiceProvider
-      .setPrefix(MODULE_NAME)
-      .setStorageType('localStorage') // or sessionStorage
-      .setNotify(true, true);
+    Cache.set("test", "testValue");
+    this.sample = 'angular works!';
+  }
+}
 
-    $httpProvider.interceptors.push('httpRequestInterceptor')
-  });
+let AppComponent = {
+  template: require('./app.html'),
+  controller: AppCtrl,
+  controllerAs: 'app'
+}
 
-export default MODULE_NAME;
+export default AppComponent;
