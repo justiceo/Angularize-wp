@@ -1,6 +1,6 @@
 # Angularize WordPress
 
-Bring the power of AngularJs to your WordPress site. Even though this can be used to load the entire WordPress site, it more useful for loading non-critical parts of a site (for SEO reasons). 
+Super-charge your WordPress site with AngularJs components. Even though this can be used to load the entire WordPress site, it more useful for loading non-critical parts of a site (for SEO reasons). 
 
 For example, loading all sidebar widgets, banners and sliders, ads, forms etc. 
 
