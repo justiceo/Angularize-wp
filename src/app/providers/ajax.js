@@ -10,8 +10,7 @@ export default class Ajax {
         this.$wp = $window.wp_rest_object;
 
         this.origin = $window.location.protocol + "//" + $window.location.hostname;
-        this.restEndpoint = this.origin + "/wp-json/wp/v2";
-        this.postEndpoint = this.restEndpoint + "/posts"
+        this.restRoute = this.origin + "/wp-json/wp/v2";
     }
 
     get(url, no_cache = false) {
@@ -69,11 +68,4 @@ export default class Ajax {
             }
         )
     }
-
-    
-    
-    // short-hands
-    get_posts() { return this.get(this.postEndpoint) }
-    get_post(postId) { return this.get(this.postEndpoint + "/" + postId) }
-    get_post_categories(postId) { return this.get(this.postEndpoint + "/" + postId + "/categories")}
 }
