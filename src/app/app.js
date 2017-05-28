@@ -4,6 +4,7 @@ import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
 import AppCtrl from './app.controller';
+import AppComponent from './app.component';
 
 import '../style/app.css';
 
@@ -20,7 +21,8 @@ const MODULE_NAME = 'app';
 angular.module(MODULE_NAME, [
   LocalStorageModule
   ])
-  .directive('app', app)
+  .component('app', AppComponent)
+  //.directive('app', app)
   .controller('AppCtrl', AppCtrl)  
   .service('Cache', Cache)
   .service('PostService', PostService)
