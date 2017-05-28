@@ -8,7 +8,7 @@ export default class PostService {
         angular.extend(this, {'$window': $window, '$q': $q, '$log': $log, 'Ajax': Ajax});
         this.$wp = $window.wp_rest_object || {};
         this.post = this.$wp.postObject || {};
-        this.route = "/posts";
+        this.route = Ajax.restRoute + "/posts";
         console.log("$wp", this.$wp);
     }
 
@@ -55,8 +55,7 @@ export default class PostService {
     has_post_format() {}
 
     // short-hands
-    get_posts() { return Ajax.get(this.route) }
-    get_post() { return this.get_post(this.the_ID)}
-    get_post(postId) { return Ajax.get(this.route + "/" + postId) }
-    get_post_categories(postId) { return Ajax.get(this.route + "/" + postId + "/categories")}
+    get_posts() { return this.Ajax.get(this.route) }
+    get_post(postId = this.the_ID()) { return this.Ajax.get(this.route + "/" + postId) }
+    get_post_categories(postId) { return this.Ajax.get(this.route + "/" + postId + "/categories")}
 }

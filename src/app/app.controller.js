@@ -5,5 +5,6 @@ export default class AppCtrl {
     console.log(Cache.get('test'));
     console.log(PostService.the_ID());    
     this.sample = 'angular works!';
+	console.log(PostService.get_post());
   }
 }
