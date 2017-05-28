@@ -9,8 +9,7 @@ export default class Ajax {
         angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log, 'Cache': Cache});
         this.$wp = $window.wp_rest_object;
 
-        //this.origin = $window.location.protocol + "//" + $window.location.hostname;
-        this.origin = 'http://dev3.kasomafrica.com';
+        this.origin = $window.location.protocol + "//" + $window.location.hostname;
         this.restEndpoint = this.origin + "/wp-json/wp/v2";
         this.postEndpoint = this.restEndpoint + "/posts"
     }
