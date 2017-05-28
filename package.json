@@ -1,7 +1,7 @@
 {
-  "name": "angular-webpack-workflow",
-  "version": "1.1.0",
-  "description": "A workflow for Angular made with Webpack",
+  "name": "angularize-wp",
+  "version": "1.0.0-beta",
+  "description": "Super-charge your WordPress site with AngularJs components",
   "scripts": {
     "build": "rimraf dist && webpack --bail --progress --profile",
     "server": "webpack-dev-server --history-api-fallback --inline --progress",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/preboot/angularjs-webpack.git"
+    "url": "git+https://github.com/justiceo/Angularize-wp.git"
   },
-  "author": "Jesus Rodriguez",
+  "author": "Justice Ogbonna",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/preboot/angularjs-webpack/issues"
+    "url": "https://github.com/justiceo/Angularize-wp/issues"
   },
-  "homepage": "https://github.com/preboot/angularjs-webpack",
+  "homepage": "https://justiceo.github.io/Angularize-wp/",
   "dependencies": {
     "angular": "^1.5.0",
     "angular-local-storage": "^0.6.0"
@@ -53,5 +53,10 @@
     "style-loader": "^0.13.0",
     "webpack": "2.2.0",
     "webpack-dev-server": "2.2.0"
-  }
+  },
+  "main": "karma.conf.js",
+  "keywords": [
+    "angularjs",
+    "wordpress"
+  ]
 }
