@@ -10,5 +10,14 @@
 </head>
 <body>
   <app></app>
+  <echo></echo>
+  <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) {
+    angular.module("app").component("echo", {
+      template: 'Hello World!',
+      controller: function() {}
+    })
+  });
+  </script>
 </body>
 </html>

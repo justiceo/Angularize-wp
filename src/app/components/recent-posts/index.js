@@ -1,4 +1,4 @@
- export class RecentPostsCtrl {
+export class RecentPostsCtrl {
     constructor(PostService) {
         PostService.get_posts().then(            
             posts => this.posts = posts.slice(0,5)            

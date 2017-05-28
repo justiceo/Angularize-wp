@@ -1,5 +1,23 @@
 # Angularize WordPress
 
+Bring the power of AngularJs to your WordPress site. Even though this can be used to load the entire WordPress site, it more useful for loading non-critical parts of a site (for SEO reasons). 
+
+For example, loading all sidebar widgets, banners and sliders, ads, forms etc. 
+
+### Hello World component
+Below is a complete (with script tag) example of an angular component in a WordPress site.
+```
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) {
+    angular.module("app").component("echo", {
+      template: 'Hello World!',
+      controller: function() {}
+    })
+  });
+</script>
+```
+Now, anywhere you enter the tag `<echo></echo>` in your WordPress site (posts, pages, widgets etc), you will get the text *Hello World!*
+
 
 ### Angular Workflow
 * Heavily commented webpack configuration with reasonable defaults.
