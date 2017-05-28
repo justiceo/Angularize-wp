@@ -58,3 +58,8 @@ function enque_scripts() {
     wp_localize_script('ng-script', 'wp_rest_object', $translation_array);
     wp_enqueue_script('ng-script');
 }
+
+add_action('wp_footer', 'add_app_tag');
+function add_app_tag() {
+    echo '<app></app>';
+}
