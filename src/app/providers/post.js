@@ -44,7 +44,10 @@ export default class PostService {
     is_post() { return this.post.post_type === 'post'}
     is_page() { return this.post.post_type === 'page'}
 
-    get_posts() { return this.Ajax.get(this.Ajax.restRoute + "/posts") }
+    get_posts() { 
+        return this.Ajax.get(this.Ajax.restRoute + "/posts")
+            .then(posts => this.$q.resolve(posts.data))
+    }
 
     // See for properties: https://developer.wordpress.org/rest-api/reference/posts/ 
     get_post(postId = this.the_ID()) { return this.Ajax.get(this.Ajax.restRoute + "/posts/" + postId); }

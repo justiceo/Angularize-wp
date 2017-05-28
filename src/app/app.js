@@ -5,6 +5,7 @@ import PostService from './providers/post';
 import Ajax from './providers/ajax';
 import AppCtrl from './app.controller';
 import AppComponent from './app.component';
+import RecentPostsComponent from './components/recent-posts/';
 
 import '../style/app.css';
 
@@ -22,6 +23,7 @@ angular.module(MODULE_NAME, [
   LocalStorageModule
   ])
   .component('app', AppComponent)
+  .component('recentPost', RecentPostsComponent)
   //.directive('app', app)
   .controller('AppCtrl', AppCtrl)  
   .service('Cache', Cache)

@@ -23,8 +23,8 @@ export default class Ajax {
 
         return this.$http.get(url).then(
             success => {
-                this.Cache.set(url, success);
-                return this.$q.resolve(success);
+                this.Cache.set(url, success.data);
+                return this.$q.resolve(success.data);
             },
             error => {
                 this.$log.error("Error requesting " + url, error);
