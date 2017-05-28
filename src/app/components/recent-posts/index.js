@@ -1,7 +1,8 @@
 export class RecentPostsCtrl {
-    constructor(PostService) {
+    constructor(PostService, $log) {
+        $log.info("RecentPost: Initializing...");
         PostService.get_posts().then(            
-            posts => this.posts = posts.slice(0,5)            
+            posts => this.posts = posts.slice(0,5)         
         );
     }
 }

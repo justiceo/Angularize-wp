@@ -1,7 +1,7 @@
 export default class Cache {
-    constructor(localStorageService) {
+    constructor($log, localStorageService) {
         "ngInject";
-        
+        $log.info("Cache: Initializing...");
         this.storage = localStorageService;
     }
 

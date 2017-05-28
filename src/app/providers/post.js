@@ -5,11 +5,11 @@
 export default class PostService {
     constructor($window, $q, $log, Ajax) {
         'ngInject';        
+        $log.info("PostService: Initializing...");
         angular.extend(this, {'$window': $window, '$q': $q, '$log': $log, 'Ajax': Ajax});
         this.$wp = $window.wp_rest_object || {};
         this.post = this.$wp.postObject || {};
         this.route = Ajax.restRoute + "/posts";
-        console.log("$wp", this.$wp);
     }
 
     /**
@@ -45,8 +45,8 @@ export default class PostService {
     is_page() { return this.post.post_type === 'page'}
 
     get_posts() { 
-        return this.Ajax.get(this.Ajax.restRoute + "/posts")
-            .then(posts => this.$q.resolve(posts.data))
+        return this.Ajax.get(this.Ajax.restRoute + "/posts", true)
+            .then(posts => this.$q.resolve(posts))
     }
 
     // See for properties: https://developer.wordpress.org/rest-api/reference/posts/ 

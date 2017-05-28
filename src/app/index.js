@@ -9,15 +9,7 @@ import AuthorPopover from './components/author-popover';
 
 import '../style/app.css';
 
-let app = () => {
-  return {
-    template: require('./app.html'),
-    controller: 'AppCtrl',
-    controllerAs: 'app'
-  }
-};
-
-const MODULE_NAME = 'app';
+const MODULE_NAME = 'angularize';
 
 angular.module(MODULE_NAME, [
   LocalStorageModule

@@ -6,6 +6,7 @@
 export default class Ajax {
     constructor($window, $http, $q, $log, Cache) {
         'ngInject';
+        $log.info("Ajax: Initializing...");
         angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log, 'Cache': Cache});
         this.$wp = $window.wp_rest_object;
 

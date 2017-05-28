@@ -35,7 +35,7 @@ function rest_api_plugin_activate(){
 // Add ng-app directive to html tag
 add_filter('language_attributes', 'add_ng_attribute');
 function add_ng_attribute($attr) {
-    return $attr . ' ng-app="app"';
+    return $attr . ' ng-app="angularize"';
 }
 
 // (Optional) Add the router holder for webpack
