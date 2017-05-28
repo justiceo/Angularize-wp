@@ -56,6 +56,21 @@ export default class PostService {
 
     // short-hands
     get_posts() { return this.Ajax.get(this.route) }
-    get_post(postId = this.the_ID()) { return this.Ajax.get(this.route + "/" + postId) }
-    get_post_categories(postId) { return this.Ajax.get(this.route + "/" + postId + "/categories")}
+
+    // See for properties: https://developer.wordpress.org/rest-api/reference/posts/ 
+    get_post(postId = this.the_ID()) { return this.Ajax.get(this.Ajax.restRoute + "/posts/" + postId) }
+
+    get_categories() { return this.Ajax.get(this.Ajax.restRoute + '/categories'); }
+
+    get_tags() { return this.Ajax.get(this.Ajax.restRoute + '/tags'); }
+
+    get_comments() { return this.Ajax.get(this.Ajax.restRoute + '/comments'); }
+
+    get_post_comments(postId) { return this.Ajax.get(this.Ajax.restRoute + '/comments?post=' + postId); }
+
+    get_post_revisions(postId) { return this.Ajax.get(this.Ajax.restRoute + '/posts/' + postId + '/revisions'); }
+
+    get_media() { return this.Ajax.get(this.Ajax.restRoute + '/media'); }  
+
+    get_statuses() { return this.Ajax.get(this.Ajax.restRoute + '/statuses');
 }
