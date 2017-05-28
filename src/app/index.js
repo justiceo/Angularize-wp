@@ -5,6 +5,7 @@ import PostService from './providers/post';
 import Ajax from './providers/ajax';
 import AppComponent from './app';
 import RecentPosts from './components/recent-posts/';
+import AuthorPopover from './components/author-popover';
 
 import '../style/app.css';
 
@@ -23,8 +24,7 @@ angular.module(MODULE_NAME, [
   ])
   .component('app', AppComponent)
   .component('recentPost', RecentPosts)
-  //.directive('app', app)
-  //.controller('AppCtrl', AppCtrl)  
+  .component('authorPopover', AuthorPopover)
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)
