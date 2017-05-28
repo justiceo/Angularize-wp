@@ -41,8 +41,8 @@ export default class PostService {
     the_publish_date() { return this.post.post_date }
     the_last_modified() { return this.post.post_modified }
     the_name() { return this.post.post_name }
-    is_post() { this.post.post_type === 'post'}
-    is_page() { this.post.post_type === 'page'}
+    is_post() { return this.post.post_type === 'post'}
+    is_page() { return this.post.post_type === 'page'}
 
     the_category() {}
     the_permalink() {}
@@ -54,11 +54,11 @@ export default class PostService {
     has_thumbnail() {}
     has_post_format() {}
 
-    // short-hands
-    get_posts() { return this.Ajax.get(this.route) }
+
+    get_posts() { return this.Ajax.get(this.Ajax.restRoute + "/posts") }
 
     // See for properties: https://developer.wordpress.org/rest-api/reference/posts/ 
-    get_post(postId = this.the_ID()) { return this.Ajax.get(this.Ajax.restRoute + "/posts/" + postId) }
+    get_post(postId = this.the_ID()) { return this.Ajax.get(this.Ajax.restRoute + "/posts/" + postId); }
 
     get_categories() { return this.Ajax.get(this.Ajax.restRoute + '/categories'); }
 
@@ -72,5 +72,5 @@ export default class PostService {
 
     get_media() { return this.Ajax.get(this.Ajax.restRoute + '/media'); }  
 
-    get_statuses() { return this.Ajax.get(this.Ajax.restRoute + '/statuses');
+    get_statuses() { return this.Ajax.get(this.Ajax.restRoute + '/statuses'); }
 }
