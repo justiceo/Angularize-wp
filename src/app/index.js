@@ -6,6 +6,7 @@ import Ajax from './providers/ajax';
 import AppComponent from './app';
 import RecentPosts from './components/recent-posts/';
 import AuthorPopover from './components/author-popover';
+import BookFlight from './components/book-flight';
 
 import '../style/app.css';
 
@@ -17,6 +18,7 @@ angular.module(MODULE_NAME, [
   .component('app', AppComponent)
   .component('recentPost', RecentPosts)
   .component('authorPopover', AuthorPopover)
+  .component('bookFlight', BookFlight)
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)

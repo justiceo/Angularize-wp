@@ -12,11 +12,31 @@
   <app></app>
   <echo></echo>
   <author-popover></author-popover>
+  <p hello-popover>testing popover</p>
+  <book-flight></book-flight>
   <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function(event) {
-    angular.module("app").component("echo", {
+    angular.module("angularize").component("echo", {
       template: 'Hello World!',
       controller: function() {}
+    });
+
+    angular.module("angularize").directive("helloPopover", function() {
+      return {
+        template: `<p>Hello world directive</p>`,
+        scope: {}, // use a new isolated scope, perhaps change to use UIB's
+        restrict: 'A',
+        replace: false,
+        compile: function(tElem, attrs) {
+          // do DOM transformation here
+          return function(scope, elem, attrs) {
+            // linking function here
+            elem.bind('mouseover', function() {
+              console.log("now is time to popover")
+            });
+          }
+        }
+      }
     })
   });
   </script>
