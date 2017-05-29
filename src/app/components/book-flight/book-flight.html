@@ -1,1 +1,8 @@
-<p>booking flight</p>
+<div class="row">
+    <a ng-hide="$ctrl.hide" ng-click="$ctrl.hide = true">Please! I would like to travel to {{ $ctrl.to }}!</a>
+    <div ng-show="$ctrl.hide">
+        <input ng-model="$ctrl.from" placeholder="Where would you be coming from?" />
+        <input ng-model="$ctrl.to" value="$ctrl.to" />
+        <button ng-click="$ctrl.fly()">Go!</button>
+    </div>
+</div>
