@@ -65,4 +65,8 @@ export default class PostService {
     get_media() { return this.Ajax.get(this.Ajax.restRoute + '/media'); }  
 
     get_statuses() { return this.Ajax.get(this.Ajax.restRoute + '/statuses'); }
+
+    get(relRoute) {
+        return this.Ajax.get(this.Ajax.restRoute + relRoute);
+    }
 }
