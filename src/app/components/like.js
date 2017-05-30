@@ -6,12 +6,13 @@
  * where 213 is post id.
  */
 export default class LikeDirectiveCtrl {
-    constructor(PostService) {
+    constructor(PostService, CurrentUser) {
         //this.template = '<p>Like directive</p>';
         this.restrict = 'A';
         this.transclude = true;
         this.scope = {};
         this.PostService = PostService;
+        this.CurrentUser = CurrentUser;
         this.likeCount = 0;
         this.template = function( element, attrs ) {
             var tag = element[0].nodeName;

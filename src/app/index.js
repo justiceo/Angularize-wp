@@ -3,6 +3,7 @@ import LocalStorageModule from 'angular-local-storage';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
+import CurrentUser from './providers/current-user';
 import AppComponent from './app';
 import RecentPosts from './components/recent-posts/';
 import AuthorPopover from './components/author-popover';
@@ -24,6 +25,7 @@ angular.module(MODULE_NAME, [
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)
+  .service('CurrentUser', CurrentUser)
   .factory('httpRequestInterceptor', function ($window) {
     'ngInject';
     return {
