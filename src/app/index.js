@@ -7,6 +7,7 @@ import AppComponent from './app';
 import RecentPosts from './components/recent-posts/';
 import AuthorPopover from './components/author-popover';
 import BookFlight from './components/book-flight';
+import LikeDirective from './components/like';
 
 import '../style/app.css';
 
@@ -19,6 +20,7 @@ angular.module(MODULE_NAME, [
   .component('recentPost', RecentPosts)
   .component('authorPopover', AuthorPopover)
   .component('bookFlight', BookFlight)
+  .directive('like', () => new LikeDirective())
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)
