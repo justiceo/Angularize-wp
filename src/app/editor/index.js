@@ -5,6 +5,7 @@ let MODULE_NAME = "AngularizeEditor";
 
 angular.module(MODULE_NAME, [
     ngMaterial,
+    'material.svgAssetsCache',
   ])
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
