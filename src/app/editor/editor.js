@@ -1,4 +1,5 @@
 import MediumEditor from 'medium-editor';
+import AutoList from 'medium-editor-autolist';
 
 export class AbstractEditorCtrl {
     constructor(PostService) {
@@ -17,6 +18,7 @@ export class AbstractEditorCtrl {
         // add the edit button with handler here here
         elem.css("background", "#ddd");
 
+        let autolist = new AutoList();
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
         let contentEditorOptions = {
 			buttonLabels: 'fontawesome',
@@ -24,6 +26,9 @@ export class AbstractEditorCtrl {
 				text: 'Write your story here',
 				hideOnClick: false
 			},
+            extensions: {
+                'auotlist': autolist
+            },
 			toolbar: {
 				buttons: ['h1', 'h2', 'bold', 'italic', 'quote', 'pre', 'unorderedlist','orderedlist', 'justifyLeft', 'justifyCenter', 'anchor']
 			}
