@@ -1,5 +1,5 @@
 import ngMaterial from 'angular-material';
-import svgAssetsCache from '../svg-assets-cache';
+import svgAssetsCache from 'svg-assets-cache';
 import PostSettings from './settings/settings';
 import EditorDirective from './editor';
 
