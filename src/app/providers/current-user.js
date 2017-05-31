@@ -3,14 +3,18 @@
  * 
  */
 export default class CurrentUser {
-    constructor($window, Ajax) {
-        this.user = $window.wp_rest_object || {}
+    constructor($window, $log, $q, Ajax) {
+        $log.info('CurrentUser: Initializing...')
+        this.Ajax = Ajax;
+        this.$q = $q;
+        this.user = $window.wp_rest_object.currentUser || {}
+        this.user.meta = this.user.meta || {};
         let userInfo = this.user.data || {};   
         angular.extend(this.user, {
             'ID': this.user.ID, // only return the ID, fetch the rest via ajax please
             'display_name': userInfo.display_name,
             'email': userInfo.user_email,
-            'username': userInfo.user_login,
+            'login': userInfo.user_login,
             'nicename': userInfo.user_nicename,
             'registered_date': userInfo.user_registered,
             'status': userInfo.user_status
@@ -42,6 +46,6 @@ export default class CurrentUser {
     }
 
     getMeta(key) {
-        return this.user.meta[key];
+        return this.$q.resolve(this.user.meta[key]);
     }
 }

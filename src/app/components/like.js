@@ -7,7 +7,6 @@
  */
 export default class LikeDirectiveCtrl {
     constructor(PostService, CurrentUser) {
-        //this.template = '<p>Like directive</p>';
         this.restrict = 'A';
         this.transclude = true;
         this.scope = {};

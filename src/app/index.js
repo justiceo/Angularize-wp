@@ -21,7 +21,7 @@ angular.module(MODULE_NAME, [
   .component('recentPost', RecentPosts)
   .component('authorPopover', AuthorPopover)
   .component('bookFlight', BookFlight)
-  .directive('like', () => new LikeDirective())
+  .directive('like', (PostService, CurrentUser) => new LikeDirective(PostService, CurrentUser))
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)
