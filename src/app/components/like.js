@@ -26,7 +26,7 @@ export default class LikeDirectiveCtrl {
         let postId = attr.like;
         this.CurrentUser.getMeta('likes').then(
             likes => {
-                if(likes.contain(postId)) 
+                //if(likes.contain(postId)) 
                     element.addClass('liked')
             }
         )
