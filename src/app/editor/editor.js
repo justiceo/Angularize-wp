@@ -22,7 +22,6 @@ export class AbstractEditorCtrl {
 			}
 
 		};
-		//this.contentEditor = new MediumEditor(".editable",contentEditorOptions);
     }
 
     compile(elem, attr) {
