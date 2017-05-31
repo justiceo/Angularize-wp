@@ -1,5 +1,6 @@
 import ngMaterial from 'angular-material';
 import PostSettings from './settings/settings';
+import EditorDirective from './editor';
 
 let MODULE_NAME = "AngularizeEditor";
 
@@ -12,7 +13,7 @@ angular.module(MODULE_NAME, [
      .primaryPalette('purple')
      .accentPalette('indigo')
   })
-
-    .component('postSettings', PostSettings);
+    .directive('editable', EditorDirective)
+    .component('postSettings', PostSettings)
 
 export default MODULE_NAME;
