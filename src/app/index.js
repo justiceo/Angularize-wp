@@ -1,5 +1,6 @@
 import angular from 'angular';
 import LocalStorageModule from 'angular-local-storage';
+import AngularizeEditor from './components/editor';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
@@ -15,7 +16,8 @@ import '../style/app.css';
 const MODULE_NAME = 'angularize';
 
 angular.module(MODULE_NAME, [
-  LocalStorageModule
+  LocalStorageModule,
+  AngularizeEditor // allow us to use <settings> etc
   ])
   .component('app', AppComponent)
   .component('recentPost', RecentPosts)
