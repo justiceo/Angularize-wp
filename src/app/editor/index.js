@@ -1,5 +1,5 @@
 import ngMaterial from 'angular-material';
-import PostSettings from './settings';
+import PostSettings from './settings/settings';
 
 let MODULE_NAME = "AngularizeEditor";
 

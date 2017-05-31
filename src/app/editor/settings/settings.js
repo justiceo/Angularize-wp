@@ -7,7 +7,7 @@ export class PostSettingsCtrl {
 
 let PostSettings = {
     controller: PostSettingsCtrl,
-    template: `<p>post settings template</p>`
+    template: require('./settings.html')
 };
 
 export default PostSettings;
