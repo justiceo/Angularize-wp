@@ -2,9 +2,9 @@
 export class PostSettingsCtrl {
     constructor($scope, PostService) {
         console.log("PostSettingsCtrl: postservice", PostService);
-        this.categories = [];
-        this.tags = [];
         this.$scope = $scope;
+        this.$scope.categories = [];
+        this.$scope.tags = [];
         this.$scope.cancel = this.cancel;
     }
 
