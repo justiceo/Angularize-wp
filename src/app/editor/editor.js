@@ -1,7 +1,7 @@
 import MediumEditor from 'medium-editor';
 import AutoList from 'medium-editor-autolist';
 var $ = require('jquery');
-require('medium-editor-insert-plugin')($)
+require('medium-editor-insert-plugin')($);
 
 export class AbstractEditorCtrl {
     constructor(PostService) {
