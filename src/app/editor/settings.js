@@ -1,6 +1,8 @@
 
 export class PostSettingsCtrl {
-
+    constructor(PostService) {
+        console.log("PostSettingsCtrl: postservice", PostService)
+    }
 }
 
 let PostSettings = {
