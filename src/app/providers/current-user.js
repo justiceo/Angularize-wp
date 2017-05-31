@@ -20,7 +20,7 @@ export default class CurrentUser {
             'registered_date': userInfo.user_registered,
             'status': userInfo.user_status
         });   
-        this.fetchUserInfo();
+        //this.fetchUserInfo();
         $log.debug("CurrentUser: $wp.user ", this.$wp.user);
     }
 

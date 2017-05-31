@@ -5,7 +5,7 @@
  * Usage: <i class="fa fa-heart" like="213"></i>
  * where 213 is post id.
  */
-export default class LikeDirectiveCtrl {
+export class LikeDirectiveCtrl {
     constructor(PostService, CurrentUser) {
         this.restrict = 'A';
         this.transclude = true;
@@ -36,13 +36,13 @@ export default class LikeDirectiveCtrl {
     link(scope, element, attr) {
         element.bind('click', () => {
             if(element.hasClass('liked')) {
-                element.removeClass('liked')
-                this.unlike(postId);
+                element.removeClass('liked');
+                this.unlike(attr.like);
                 --this.likeCount;
             }
             else {
                 element.addClass('liked');
-                this.like(postId);
+                this.like(attr.like);
                 ++this.likeCount;
             }
         });
@@ -56,3 +56,10 @@ export default class LikeDirectiveCtrl {
         console.log("unliked ", postId);
     }
 }
+
+let LikeDirective = function(PostService, CurrentUser) {
+    'ngInject';
+    return new LikeDirectiveCtrl(PostService, CurrentUser);
+}
+
+export default LikeDirective;
