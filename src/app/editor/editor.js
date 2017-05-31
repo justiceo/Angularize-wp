@@ -11,9 +11,16 @@ export class AbstractEditorCtrl {
             return "<"+tag+" data-ng-transclude ng-*=''></"+tag+">";
         }
 
-        this.contentEditorOptions = {
+    }
+
+    compile(elem, attr) {
+        // add the edit button with handler here here
+        elem.css("background", "#ddd");
+
+        // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
+        let contentEditorOptions = {
 			buttonLabels: 'fontawesome',
-			placeholder: {
+            placeholder: {
 				text: 'Write your story here',
 				hideOnClick: false
 			},
@@ -22,18 +29,19 @@ export class AbstractEditorCtrl {
 			}
 
 		};
-    }
 
-    compile(elem, attr) {
-        // add the edit button with handler here here
-        elem.css("background", "#ddd");
-        this.contentEditor = new MediumEditor(elem,this.contentEditorOptions);
-        this.contentEditor.setup();
+        this.contentEditor = new MediumEditor(elem, contentEditorOptions);
+        this.contentEditor.destroy(); // fix this later
         return this.link;
     }
 
     link(scope, elem, attr) {
-
+        elem.bind("click", () => {
+            this.contentEditor.setup();
+        })
+        elem.bind("doubleclick", () => {
+            this.contentEditor.destroy();
+        })
     }
 }
 
