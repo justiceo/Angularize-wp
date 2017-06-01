@@ -2,6 +2,7 @@ import ngMaterial from 'angular-material';
 import svgAssetsCache from 'svg-assets-cache';
 import PostSettings from './settings/settings';
 import EditorDirective from './editor';
+import Toolbar from './toolbar';
 
 let MODULE_NAME = "AngularizeEditor";
 
@@ -16,5 +17,6 @@ angular.module(MODULE_NAME, [
   })
     .directive('editable', EditorDirective)
     .component('postSettings', PostSettings)
+    .component('toolbar', Toolbar)
 
 export default MODULE_NAME;
