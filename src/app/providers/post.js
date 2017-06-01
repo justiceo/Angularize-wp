@@ -10,7 +10,7 @@ export default class PostService {
         this.$wp = $window.wp_rest_object || {};
         this.post = this.$wp.postObject || {};
         $log.debug("PostService: postObject ", this.post);
-        this.route = Ajax.restRoute + "/posts";
+        this.postRoute = Ajax.restRoute + "/posts";
     }
     
     // For properties, see: https://codex.wordpress.org/Function_Reference/$post
@@ -39,6 +39,17 @@ export default class PostService {
     get_statuses() { return this.Ajax.get(this.Ajax.restRoute + '/statuses'); }
 
     get(relRoute) {
-        return this.Ajax.get(this.Ajax.restRoute + relRoute);
+        return this.Ajax.get(this.postRoute + relRoute);
+    }
+
+    updatePost(property, data, postId = the_ID()) {
+        let payload = {
+            property: data
+        };
+        return this.Ajax.post(this.postRoute + "/" + postId, payload).then(
+            success => {
+                return success;
+            }
+        )
     }
 }

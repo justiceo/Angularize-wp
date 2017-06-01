@@ -37,7 +37,7 @@ export default class Ajax {
     post(url, payload) {
         return this.$http.post(url, payload).then(
             success => {
-                return this.$q.resolve(success);
+                return this.$q.resolve(success.data);
             },
             error => {
                 this.$log.error("Error requesting " + url, error);
@@ -49,7 +49,7 @@ export default class Ajax {
     put(url, payload) {
         return this.$http.put(url, payload).then(
             success => {
-                return this.$q.resolve(success);
+                return this.$q.resolve(success.data);
             },
             error => {
                 this.$log.error("Error requesting " + url, error);
@@ -61,7 +61,7 @@ export default class Ajax {
     delete(url) {
         return this.$http.delete(url).then(
             success => {
-                return this.$q.resolve(success);
+                return this.$q.resolve(success.data);
             },
             error => {
                 this.$log.error("Error requesting " + url, error);

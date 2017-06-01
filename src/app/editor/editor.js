@@ -44,6 +44,10 @@ export class AbstractEditorCtrl {
                 editor: this.contentEditor
             });
         });
+
+        // todo: add edit button above element
+        // todo: add edit handler
+        // todo: add save and cancel handlers
         return this.link;
     }
 
@@ -61,6 +65,6 @@ let EditorDirective = function(PostService) {
     return new AbstractEditorCtrl(PostService);
 }
 
-// separate functions for edit-title, edit-content, edit-featured image
+// todo: separate functions for edit-title, edit-content, edit-featured image
 
 export default EditorDirective;
