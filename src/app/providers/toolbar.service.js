@@ -1,5 +1,5 @@
 
-export class ToolbarService {
+export default class ToolbarService {
 
     constructor($log) {
         $log.info("TbService: Initializing...");
@@ -24,7 +24,7 @@ export class ToolbarService {
             button.position = 1000;
 
         // if button already exist, don't add it.
-        for (let b of buttons) {
+        for (let b of this.buttons) {
             if (b.id == button.id) {
                 console.log(b.id, " already exists")
                 return;
