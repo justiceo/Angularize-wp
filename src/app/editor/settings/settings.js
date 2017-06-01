@@ -9,7 +9,6 @@ export class PostSettingsCtrl {
         this.$scope = $scope;
         this.$scope.categories = [];
         this.$scope.tags = [];
-        this.$scope.cancel = this.cancel;
 
         this.loadPostSettings();
         var settingsButton = {
@@ -20,6 +19,7 @@ export class PostSettingsCtrl {
             handler: () => this.settingsHandler()
         };
         ToolbarService.add(settingsButton);
+        $scope.cancel =  () => $mdDialog.hide();     
     }
 
     settingsHandler() {

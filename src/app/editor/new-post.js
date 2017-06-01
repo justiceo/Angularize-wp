@@ -17,9 +17,7 @@ export class NewPostCtrl {
         ToolbarService.add(button);
 
 
-        $scope.cancel = function () {
-            $mdDialog.hide();
-        }
+        $scope.cancel =  () => $mdDialog.hide();        
 
         $scope.create = function (title) {
             console.log("EDITOR: creating post title");
