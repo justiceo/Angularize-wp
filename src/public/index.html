@@ -12,10 +12,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor-insert-plugin/2.4.1/css/medium-editor-insert-plugin.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor-insert-plugin/2.4.1/css/medium-editor-insert-plugin-frontend.css">
-
+  <link rel="stylesheet" href="demo.css">
   <base href="/">
 </head>
 <body>
+  <div class="container">
+    <div class="header">
+      <h1>Angularize WordPress</h1>
+      <p>Super-charge your WordPress site with AngularJs components</p>
+      <a href="#" class="button">Download</a>
+      <a href="#" class="button light">View on Github</a>
+    </div>
+
+    <h2>Usage</h2>
+
   <app></app>
   <echo></echo>
   <author-popover></author-popover>
@@ -34,6 +44,23 @@ sed do eiusmod tempor incididunt ut
 <p class="test">
  labore et dolore magna aliqua. Ut enim ad minim veniam,</p> 
  quis nostrud exercitatioLorem ipsum dolor of editable text</div>
+
+ <div class="footer">
+      <h2>Use responsibly</h2>
+
+      <p><a href="#">Using AngularJs for primary content can affect your WordPress site SEO</a></p>
+
+      <a href="#" class="button">Download</a>
+      <a href="#" class="button light">View on GitHub</a>
+
+      <div class="credit">
+        Made by <a href="#">Justice Ogbonna</a>
+      </div>
+    </div>
+  </div>
+
+
+
   <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function(event) {
     angular.module("angularize").component("echo", {
@@ -60,5 +87,6 @@ sed do eiusmod tempor incididunt ut
     })
   });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js"></script>
 </body>
 </html>
