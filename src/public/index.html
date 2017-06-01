@@ -24,7 +24,85 @@
       <a href="#" class="button light">View on Github</a>
     </div>
 
-    <h2>Usage</h2>
+    <p class="notice">Note: This plugin is under active development</p>
+    <h2>Install on WordPress</h2>
+    <p><strong>1.</strong> Download the latest angular_wp.zip file from <a href="https://github.com/justiceo/Angularize-wp/releases">Github</a></p>
+
+    <p><strong>2.</strong> Install and activate WP-Rest-API v2</p>
+
+    <p><strong>3.</strong> Finally, install and activate Angularize-WP</p>
+
+    <h2>For Development (customize & install)</h2>
+    <p><strong>1.</strong> Clone the repo <a href="https://github.com/justiceo/Angularize-wp/releases">Github</a></p>
+    <pre><code class="language-bash">git clone https://github.com/justiceo/Angularize-wp</code></pre>
+
+    <p><strong>2.</strong> Install npm dependencies</p>
+    <pre><code class="language-bash">npm install</code></pre>
+
+    <p><strong>3.</strong> Finally, build to generate plugin files</p>
+    <pre><code class="language-bash">webpack -p</code></pre>
+
+    <h2>All Done!</h2>
+    <p>Now you can drop in AngularJs directives, components and providers anywhere in your WordPress site</p>
+    <p>Below is an example of an angular hello world component in a WordPress site.</p>
+    <pre><code class="language-html">
+&lt;!-- Paste this inside a post, page, widget, header etc -->
+&lt;echo>&lt;/echo>
+&lt;script type="text/javascript" defer data-manual>
+  document.addEventListener("DOMContentLoaded", function() {
+    angular.module("angularize").component("echo", {
+      template: 'Hello World!',
+      controller: function() {}
+    })
+  });
+&lt;/script>
+      </code></pre>
+
+    <h2>A step beyond Hello World!</h2>
+    <p>Below is the <a href="#">actual source</a> for the all too famous <a href="https://en.support.wordpress.com/widgets/recent-posts-widget/">Recent posts</a> widget.</p>
+    <pre><code class="language-javascript">
+export class RecentPostsCtrl {
+    constructor(PostService) {
+        PostService.get_posts().then(            
+            posts => this.posts = posts.slice(0,5)  // take top 5       
+        );
+    }
+}
+
+let RecentPosts = {
+    controller: RecentPostsCtrl,
+    template: `
+    &lt;h2>Recent Posts&lt;/h2>
+    &lt;ul>
+        &lt;li ng-repeat="post in $ctrl.posts">
+            &lt;a href="{{ post.link }}">
+                {{ post.title.rendered }}
+            &lt;/a>
+        &lt;/li>
+    &lt;/ul>
+    `
+}
+export default RecentPosts;
+      </code></pre>
+    <p>How simple is that? And on the bright side, you can now display recent posts anywhere on the page, not just the sidebar</span>
+
+    <h2>Included Components</h2>
+    <h3>Toolbar</h3>
+    <p><toolbar>toolbar component</toolbar></p>
+
+    <h2>Included Directives</h2>
+    <h3>Author Popover</h3>
+    <p><author-popover></author-popover></p>
+
+    <h3>Like Button</h3>
+    <p>Users can like the current post or page they're on.</p>
+    <p>Attribute on text example: Click <a like="12">Like</a> to like and unlike</p>
+    <p>Multiple like buttons for the same post is synced easily</p>
+    <button like="13">Post A</button>
+    <button like="13">Another Post A</button>
+    <p>Refreshing the browser wouldn't refresh like status. More on this later</p>
+
+    
 
   <app></app>
   <echo></echo>
@@ -34,7 +112,6 @@
   <p like="24">post with id 24</p>
   <book-flight></book-flight>
   <post-settings></post-settings>
-  <toolbar>toolbar component</toolbar>
   <new-post></new-post>
   <div editable>
     <p>The standard Lorem Ipsum <strong>passage</strong>, used since the 1500s
@@ -61,7 +138,7 @@ sed do eiusmod tempor incididunt ut
 
 
 
-  <script type="text/javascript">
+  <script type="text/javascript" defer>
   document.addEventListener("DOMContentLoaded", function(event) {
     angular.module("angularize").component("echo", {
       template: 'Hello World!',
@@ -87,6 +164,8 @@ sed do eiusmod tempor incididunt ut
     })
   });
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-coy.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
 </body>
 </html>
