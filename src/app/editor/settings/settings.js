@@ -12,7 +12,7 @@ export class PostSettingsCtrl {
 			title: 'Settings',
 			icon: 'icon-settings',
 			position: 4,
-			handler: this.settingsHandler
+			handler: () => this.settingsHandler()
 		};
 		ToolbarService.add(settingsButton);
     }
