@@ -1,3 +1,38 @@
 /* styles in src/style directory are applied to the whole page */
 
-/* install bootstrap to make templating easy */
+/* install bootstrap to make importings node_modules css easy */
+.toolbar-wrapper.bottom {
+    bottom: 80px;
+    position: fixed;
+    width: 100%;
+}
+
+button md-icon:before {
+    font-size: 2em;
+}
+.md-chips .md-chip-input-container {
+    float: none;
+}
+md-input-container .md-errors-spacer { display: none; }
+
+.editable
+ {
+    outline: none;
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.medium-editor-state-buttons {
+    display: inline-block;
+}
+
+.medium-editor-state-buttons .btn.btn-default {
+    padding: 5px 9px;
+    background: transparent;
+    border: 1px solid #999;
+    text-decoration: none;
+    border-radius: 2px;
+    font-size: 75%;
+    margin-right: 10px;
+}
