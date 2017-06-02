@@ -101,16 +101,22 @@ export default RecentPosts;
         <author-popover></author-popover>
       </p>
 
-      <h3>Like Button</h3>
-      <p>Users can like the current post or page they're on.</p>
-      <p>Attribute on text example: Click <a like="12">Like</a> to like and unlike</p>
-      <p>Multiple like buttons for the same post is synced easily</p>
-      <button like="13">Post A</button>
-      <button like="13">Another Post A</button>
-      <p>Refreshing the browser wouldn't refresh like status. More on this later</p>
+      <div layout="column">
+        <md-toolbar class="md-accent _md _md-toolbar-transitions">
+          <div class="md-toolbar-tools">
+            <h2>Like Button</h2>
+          </div>
+        </md-toolbar>
+        <md-content>
+          <p>Users can like the current post or page they're on.</p>
+          <p>Attribute on text example: Click <a like="12">Like</a> to like and unlike</p>
+          <p>Multiple like buttons for the same post is synced easily</p>
+          <button class="button" like="13" like-count="count_13">Like Post A {{ count_13 }}</button>
+          <button class="button" like="13" like-count="count_13">Like Post A {{ count_13 }}</button>
+          <p>Refreshing the browser wouldn't refresh like status. More on this later</p>
+        </md-content>
+      </div>
 
-
-      <app></app>
       <h3>Echo component (just for test)</h3>
       <p>
         <echo></echo>
@@ -118,6 +124,9 @@ export default RecentPosts;
 
       <h3>Book Flight Component</h3>
       <book-flight></book-flight>
+
+      <h3>Author Popover</h3>
+      <author-popover></author-popover>
 
       <h3>Post Settings</h3>
       <post-settings></post-settings>
@@ -132,7 +141,8 @@ export default RecentPosts;
         sed do eiusmod tempor incididunt ut
         <p class="test">
           labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
-        quis nostrud exercitatioLorem ipsum dolor of editable text</div>
+        quis nostrud exercitatioLorem ipsum dolor of editable text
+      </div>
 
       <div class="footer">
         <h2>Use responsibly</h2>
