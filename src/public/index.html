@@ -1,5 +1,6 @@
 <!doctype html>
 <html ng-app="angularize" lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Angular App</title>
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="demo.css">
   <base href="/">
 </head>
+
 <body>
   <div class="container">
     <div class="header">
@@ -24,7 +26,8 @@
       <a href="#" class="button light">View on Github</a>
     </div>
 
-    <p class="notice">Note: This plugin is under active development</p>
+    <p class="notice"><strong>Note:</strong> This plugin is under <a href="#">active development</a></p>
+
     <h2>Install on WordPress</h2>
     <p><strong>1.</strong> Download the latest angular_wp.zip file from <a href="https://github.com/justiceo/Angularize-wp/releases">Github</a></p>
 
@@ -59,7 +62,7 @@
       </code></pre>
 
     <h2>A step beyond Hello World!</h2>
-    <p>Below is the <a href="#">actual source</a> for the all too famous <a href="https://en.support.wordpress.com/widgets/recent-posts-widget/">Recent posts</a> widget.</p>
+    <p>Below is the <a href="#">actual source</a> for the all too famous <a href="https://en.support.wordpress.com/widgets/recent-posts-widget/">Recent posts</a>      widget.</p>
     <pre><code class="language-javascript">
 export class RecentPostsCtrl {
     constructor(PostService) {
@@ -86,86 +89,78 @@ export default RecentPosts;
       </code></pre>
     <p>How simple is that? And on the bright side, you can now display recent posts anywhere on the page, not just the sidebar</span>
 
-    <h2>Included Components</h2>
-    <h3>Toolbar</h3>
-    <p><toolbar>toolbar component</toolbar></p>
+      <h2>Included Components</h2>
+      <h3>Toolbar</h3>
+      <p>
+        <toolbar>toolbar component</toolbar>
+      </p>
 
-    <h2>Included Directives</h2>
-    <h3>Author Popover</h3>
-    <p><author-popover></author-popover></p>
+      <h2>Included Directives</h2>
+      <h3>Author Popover</h3>
+      <p>
+        <author-popover></author-popover>
+      </p>
 
-    <h3>Like Button</h3>
-    <p>Users can like the current post or page they're on.</p>
-    <p>Attribute on text example: Click <a like="12">Like</a> to like and unlike</p>
-    <p>Multiple like buttons for the same post is synced easily</p>
-    <button like="13">Post A</button>
-    <button like="13">Another Post A</button>
-    <p>Refreshing the browser wouldn't refresh like status. More on this later</p>
+      <h3>Like Button</h3>
+      <p>Users can like the current post or page they're on.</p>
+      <p>Attribute on text example: Click <a like="12">Like</a> to like and unlike</p>
+      <p>Multiple like buttons for the same post is synced easily</p>
+      <button like="13">Post A</button>
+      <button like="13">Another Post A</button>
+      <p>Refreshing the browser wouldn't refresh like status. More on this later</p>
 
-    
 
-  <app></app>
-  <echo></echo>
-  <author-popover></author-popover>
-  <p hello-popover>testing popover</p>
-  <p like="12">post with id 12</p>
-  <p like="24">post with id 24</p>
-  <book-flight></book-flight>
-  <post-settings></post-settings>
-  <new-post></new-post>
-  <div editable>
-    <p>The standard Lorem Ipsum <strong>passage</strong>, used since the 1500s
+      <app></app>
+      <h3>Echo component (just for test)</h3>
+      <p>
+        <echo></echo>
+      </p>
 
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, </p>
-sed do eiusmod tempor incididunt ut
-<p class="test">
- labore et dolore magna aliqua. Ut enim ad minim veniam,</p> 
- quis nostrud exercitatioLorem ipsum dolor of editable text</div>
+      <h3>Book Flight Component</h3>
+      <book-flight></book-flight>
 
- <div class="footer">
-      <h2>Use responsibly</h2>
+      <h3>Post Settings</h3>
+      <post-settings></post-settings>
 
-      <p><a href="#">Using AngularJs for primary content can affect your WordPress site SEO</a></p>
+      <h3>New Post</h3>
+      <new-post></new-post>
 
-      <a href="#" class="button">Download</a>
-      <a href="#" class="button light">View on GitHub</a>
+      <h3>Editor Component</h3>
+      <div editable>
+        <p>The standard Lorem Ipsum <strong>passage</strong>, used since the 1500s "Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit, </p>
+        sed do eiusmod tempor incididunt ut
+        <p class="test">
+          labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        quis nostrud exercitatioLorem ipsum dolor of editable text</div>
 
-      <div class="credit">
-        Made by <a href="#">Justice Ogbonna</a>
+      <div class="footer">
+        <h2>Use responsibly</h2>
+
+        <p><a href="#">Using AngularJs for primary content can affect your WordPress site SEO</a></p>
+
+        <a href="#" class="button">Download</a>
+        <a href="#" class="button light">View on GitHub</a>
+
+        <div class="credit">
+          Made by <a href="#">Justice Ogbonna</a>
+        </div>
       </div>
-    </div>
   </div>
 
 
 
   <script type="text/javascript" defer>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    angular.module("angularize").component("echo", {
-      template: 'Hello World!',
-      controller: function() {}
+    document.addEventListener("DOMContentLoaded", function (event) {
+      angular.module("angularize").component("echo", {
+        template: 'Hello World!',
+        controller: function () { }
+      });
     });
-
-    angular.module("angularize").directive("helloPopover", function() {
-      return {
-        template: `<p>Hello world directive</p>`,
-        scope: {}, // use a new isolated scope, perhaps change to use UIB's
-        restrict: 'A',
-        replace: false,
-        compile: function(tElem, attrs) {
-          // do DOM transformation here
-          return function(scope, elem, attrs) {
-            // linking function here
-            elem.bind('mouseover', function() {
-              console.log("now is time to popover")
-            });
-          }
-        }
-      }
-    })
-  });
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-coy.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
 </body>
+
 </html>

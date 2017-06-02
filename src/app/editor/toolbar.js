@@ -16,16 +16,14 @@ let Toolbar = {
         <button md-button ng-repeat="button in $ctrl.buttons track by $index"
             class="md-fab"
             aria-label="{{ button.title }}"
-            data-id="{{ button.id }}"
-            uib-tooltip="{{ button.title }}"
-            tooltip-placement="top"
-            tooltip-class="le-tooltip"
-            tooltip-popup-delay="800"
-            tooltip-popup-close-delay="100"
+            data-id="{{ button.id }}"            
             ng-class="button.class"
             ng-click="button.handler()" 
             ng-disabled="button.disabled">
             <md-icon md-font-icon="{{ button.icon }}"></md-icon>       
+            <md-tooltip md-direction="top" md-delay="200">
+                {{ button.title }}
+            </md-tooltip>
         </button md-button>
     </section>
     </div>
