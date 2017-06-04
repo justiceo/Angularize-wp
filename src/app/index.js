@@ -1,6 +1,5 @@
 import angular from 'angular';
 import LocalStorageModule from 'angular-local-storage';
-import AngularizeEditor from './editor';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
@@ -12,16 +11,12 @@ import AuthorPopover from './components/author-popover';
 import BookFlight from './components/book-flight';
 import LikeDirective from './components/like';
 
-// for syntax highlighting on demo page
-require('prismjs');
-
 import '../style/app.scss';
 
 const MODULE_NAME = 'angularize';
 
 angular.module(MODULE_NAME, [
-  LocalStorageModule,
-  AngularizeEditor // allow us to use <settings> etc
+  LocalStorageModule
   ])
   .component('app', AppComponent)
   .component('recentPost', RecentPosts)
