@@ -61,5 +61,5 @@ function ngwp_enque_scripts() {
 
 add_action('wp_footer', 'ngwp_add_app_tag');
 function ngwp_add_app_tag() {
-    echo '<app></app>';
+    //echo '<app></app>';
 }
