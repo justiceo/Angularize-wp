@@ -25,10 +25,12 @@
     "angular-aria": "^1.6.4",
     "angular-local-storage": "^0.6.0",
     "angular-material": "^1.1.4",
+    "font-awesome": "^4.7.0",
     "jquery.ui.widget": "^1.10.3",
     "medium-editor": "^5.23.0",
     "medium-editor-autolist": "^1.0.1",
     "medium-editor-insert-plugin": "^2.4.1",
+    "prismjs": "^1.6.0",
     "svg-assets-cache": "^1.1.3"
   },
   "devDependencies": {

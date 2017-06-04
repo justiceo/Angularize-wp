@@ -12,6 +12,9 @@ import AuthorPopover from './components/author-popover';
 import BookFlight from './components/book-flight';
 import LikeDirective from './components/like';
 
+// for syntax highlighting on demo page
+require('prismjs');
+
 import '../style/app.scss';
 
 const MODULE_NAME = 'angularize';
