@@ -63,3 +63,9 @@ add_action('wp_footer', 'ngwp_add_app_tag');
 function ngwp_add_app_tag() {
     echo '<app></app>';
 }
+
+// Disables the WYSIWYG editor of tinyMce
+/** It automatically removes empty elements (which strips off component tags)
+ *  and can apply undesirable formatting and cleanup of newlines, br tags etc
+ */
+add_filter('user_can_richedit', '__return_false', 50);
