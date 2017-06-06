@@ -144,3 +144,5 @@ webpack
 X-WP-Total: the total number of records in the collection
 X-WP-TotalPages: the total number of pages encompassing all available records
 ### Switch out PostService for Backbone js client.
+- add backwards support for front-end editor - editor
+- remove editor module
