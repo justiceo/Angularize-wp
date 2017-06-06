@@ -106,3 +106,33 @@ webpack
 # License
 
 [MIT](/LICENSE)
+
+
+#### Release 1.0.0 Goals
+- working documentation
+- working demo
+- optional inclusion of extra components
+- optional inclusion of extra modules
+- working tests
+
+##### Release 1.0.0-beta.3
+- move extra components to a common module
+- complete book-flight component
+- complete author-popover component
+- remove <app> component and tests
+- add test for <recent-post> component
+- thin down demo.css to the basics
+- make prismjs work smoothly on live reload
+- ensure demo.css isn't overriding import angluar-material styles
+
+##### Why not use Angular Material
+- Js needs to be parsed before any html can render
+- It is very heavy and bloated, 10X bootstrap
+- We'll still need bootstrap for some other tasks
+- The CSS benefits can be derived from a customized boostrap css like Bootswatch paper
+- It breaks CSS of other components - like editor, and can after style of website it's used on.
+
+
+##### Things we stand to loose
+- Easy components like chips, modals and buttons
+- Cool animations and ripples
