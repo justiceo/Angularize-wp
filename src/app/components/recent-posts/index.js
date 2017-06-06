@@ -1,9 +1,13 @@
 export class RecentPostsCtrl {
-    constructor(PostService, $log) {
+    constructor($log, $scope) {
         $log.info("RecentPost: Initializing...");
-        PostService.get_posts().then(            
-            posts => this.posts = posts.slice(0,5)         
-        );
+        let postCollection = new wp.api.collections.Posts();
+        postCollection.fetch({ data: { per_page: 5}}).then(
+            top5 => {
+                this.posts = top5;
+                $scope.$apply(); // because angular doesn't catch the above line
+            }
+        )
     }
 }
 
