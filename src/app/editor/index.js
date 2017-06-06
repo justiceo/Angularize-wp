@@ -5,12 +5,9 @@ import EditorDirective from './editor';
 import Toolbar from './toolbar';
 import NewPost from './new-post';
 
-let MODULE_NAME = "AngularizeEditor";
+let editorModule = angular.module('angularize.editor', [ngMaterial, svgAssetsCache]);
 
-angular.module(MODULE_NAME, [
-    ngMaterial,
-    svgAssetsCache,
-  ])
+editorModule
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
      .primaryPalette('purple')
@@ -21,4 +18,4 @@ angular.module(MODULE_NAME, [
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)
 
-export default MODULE_NAME;
+export default editorModule;

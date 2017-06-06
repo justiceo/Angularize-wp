@@ -1,7 +1,7 @@
 import angular from 'angular';
 import LocalStorageModule from 'angular-local-storage';
-import AngularizeEditor from './editor';
-import './components';
+import './editor';
+import './widgets';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
@@ -19,7 +19,7 @@ const MODULE_NAME = 'angularize';
 angular.module(MODULE_NAME, [
   LocalStorageModule,
   'angularize.widgets',
-  AngularizeEditor // allow us to use <settings> etc
+  'angularize.editor' // allow us to use <settings> etc
   ])
   .component('app', AppComponent)
   .service('Cache', Cache)
