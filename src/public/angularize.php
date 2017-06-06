@@ -47,7 +47,7 @@ function ngwp_add_meta_tags() {
 // Enque scripts and styles with localization
 add_action('wp_enqueue_scripts', 'ngwp_enque_scripts'); 
 function ngwp_enque_scripts() {
-    wp_register_script('ng-script', plugin_dir_url(__FILE__) . '/app.bundle.js', array(), '1.0.0', true);
+    wp_register_script('ng-script', plugin_dir_url(__FILE__) . '/app.bundle.js', array('wp-api'), '1.0.0', true);
     $translation_array = array(
         'nonce' => wp_create_nonce( 'wp_rest' ),
         'currentUser' => wp_get_current_user(),

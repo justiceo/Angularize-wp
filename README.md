@@ -136,3 +136,11 @@ webpack
 ##### Things we stand to loose
 - Easy components like chips, modals and buttons
 - Cool animations and ripples
+
+
+### Keep Writing Editor out of this eventually
+### Add all wp widgets as components
+### Consume the headers:
+X-WP-Total: the total number of records in the collection
+X-WP-TotalPages: the total number of pages encompassing all available records
+### Switch out PostService for Backbone js client.
