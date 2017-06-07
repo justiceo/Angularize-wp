@@ -1,16 +1,12 @@
 
+var _ = require("underscore");
+
 class RestCollection {
 
     constructor(endpoint, Schema) {
-
-        this._root = null;
-        this._value = []; // should extend underscore array functions
-        this._modelRef = null;
-
-        if (!endpoint) return;
-        console.log("creating rest coll ", endpoint);
-        // anything that is not verifyably a collection
-        this._modelRef = new RestObject(Schema.getModel(endpoint), Schema);
+        this._value = []; 
+        this._endpoint = endpoint;
+        this._modelRef = new RestObject(this._endpoint + '/' + Schema.getModel(endpoint), Schema);
     }
 
     at(index) { return this._value.splice(index, 1); }
@@ -22,14 +18,11 @@ class RestCollection {
 }
 
 class RestObject {
-
-
     constructor(endpoint, Schema) {
-        this.childRefs = {};
-        if (!endpoint) return;
-        console.log("creating rest object ", endpoint);
+        this._endpoint = endpoint;
+
         Schema.getCollections(endpoint).forEach(e => {
-            this.childRefs[e] = new RestCollection(e, Schema);
+            this[e] = new RestCollection(this._endpoint + '/' + e, Schema);
         });
     }
 
@@ -39,10 +32,9 @@ class RestObject {
         this[endpoint] = new RestObject("url", "", "");
         return this[endpoint];
     }
+
     val() { }
-    get() {
-        // fetch the post
-    }
+    get() {} // fetch the post
     post(data) { }
     put(args) { }
     delete(args) { }
@@ -51,16 +43,7 @@ class RestObject {
 }
 
 class Schema {
-    // fetch the json root
-    // create the object and print it to console
-
-    constructor() {/*
-        $http.get("http://snow.2rof.com/wp-json/wp/v2/").then(
-            success => {
-                console.log(success.data);
-                this.schema = success.data;
-            }
-        )*/
+    constructor() {
         this.schema = {
             "routes": {
                 "/wp/v2": {
@@ -78,41 +61,28 @@ class Schema {
                 "/wp/v2/pages/(?P<id>[\\d]+)": {},
             }
         }
+        this.routes = Object.keys(this.schema.routes).map(r => r.replace("parent", "id"));
     }
 
     getModel(endpoint) {
-        let routes = Object.keys(this.schema.routes);
-        routes = routes.filter(r => r.startsWith(endpoint)).map(r => r.replace(endpoint, ""));
-        routes = routes.filter(r => r == "/(?P<id>[\\d]+)" || r == "/(?P<parent>[\\d]+)");
-        if (routes.length > 0)
-            return endpoint + routes[0];
-
-        //routes = routes.map(r => endpoint + r.substring(endpoint.length. r.indexOf('/')));
-        //return routes;
+        let routes = this.routes;
+        routes = routes.filter(r => this.isImmediate(endpoint, r) && !this.isCollection(r))
+        return _.first(routes).replace(endpoint + "/", "");
     }
 
-    isModel(endpoint) {
-        return !isCollection(endpoint);
+    getCollections(endpoint) {
+        let routes = this.routes;
+        return routes.filter(r => this.isImmediate(endpoint, r) && this.isCollection(r)).map(r => r.replace(endpoint + "/", ""));        
     }
 
     isCollection(endpoint) {
         return !endpoint.endsWith("[\\d]+)"); // todo: improve targetting
     }
 
-    getCollections(endpoint) {
-        let routes = Object.keys(this.schema.routes);
-        routes = routes.filter(r => r.startsWith(endpoint));
-        // we just need the end point names
-        routes = routes.map(r => r.replace(endpoint + "/", ""));
-        routes = routes.map(r => {
-            if (r.indexOf('/') != -1)
-                return r.substring(0, r.indexOf('/'));
-            else return r;
-        });
-        routes = routes.filter(this.onlyUnique).filter(r => r != "").map(r => endpoint + "/" + r);
-        return routes;
+    isImmediate(endpoint, newEndpoint) {
+        let diff = newEndpoint.replace(endpoint, "");
+        return (newEndpoint.startsWith(endpoint)) && (diff.match(/\//g) || []).length == 1
     }
-
 
     onlyUnique(value, index, self) {
         return self.indexOf(value) === index;
@@ -121,4 +91,7 @@ class Schema {
 
 var schema = new Schema();
 var ro = new RestObject("/wp/v2", schema);
-console.log(ro);
+const util = require('util');
+console.log(util.inspect(ro, false, null));
+
+
