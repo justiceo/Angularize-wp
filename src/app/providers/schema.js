@@ -4,7 +4,7 @@ var _ = require("underscore");
 class RestCollection {
 
     constructor(endpoint, Schema) {
-        this._value = []; 
+        this._value = [];
         this._endpoint = endpoint;
         this._modelRef = new RestObject(this._endpoint + '/' + Schema.getModel(endpoint), Schema);
     }
@@ -20,25 +20,36 @@ class RestCollection {
 class RestObject {
     constructor(endpoint, Schema) {
         this._endpoint = endpoint;
+        this._args = {}; // the lite collection
+        this._args.deep = {}; // the complete collection.
 
+        // get the args for the different methods and append them
+
+        // add collections that extend from there
         Schema.getCollections(endpoint).forEach(e => {
             this[e] = new RestCollection(this._endpoint + '/' + e, Schema);
         });
     }
 
     $(route) {
-        // endpoint must exist in childRef keys to be valid
-        // update the child ref
-        this[endpoint] = new RestObject("url", "", "");
-        return this[endpoint];
+        if (!this[route])
+            throw this._endpoint + '/' + route + " - route not reachable from model"
+        return this[route];
     }
 
-    val() { }
-    get() {} // fetch the post
-    post(data) { }
+    val() { return this._model; }
+    get(args) { } // fetch the post
+    post(args) { }
     put(args) { }
     delete(args) { }
     asPostType() { }
+    args() { } // returns the arguments for the different post types
+    extend(a, b) {
+        for (var key in b)
+            if (b.hasOwnProperty(key))
+                a[key] = b[key];
+        return a;
+    }
 
 }
 
@@ -72,7 +83,7 @@ class Schema {
 
     getCollections(endpoint) {
         let routes = this.routes;
-        return routes.filter(r => this.isImmediate(endpoint, r) && this.isCollection(r)).map(r => r.replace(endpoint + "/", ""));        
+        return routes.filter(r => this.isImmediate(endpoint, r) && this.isCollection(r)).map(r => r.replace(endpoint + "/", ""));
     }
 
     isCollection(endpoint) {
