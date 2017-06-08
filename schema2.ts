@@ -1,9 +1,12 @@
 /// <reference path="./typings/index.d.ts" />
 
 interface RestObjectI {
+    id: number;
+    isLoaded: boolean;
     rawVal(): Object;
     get(): Promise<Object>;
     post(args: Object): Promise<Object>;
+    attr(prop: string, value: any): void;
     //sync(): Promise<Object>;
     //attr(prop: string): Object;
     //attr(prop: string, value: Object): boolean;
@@ -11,9 +14,9 @@ interface RestObjectI {
 }
 
 interface RestCollectionI {
+    isLoaded: boolean;
     rawVal(): Array<any>
     get(args?: Object): Promise<Array<RestObjectI>>
-    post(): Promise<Array<RestObjectI>>
     //sync(): Promise<Array<RestObjectI>>
     id(id: number): RestObjectI
     //find(args: Object): RestObjectI
@@ -21,47 +24,65 @@ interface RestCollectionI {
 }
 
 class RestCollection extends Array<RestObjectI> implements RestCollectionI {
-    _state: Array<any>;
+    _state: Array<any> = [];
     _route;
     _modelRef;
+    Ajax;
+    isLoaded: boolean;
     constructor(public _endpoint, public _parent, public _schema) {
         super();
         this._state = [];
         this._route = _parent + '/' + _endpoint;
         this._modelRef = {}; // new RestObject(Schema.getModel(this._route), this._route,  Schema);
     }
-
+    // wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
     rawVal(): Array<any> {
         return this._state;
     }
 
+    //* wp.posts().id(2)       // returns a rest object with this id.
     id(postId): RestObjectI {
-        /*let postArr = this._state.filter(p => p.id == postId);
-        let value = postArr.size() == 0 ? null: postArr[0]
-        return new RestObject(postId, this._route, this._schema, value);*/
-        return null;
+        return this.find(o => o.id == postId);
     }
 
-    get(args?): Promise<Array<RestObjectI>> {
-        // process args and append to route
-        /*
+    // wp.posts().get()       // returns a promise to get the posts, using default params
+    get(): Promise<Array<RestObjectI>> {
+        // process args and append to route        
         return this.Ajax.get(this._route).then(
             success => {
-                success.data.forEach(e => this._state.push(this.toRestObj(e)));
-                return this._state;
+                this._state = success.data;
+                this._state.forEach(o => {
+                    this.push(new RestObject(o.id, "parent", this._schema))
+                })
+                this.isLoaded = true;
+                return this;
             }
-        )*/
-        return null;
+        )
     }
 
-    post(): Promise<Array<RestObjectI>> {
-        return null;
+    //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
+    add(args: any): RestObjectI { // what if object with id already exists in collection
+        let obj;
+        if (args.id && this.id(args.id).isLoaded) //buggy
+            obj = this.id(args.id);
+        else
+            obj = new RestObject("temporary_id", this._parent, this._schema);
+        for (let key in args) {
+            obj.attr(key, args[key])
+        }
+        this.push(obj);
+        return obj;
     }
 }
 
 class RestObject implements RestObjectI {
     _route;
     _args;
+    _state;
+    id;
+    isLoaded;
+    isModified;
+    Ajax;
     constructor(public _endpoint, public _parent, public _schema) {
         this._route = _parent + '/' + _endpoint;
 
@@ -78,19 +99,68 @@ class RestObject implements RestObjectI {
         }
     }
 
+    // wp.init('posts', {'per_page': 5}) // same as above
+    init(type: string, args?): Array<RestObjectI> {
+        let endpoint = type + this._serialize(args);
+        let collection = new RestCollection(endpoint, this._parent, this._schema);
+        return collection;
+    }
+
+    _serialize(obj): string {
+        // todo: check validity of keys too
+        return "?" + Object.keys(obj).map(function (key) {
+            return key + '=' + encodeURIComponent(obj[key]);
+        }).join('&')
+    }
+
     rawVal(): Object {
-        return null;
+        return this._state;
     }
-
+    //// returns a promise to get the model and update rawVal
     get(): Promise<Object> {
-        return null;
+        return this.Ajax.get(this._route).then(
+            success => {
+                this._extend(this._state, success.data);
+                this.isLoaded = true;
+                return this;
+            }
+        )
     }
 
-    post(args: Object): Promise<Object> {
-        return null;
+    attr(...args): any {
+        if (args.length == 1)
+            return this.getAttr(args[0]);
+        else if (args.length = 2)
+            return this.setAttr(args[0], args[1])
+        else
+            throw "Wrong number of arguments";
     }
 
-    extend(a, b) {
+    getAttr(prop: string): any {
+        return this._state[prop];
+    }
+
+    setAttr(prop: string, value: any): any {
+        this._state[prop] = value;
+        this.isModified = true;
+    }
+
+    post(...attr): Promise<Object> {
+        let payload = {};
+        // if nothing is specified in payload, then push the whole object, else push only what's specified
+        if (attr.length == 0)
+            payload = this._state;
+        else {
+            attr.forEach(a => payload[a] = this._state[a]);
+        }
+        return this.Ajax.post(this._route, payload).then(
+            success => {
+                return this;
+            }
+        )
+    }
+
+    _extend(a, b) {
         for (var key in b)
             if (b.hasOwnProperty(key))
                 a[key] = b[key];
@@ -131,7 +201,7 @@ class Schema {
     getModel(endpoint): string {
         let routes = this.routes;
         routes = routes.filter(r => this.isImmediate(endpoint, r) && !this.isCollection(r))
-        if(routes.length == 0 ) return null;
+        if (routes.length == 0) return null;
         return routes[0].replace(endpoint + "/", "");
     }
 
