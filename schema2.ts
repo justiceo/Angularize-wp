@@ -31,9 +31,8 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     isLoaded: boolean;
     constructor(public _endpoint, public _parent, public _schema) {
         super();
-        this._state = [];
         this._route = _parent + '/' + _endpoint;
-        this._modelRef = {}; // new RestObject(Schema.getModel(this._route), this._route,  Schema);
+        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema);
     }
     // wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
     rawVal(): Array<any> {
@@ -42,7 +41,13 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
 
     //* wp.posts().id(2)       // returns a rest object with this id.
     id(postId): RestObjectI {
-        return this.find(o => o.id == postId);
+        let res = this.find(o => o.id == postId);
+        if(res == null) {            
+            res = new RestObject(postId, this._route, this._schema);
+            this.push(res);
+            // todo: update internal model
+        }
+        return res;
     }
 
     // wp.posts().get()       // returns a promise to get the posts, using default params
@@ -84,7 +89,7 @@ class RestObject implements RestObjectI {
     isModified;
     Ajax;
     constructor(public _endpoint, public _parent, public _schema) {
-        this._route = _parent + '/' + _endpoint;
+        this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
 
         // get the args for the different methods and append them
         let args = _schema.getArgs(this._route);
@@ -94,7 +99,8 @@ class RestObject implements RestObjectI {
         // add collections that extend from there
         if (_schema) {
             _schema.getCollections(this._route).forEach(e => {
-                this[e] = new RestCollection(e, this._route, _schema);
+                // do stuff like wp.posts({title: 'hello'})
+                this[e] = (args) => this.init(e, args);
             });
         }
     }
@@ -102,11 +108,12 @@ class RestObject implements RestObjectI {
     // wp.init('posts', {'per_page': 5}) // same as above
     init(type: string, args?): Array<RestObjectI> {
         let endpoint = type + this._serialize(args);
-        let collection = new RestCollection(endpoint, this._parent, this._schema);
+        let collection = new RestCollection(endpoint, this._route, this._schema);
         return collection;
     }
 
     _serialize(obj): string {
+        if(obj == null || Object.keys(obj).length == 0) return "";
         // todo: check validity of keys too
         return "?" + Object.keys(obj).map(function (key) {
             return key + '=' + encodeURIComponent(obj[key]);
@@ -225,7 +232,11 @@ class Schema {
 }
 
 var schema = new Schema();
-var ro = new RestObject("/wp/v2", "wp-json/", schema);
-console.log(ro);
+var ro = new RestObject("/wp/v2", "", schema);
+var require: any;
+const util = require('util');
+console.log(util.inspect(ro, false, null));
+console.log(util.inspect(ro.pages(), false, null));
+console.log(util.inspect(ro.posts(), false, null));
 
 
