@@ -1,6 +1,31 @@
 
 var _ = require("underscore");
 
+/**
+ * wp = new RestObject("/wp/v2", Schema);
+ * wp.posts()             // returns a rest collection obj, behave like real array that is super-charged
+ * wp.posts({'per_page': 5, 'author': 1})   // returns a different reference from above
+ * wp.posts()[2]          // returns a rest object by index
+ * wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
+ * wp.posts().latest()    // returns a reference to the collection, updates it
+ * wp.posts().get()       // returns a promise to get the posts, using default params
+ * wp.posts().id(2)       // returns a rest object
+ * wp.posts().find({id: 2})   // returns a rest object
+ * wp.posts().more()          // should support pagination, hence next page if any
+ * wp.posts().id(2).rawVal()  // returns the reference to model backing the rest object, null otherwise
+ * wp.posts().id(2).latest()  // returns a reference to rawVal and updates it, non-nullable
+ * wp.posts().id(2).get()     // returns a promise to get the model and update rawVal
+ * wp.posts().id(2).sync()    // update post 2 on the server, prevents overwriting newer changed model
+ * wp.posts().id(2).post()    // updates post 2 on the server, regardless of newer changes.
+ * wp.posts().id(2).attr("title") // returns the title attribute of the post, null otherwise
+ * wp.posts().id(2).attr("title", "hello world")  // update the title of post 2
+ * wp.posts().id(2).attrs     // returns a list of attributes on the post
+ * // creating and updating
+ * wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
+ * wp.posts().add({title: 'hello world'}).sync()  // creates a new post on the server
+ * wp.posts().sync()          // download remote changes (via revisions), upload local revisions via sync on actual objects
+ * wp.posts().id(2).revisions() // returns a rest collection obj
+ */
 class RestCollection {
 
     constructor(endpoint, parent, Schema) {
