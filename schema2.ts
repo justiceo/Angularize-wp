@@ -56,7 +56,8 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
         // process args and append to route        
         return this._ajax.get(root + this._route).then(
             success => {
-                this._state = success.data;
+                this._state = success;
+                console.log("restC: ", this._route, success)
                 this._state.forEach(o => {
                     this.push(new RestObject(o.id, this._route, this._schema, this._ajax))
                 })
@@ -84,7 +85,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
 class RestObject implements RestObjectI {
     _route;
     _args;
-    _state;
+    _state = {};
     id;
     isLoaded;
     isModified;
@@ -127,7 +128,7 @@ class RestObject implements RestObjectI {
         let root = "/wp-json";
         return this._ajax.get(root + this._route).then(
             success => {
-                this._extend(this._state, success.data);
+                this._extend(this._state, success);
                 this.isLoaded = true;
                 return this;
             }
@@ -239,6 +240,7 @@ export default class Rest {
         console.log("creating rest object")
         this.schema = new Schema();
         this.wp = new RestObject("/wp/v2", "", this.schema, Ajax);
+        window.$rest = this.wp;
         console.log("wp: ", this.wp);
         let posts = this.wp.posts();
         console.log("post len: ", posts.length);
