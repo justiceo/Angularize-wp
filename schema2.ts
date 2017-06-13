@@ -33,31 +33,57 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
         super();
         this._route = _parent + '/' + _endpoint;
         this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema);
+
+        this.Ajax = {
+            get: (url) => this.ajax('get', url),
+            post: (url, data) => this.ajax('post', url, data),
+            "delete": (url) => this.ajax('delete', url)
+        }
+
+        
     }
+    
     // wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
-    rawVal(): Array<any> {
+    rawVal = () => {
         return this._state;
     }
 
+    ajax = (method, url, data?) => {
+        let http = new XMLHttpRequest();
+        http.open(method, url);
+        if(data) http.send(data);
+        else http.send();
+
+        return {
+            then: (success, fail) => {
+                http.onreadystatechange = () => {
+                    if(http.readyState != 4) return;
+                    if(http.status == 200) success("success callback");
+                    else fail("error callback");
+                }
+            }
+        }
+    }
+
     //* wp.posts().id(2)       // returns a rest object with this id.
-    id(postId): RestObjectI {
+    id = (postId) => {
         let res = this.find(o => o.id == postId);
         if(res == null) {            
             res = new RestObject(postId, this._route, this._schema);
             this.push(res);
             // todo: update internal model
         }
-        return res;
+        return res; 
     }
 
     // wp.posts().get()       // returns a promise to get the posts, using default params
-    get(): Promise<Array<RestObjectI>> {
+    get = () => {
         // process args and append to route        
         return this.Ajax.get(this._route).then(
             success => {
                 this._state = success.data;
                 this._state.forEach(o => {
-                    this.push(new RestObject(o.id, "parent", this._schema))
+                    this.push(new RestObject(o.id, this._route, this._schema))
                 })
                 this.isLoaded = true;
                 return this;
@@ -66,7 +92,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     }
 
     //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
-    add(args: any): RestObjectI { // what if object with id already exists in collection
+    add = (args: any) => { // what if object with id already exists in collection
         let obj;
         if (args.id && this.id(args.id).isLoaded) //buggy
             obj = this.id(args.id);
@@ -103,6 +129,12 @@ class RestObject implements RestObjectI {
                 this[e] = (args) => this.init(e, args);
             });
         }
+
+        this.Ajax = {
+            get: (url) => this.ajax('get', url),
+            post: (url, data) => this.ajax('post', url, data),
+            "delete": (url) => this.ajax('delete', url)
+        }
     }
 
     // wp.init('posts', {'per_page': 5}) // same as above
@@ -110,6 +142,23 @@ class RestObject implements RestObjectI {
         let endpoint = type + this._serialize(args);
         let collection = new RestCollection(endpoint, this._route, this._schema);
         return collection;
+    }
+
+    ajax(method, url, data?) {
+        let http = new XMLHttpRequest();
+        http.open(method, url);
+        if(data) http.send(data);
+        else http.send();
+
+        return {
+            then: (success, fail) => {
+                http.onreadystatechange = () => {
+                    if(http.readyState != 4) return;
+                    if(http.status == 200) success("success callback");
+                    else fail("error callback");
+                }
+            }
+        }
     }
 
     _serialize(obj): string {
@@ -232,11 +281,18 @@ class Schema {
 }
 
 var schema = new Schema();
-var ro = new RestObject("/wp/v2", "", schema);
+var wp = new RestObject("/wp/v2", "", schema);
 var require: any;
 const util = require('util');
-console.log(util.inspect(ro, false, null));
-console.log(util.inspect(ro.pages(), false, null));
-console.log(util.inspect(ro.posts(), false, null));
+console.log(util.inspect(wp, false, null));
+console.log(util.inspect(wp.pages(), false, null));
+var posts = wp.posts();
+console.log("before get: ", util.inspect(posts, false, null));
+posts.get().then(
+    success => {
+        console.log("posts: ", util.inspect(success.data, false, null));
+        console.log("first val: ", util.inspect(posts[0], false, null));
+    }
+)
 
 
