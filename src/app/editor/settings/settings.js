@@ -10,7 +10,7 @@ export class PostSettingsCtrl {
         this.$scope.categories = [];
         this.$scope.tags = [];
 
-        this.loadPostSettings();
+        //this.loadPostSettings();
         var settingsButton = {
             id: 'le_settings',
             title: 'Settings',
@@ -19,7 +19,37 @@ export class PostSettingsCtrl {
             handler: () => this.settingsHandler()
         };
         ToolbarService.add(settingsButton);
-        $scope.cancel =  () => $mdDialog.hide();     
+        $scope.cancel = () => $mdDialog.hide();
+        this.$scope.safeApply = function (fn) {
+            var phase = this.$root.$$phase;
+            if (phase == '$apply' || phase == '$digest') {
+                if (fn && (typeof (fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
+            }
+        };
+
+        this.post = new wp.api.models.Post({ id: PostService.the_post().ID });
+        this.post.fetch();
+        console.log("post: ", this.post);
+        let postCats = this.post.getCategories();
+        console.log("first cat: ", postCats);
+        this.post.getCategories().done(
+            cats => {
+                console.log("cats: ", cats);
+                this.$scope.categories = cats;
+                this.$scope.safeApply();
+            }
+        );
+        this.post.getTags().done(
+            tags => {
+                console.log("tags: ", tags);
+                this.$scope.tags = tags;
+                this.$scope.safeApply();
+            }
+        );
     }
 
     settingsHandler() {
@@ -55,7 +85,7 @@ export class PostSettingsCtrl {
             success => {
                 this.notify("Updated post settings");
             }
-        )
+            )
     }
 
     cancel() {
