@@ -2,6 +2,8 @@
  * PostService
  * contains information about the current post (could be page, attachement etc)
  */
+import Rest from './schema2';
+
 export default class PostService {
     constructor($window, $q, $log, Ajax) {
         'ngInject';        
@@ -11,6 +13,10 @@ export default class PostService {
         this.post = this.$wp.postObject || {};
         $log.debug("PostService: postObject ", this.post);
         this.postRoute = Ajax.restRoute + "/posts";
+
+        // create rest routes and schema for use with resolving later routes
+        let $rest = new Rest(Ajax);
+        console.log("rest:", $rest);
     }
     
     // For properties, see: https://codex.wordpress.org/Function_Reference/$post

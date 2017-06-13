@@ -29,10 +29,10 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     _modelRef;
     Ajax;
     isLoaded: boolean;
-    constructor(public _endpoint, public _parent, public _schema) {
+    constructor(public _endpoint, public _parent, public _schema, public _ajax) {
         super();
         this._route = _parent + '/' + _endpoint;
-        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema);
+        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema, this._ajax);
 
         this.Ajax = {
             get: (url) => this.ajax('get', url),
@@ -69,7 +69,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     id = (postId) => {
         let res = this.find(o => o.id == postId);
         if(res == null) {            
-            res = new RestObject(postId, this._route, this._schema);
+            res = new RestObject(postId, this._route, this._schema, this._ajax);
             this.push(res);
             // todo: update internal model
         }
@@ -83,7 +83,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
             success => {
                 this._state = success.data;
                 this._state.forEach(o => {
-                    this.push(new RestObject(o.id, this._route, this._schema))
+                    this.push(new RestObject(o.id, this._route, this._schema, this._ajax))
                 })
                 this.isLoaded = true;
                 return this;
@@ -97,7 +97,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
         if (args.id && this.id(args.id).isLoaded) //buggy
             obj = this.id(args.id);
         else
-            obj = new RestObject("temporary_id", this._parent, this._schema);
+            obj = new RestObject("temporary_id", this._parent, this._schema, this._ajax);
         for (let key in args) {
             obj.attr(key, args[key])
         }
@@ -114,7 +114,7 @@ class RestObject implements RestObjectI {
     isLoaded;
     isModified;
     Ajax;
-    constructor(public _endpoint, public _parent, public _schema) {
+    constructor(public _endpoint, public _parent, public _schema, public _ajax) {
         this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
 
         // get the args for the different methods and append them
@@ -140,7 +140,7 @@ class RestObject implements RestObjectI {
     // wp.init('posts', {'per_page': 5}) // same as above
     init(type: string, args?): Array<RestObjectI> {
         let endpoint = type + this._serialize(args);
-        let collection = new RestCollection(endpoint, this._route, this._schema);
+        let collection = new RestCollection(endpoint, this._route, this._schema, this._ajax);
         return collection;
     }
 
@@ -280,19 +280,18 @@ class Schema {
     }
 }
 
-var schema = new Schema();
-var wp = new RestObject("/wp/v2", "", schema);
-var require: any;
-const util = require('util');
-console.log(util.inspect(wp, false, null));
-console.log(util.inspect(wp.pages(), false, null));
-var posts = wp.posts();
-console.log("before get: ", util.inspect(posts, false, null));
-posts.get().then(
-    success => {
-        console.log("posts: ", util.inspect(success.data, false, null));
-        console.log("first val: ", util.inspect(posts[0], false, null));
+
+export default class Rest {
+    schema = null;
+    wp = null;
+    constructor(Ajax) {
+        console.log("creating rest object")
+        this.schema = new Schema();
+        this.wp = new RestObject("/wp/v2", "", this.schema, Ajax);
+        console.log("wp: ", this.wp);
     }
-)
+}
+
+
 
 
