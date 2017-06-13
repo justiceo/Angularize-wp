@@ -5,10 +5,11 @@ var _ = require("underscore");
  * wp = new RestObject("/wp/v2", Schema);
  * wp.posts()             // returns a rest collection obj, behave like real array that is super-charged
  * wp.posts({'per_page': 5, 'author': 1})   // returns a different reference from above
+ * wp.init('posts', {'per_page': 5}) // same as above, creates a new collection
  * wp.posts()[2]          // returns a rest object by index
  * wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
  * wp.posts().latest()    // returns a reference to the collection, updates it
- * wp.posts().get()       // returns a promise to get the posts, using default params
+ * wp.posts().get()       // returns a promise to get the posts
  * wp.posts().id(2)       // returns a rest object
  * wp.posts().find({id: 2})   // returns a rest object
  * wp.posts().more()          // should support pagination, hence next page if any
@@ -25,6 +26,7 @@ var _ = require("underscore");
  * wp.posts().add({title: 'hello world'}).sync()  // creates a new post on the server
  * wp.posts().sync()          // download remote changes (via revisions), upload local revisions via sync on actual objects
  * wp.posts().id(2).revisions() // returns a rest collection obj
+ * wp.pages()              // returns something similar to wp.posts()
  */
 class RestCollection {
 
@@ -184,5 +186,8 @@ var schema = new Schema();
 var ro = new RestObject("/wp/v2", schema);
 const util = require('util');
 console.log(util.inspect(ro, false, null));
+console.log(util.inspect(ro.pages(), false, null));
+
+console.log(util.inspect(ro.posts(), false, null));
 
 
