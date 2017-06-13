@@ -19,26 +19,6 @@ var RestCollection = (function (_super) {
         this.rawVal = function () {
             return _this._state;
         };
-        this.ajax = function (method, url, data) {
-            var http = new XMLHttpRequest();
-            http.open(method, url);
-            if (data)
-                http.send(data);
-            else
-                http.send();
-            return {
-                then: function (success, fail) {
-                    http.onreadystatechange = function () {
-                        if (http.readyState != 4)
-                            return;
-                        if (http.status == 200)
-                            success("success callback");
-                        else
-                            fail("error callback");
-                    };
-                }
-            };
-        };
         //* wp.posts().id(2)       // returns a rest object with this id.
         this.id = function (postId) {
             var res = _this.find(function (o) { return o.id == postId; });
@@ -50,8 +30,9 @@ var RestCollection = (function (_super) {
         };
         // wp.posts().get()       // returns a promise to get the posts, using default params
         this.get = function () {
+            var root = "/wp-json";
             // process args and append to route        
-            return _this.Ajax.get(_this._route).then(function (success) {
+            return _this._ajax.get(root + _this._route).then(function (success) {
                 _this._state = success.data;
                 _this._state.forEach(function (o) {
                     _this.push(new RestObject(o.id, _this._route, _this._schema, _this._ajax));
@@ -75,11 +56,6 @@ var RestCollection = (function (_super) {
         };
         this._route = _parent + '/' + _endpoint;
         this._modelRef = new RestObject(this._schema.getModel(this._route), this._route, this._schema, this._ajax);
-        this.Ajax = {
-            get: function (url) { return _this.ajax('get', url); },
-            post: function (url, data) { return _this.ajax('post', url, data); },
-            "delete": function (url) { return _this.ajax('delete', url); }
-        };
     }
     return RestCollection;
 }(Array));
@@ -102,37 +78,12 @@ var RestObject = (function () {
                 _this[e] = function (args) { return _this.init(e, args); };
             });
         }
-        this.Ajax = {
-            get: function (url) { return _this.ajax('get', url); },
-            post: function (url, data) { return _this.ajax('post', url, data); },
-            "delete": function (url) { return _this.ajax('delete', url); }
-        };
     }
     // wp.init('posts', {'per_page': 5}) // same as above
     RestObject.prototype.init = function (type, args) {
         var endpoint = type + this._serialize(args);
         var collection = new RestCollection(endpoint, this._route, this._schema, this._ajax);
         return collection;
-    };
-    RestObject.prototype.ajax = function (method, url, data) {
-        var http = new XMLHttpRequest();
-        http.open(method, url);
-        if (data)
-            http.send(data);
-        else
-            http.send();
-        return {
-            then: function (success, fail) {
-                http.onreadystatechange = function () {
-                    if (http.readyState != 4)
-                        return;
-                    if (http.status == 200)
-                        success("success callback");
-                    else
-                        fail("error callback");
-                };
-            }
-        };
     };
     RestObject.prototype._serialize = function (obj) {
         if (obj == null || Object.keys(obj).length == 0)
@@ -148,7 +99,8 @@ var RestObject = (function () {
     //// returns a promise to get the model and update rawVal
     RestObject.prototype.get = function () {
         var _this = this;
-        return this.Ajax.get(this._route).then(function (success) {
+        var root = "/wp-json";
+        return this._ajax.get(root + this._route).then(function (success) {
             _this._extend(_this._state, success.data);
             _this.isLoaded = true;
             return _this;
@@ -186,7 +138,7 @@ var RestObject = (function () {
         else {
             attr.forEach(function (a) { return payload[a] = _this._state[a]; });
         }
-        return this.Ajax.post(this._route, payload).then(function (success) {
+        return this._ajax.post(this._route, payload).then(function (success) {
             return _this;
         });
     };
@@ -250,6 +202,16 @@ var Rest = (function () {
         this.schema = new Schema();
         this.wp = new RestObject("/wp/v2", "", this.schema, Ajax);
         console.log("wp: ", this.wp);
+        var posts = this.wp.posts();
+        console.log("post len: ", posts.length);
+        posts.push("test");
+        console.log("post len: ", posts.length);
+        console.log("wp.posts: ", posts);
+        this.wp.posts().get().then(function (success) {
+            console.log("posts suc: ", success);
+        }, function (err) {
+            console.log("posts er: ", err);
+        });
     }
     return Rest;
 }());

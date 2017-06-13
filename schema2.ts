@@ -27,42 +27,16 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     _state: Array<any> = [];
     _route;
     _modelRef;
-    Ajax;
     isLoaded: boolean;
     constructor(public _endpoint, public _parent, public _schema, public _ajax) {
         super();
         this._route = _parent + '/' + _endpoint;
-        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema, this._ajax);
-
-        this.Ajax = {
-            get: (url) => this.ajax('get', url),
-            post: (url, data) => this.ajax('post', url, data),
-            "delete": (url) => this.ajax('delete', url)
-        }
-
-        
+        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema, this._ajax);       
     }
     
     // wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
     rawVal = () => {
         return this._state;
-    }
-
-    ajax = (method, url, data?) => {
-        let http = new XMLHttpRequest();
-        http.open(method, url);
-        if(data) http.send(data);
-        else http.send();
-
-        return {
-            then: (success, fail) => {
-                http.onreadystatechange = () => {
-                    if(http.readyState != 4) return;
-                    if(http.status == 200) success("success callback");
-                    else fail("error callback");
-                }
-            }
-        }
     }
 
     //* wp.posts().id(2)       // returns a rest object with this id.
@@ -78,8 +52,9 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
 
     // wp.posts().get()       // returns a promise to get the posts, using default params
     get = () => {
+        let root = "/wp-json";
         // process args and append to route        
-        return this.Ajax.get(this._route).then(
+        return this._ajax.get(root + this._route).then(
             success => {
                 this._state = success.data;
                 this._state.forEach(o => {
@@ -113,7 +88,6 @@ class RestObject implements RestObjectI {
     id;
     isLoaded;
     isModified;
-    Ajax;
     constructor(public _endpoint, public _parent, public _schema, public _ajax) {
         this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
 
@@ -129,12 +103,6 @@ class RestObject implements RestObjectI {
                 this[e] = (args) => this.init(e, args);
             });
         }
-
-        this.Ajax = {
-            get: (url) => this.ajax('get', url),
-            post: (url, data) => this.ajax('post', url, data),
-            "delete": (url) => this.ajax('delete', url)
-        }
     }
 
     // wp.init('posts', {'per_page': 5}) // same as above
@@ -143,24 +111,6 @@ class RestObject implements RestObjectI {
         let collection = new RestCollection(endpoint, this._route, this._schema, this._ajax);
         return collection;
     }
-
-    ajax(method, url, data?) {
-        let http = new XMLHttpRequest();
-        http.open(method, url);
-        if(data) http.send(data);
-        else http.send();
-
-        return {
-            then: (success, fail) => {
-                http.onreadystatechange = () => {
-                    if(http.readyState != 4) return;
-                    if(http.status == 200) success("success callback");
-                    else fail("error callback");
-                }
-            }
-        }
-    }
-
     _serialize(obj): string {
         if(obj == null || Object.keys(obj).length == 0) return "";
         // todo: check validity of keys too
@@ -174,7 +124,8 @@ class RestObject implements RestObjectI {
     }
     //// returns a promise to get the model and update rawVal
     get(): Promise<Object> {
-        return this.Ajax.get(this._route).then(
+        let root = "/wp-json";
+        return this._ajax.get(root + this._route).then(
             success => {
                 this._extend(this._state, success.data);
                 this.isLoaded = true;
@@ -209,7 +160,7 @@ class RestObject implements RestObjectI {
         else {
             attr.forEach(a => payload[a] = this._state[a]);
         }
-        return this.Ajax.post(this._route, payload).then(
+        return this._ajax.post(this._route, payload).then(
             success => {
                 return this;
             }
@@ -289,6 +240,19 @@ export default class Rest {
         this.schema = new Schema();
         this.wp = new RestObject("/wp/v2", "", this.schema, Ajax);
         console.log("wp: ", this.wp);
+        let posts = this.wp.posts();
+        console.log("post len: ", posts.length);
+        posts.push("test");
+        console.log("post len: ", posts.length);
+        console.log("wp.posts: ", posts);
+        this.wp.posts().get().then(
+            success => {
+                console.log("posts suc: ", success);
+            },
+            err => {
+                console.log("posts er: ", err);
+            }
+        )
     }
 }
 
