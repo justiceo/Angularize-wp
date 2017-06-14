@@ -49,7 +49,7 @@ var RestCollection = (function (_super) {
         //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
         _this.add = function (args) {
             var obj;
-            if (args.id && _this.id(args.id).isLoaded)
+            if (args.id)
                 obj = _this.id(args.id);
             else
                 obj = new RestObject("temporary_id", _this._parent, _this._schema);
@@ -183,7 +183,6 @@ var Schema = (function () {
         // routes for this namespace is located in index+namepsace
         ajax.root = index + namespace;
         this.routes = Object.keys(this.schema.routes).map(function (r) { return r.replace("parent", "id").replace(_this.namespace, ""); });
-        console.log("routes: ", this.routes);
     }
     Schema.prototype.getArgs = function (endpoint) {
         // todo: non-critical
@@ -219,9 +218,9 @@ var RestApi = (function () {
         this.$restApi = null;
         this.$restApi = new RestObject("", "", new Schema(Ajax));
         $window.$restApi = this.$restApi;
-        var posts = this.$restApi.posts();
+        var posts = this.$restApi.posts({ 'per_page': 6 });
         posts.get().then(function (success) {
-            console.log("posts suc: ", success);
+            console.log("posts get success: ", success);
         }, function (err) {
             console.log("posts er: ", err);
         });

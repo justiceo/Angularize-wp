@@ -23,6 +23,7 @@ export default class Ajax {
         var cached = this.Cache.get(url);
         if(cached) return this.$q.resolve(cached);        
 
+        console.log("$.get: ", url);
         return this.$http.get(url).then(
             success => {
                 this.Cache.set(url, success.data);

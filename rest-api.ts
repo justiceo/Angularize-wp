@@ -2,26 +2,9 @@
 
 interface RestObjectI {
     id: number;
-    isLoaded: boolean;
-    rawVal(): Object;
-    get(): Promise<Object>;
-    post(args: Object): Promise<Object>;
-    attr(prop: string, value: any): void;
-    //sync(): Promise<Object>;
-    //attr(prop: string): Object;
-    //attr(prop: string, value: Object): boolean;
-    //attrs(): Array<string>;    
 }
 
-interface RestCollectionI {
-    isLoaded: boolean;
-    rawVal(): Array<any>
-    get(args?: Object): Promise<Array<RestObjectI>>
-    //sync(): Promise<Array<RestObjectI>>
-    id(id: number): RestObjectI
-    //find(args: Object): RestObjectI
-    //more(): Array<RestObjectI>   
-}
+interface RestCollectionI {}
 
 class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     _state: Array<any> = [];
@@ -69,7 +52,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
     add = (args: any) => { // what if object with id already exists in collection
         let obj;
-        if (args.id && this.id(args.id).isLoaded) //buggy
+        if (args.id) //buggy
             obj = this.id(args.id);
         else
             obj = new RestObject("temporary_id", this._parent, this._schema);
@@ -112,6 +95,7 @@ class RestObject implements RestObjectI {
         let collection = new RestCollection(endpoint, this._route, this._schema);
         return collection;
     }
+
     _serialize(obj): string {
         if(obj == null || Object.keys(obj).length == 0) return "";
         // todo: check validity of keys too
@@ -206,7 +190,6 @@ class Schema {
         // routes for this namespace is located in index+namepsace
         ajax.root = index + namespace;        
         this.routes = Object.keys(this.schema.routes).map(r => r.replace("parent", "id").replace(this.namespace, ""));
-        console.log("routes: ", this.routes);
     }
 
     getArgs(endpoint) {
@@ -246,10 +229,10 @@ export default class RestApi {
     constructor($window, Ajax) {
         this.$restApi = new RestObject("", "", new Schema(Ajax));
         $window.$restApi = this.$restApi;     
-        let posts = this.$restApi.posts();
+        let posts = this.$restApi.posts({'per_page': 6});        
         posts.get().then(
             success => {
-                console.log("posts suc: ", success);
+                console.log("posts get success: ", success);
             },
             err => {
                 console.log("posts er: ", err);
