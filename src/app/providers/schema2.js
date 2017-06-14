@@ -13,12 +13,11 @@ var __extends = (this && this.__extends) || (function () {
 exports.__esModule = true;
 var RestCollection = (function (_super) {
     __extends(RestCollection, _super);
-    function RestCollection(_endpoint, _parent, _schema, _ajax) {
+    function RestCollection(_endpoint, _parent, _schema) {
         var _this = _super.call(this) || this;
         _this._endpoint = _endpoint;
         _this._parent = _parent;
         _this._schema = _schema;
-        _this._ajax = _ajax;
         _this._state = [];
         // wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
         _this.rawVal = function () {
@@ -28,7 +27,7 @@ var RestCollection = (function (_super) {
         _this.id = function (postId) {
             var res = _this.find(function (o) { return o.id == postId; });
             if (res == null) {
-                res = new RestObject(postId, _this._route, _this._schema, _this._ajax);
+                res = new RestObject(postId, _this._route, _this._schema);
                 _this.push(res);
                 // todo: update internal model
             }
@@ -36,13 +35,12 @@ var RestCollection = (function (_super) {
         };
         // wp.posts().get()       // returns a promise to get the posts, using default params
         _this.get = function () {
-            var root = "/wp-json";
             // process args and append to route        
-            return _this._ajax.get(root + _this._route).then(function (success) {
+            return _this._schema.ajax.get(_this._route).then(function (success) {
                 _this._state = success;
                 console.log("restC: ", _this._route, success);
                 _this._state.forEach(function (o) {
-                    _this.push(new RestObject(o.id, _this._route, _this._schema, _this._ajax));
+                    _this.push(new RestObject(o.id, _this._route, _this._schema));
                 });
                 _this.isLoaded = true;
                 return _this;
@@ -54,7 +52,7 @@ var RestCollection = (function (_super) {
             if (args.id && _this.id(args.id).isLoaded)
                 obj = _this.id(args.id);
             else
-                obj = new RestObject("temporary_id", _this._parent, _this._schema, _this._ajax);
+                obj = new RestObject("temporary_id", _this._parent, _this._schema);
             for (var key in args) {
                 obj.attr(key, args[key]);
             }
@@ -62,18 +60,17 @@ var RestCollection = (function (_super) {
             return obj;
         };
         _this._route = _parent + '/' + _endpoint;
-        _this._modelRef = new RestObject(_this._schema.getModel(_this._route), _this._route, _this._schema, _this._ajax);
+        _this._modelRef = new RestObject(_this._schema.getModel(_this._route), _this._route, _this._schema);
         return _this;
     }
     return RestCollection;
 }(Array));
 var RestObject = (function () {
-    function RestObject(_endpoint, _parent, _schema, _ajax) {
+    function RestObject(_endpoint, _parent, _schema) {
         var _this = this;
         this._endpoint = _endpoint;
         this._parent = _parent;
         this._schema = _schema;
-        this._ajax = _ajax;
         this._state = {};
         this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
         // get the args for the different methods and append them
@@ -91,7 +88,7 @@ var RestObject = (function () {
     // wp.init('posts', {'per_page': 5}) // same as above
     RestObject.prototype.init = function (type, args) {
         var endpoint = type + this._serialize(args);
-        var collection = new RestCollection(endpoint, this._route, this._schema, this._ajax);
+        var collection = new RestCollection(endpoint, this._route, this._schema);
         return collection;
     };
     RestObject.prototype._serialize = function (obj) {
@@ -108,8 +105,7 @@ var RestObject = (function () {
     //// returns a promise to get the model and update rawVal
     RestObject.prototype.get = function () {
         var _this = this;
-        var root = "/wp-json";
-        return this._ajax.get(root + this._route).then(function (success) {
+        return this._schema.ajax.get(this._route).then(function (success) {
             _this._extend(_this._state, success);
             _this.isLoaded = true;
             return _this;
@@ -147,7 +143,7 @@ var RestObject = (function () {
         else {
             attr.forEach(function (a) { return payload[a] = _this._state[a]; });
         }
-        return this._ajax.post(this._route, payload).then(function (success) {
+        return this._schema.ajax.post(this._route, payload).then(function (success) {
             return _this;
         });
     };
@@ -159,8 +155,19 @@ var RestObject = (function () {
     };
     return RestObject;
 }());
+/**
+ * Fetches the API discovery and creates the endpoints
+ * Provides methods for querying models and collections
+ */
 var Schema = (function () {
-    function Schema() {
+    function Schema(ajax, index, namespace) {
+        if (index === void 0) { index = "/wp-json"; }
+        if (namespace === void 0) { namespace = "/wp/v2"; }
+        var _this = this;
+        this.ajax = ajax;
+        this.index = index;
+        this.namespace = namespace;
+        this.schema = {};
         this.schema = {
             "routes": {
                 "/wp/v2": {},
@@ -172,7 +179,11 @@ var Schema = (function () {
                 "/wp/v2/pages/(?P<id>[\\d]+)": {}
             }
         };
-        this.routes = Object.keys(this.schema.routes).map(function (r) { return r.replace("parent", "id"); });
+        // all routes and requests need to have index+namepsace
+        // routes for this namespace is located in index+namepsace
+        ajax.root = index + namespace;
+        this.routes = Object.keys(this.schema.routes).map(function (r) { return r.replace("parent", "id").replace(_this.namespace, ""); });
+        console.log("routes: ", this.routes);
     }
     Schema.prototype.getArgs = function (endpoint) {
         // todo: non-critical
@@ -203,26 +214,19 @@ var Schema = (function () {
     };
     return Schema;
 }());
-var Rest = (function () {
-    function Rest(Ajax) {
-        this.schema = null;
-        this.wp = null;
-        console.log("creating rest object");
-        this.schema = new Schema();
-        this.wp = new RestObject("/wp/v2", "", this.schema, Ajax);
-        window.$rest = this.wp;
-        console.log("wp: ", this.wp);
-        var posts = this.wp.posts();
-        console.log("post len: ", posts.length);
-        posts.push("test");
-        console.log("post len: ", posts.length);
-        console.log("wp.posts: ", posts);
-        this.wp.posts().get().then(function (success) {
+var RestApi = (function () {
+    function RestApi($window, Ajax) {
+        this.$restApi = null;
+        this.$restApi = new RestObject("", "", new Schema(Ajax));
+        $window.$restApi = this.$restApi;
+        console.log("restApi: ", this.$restApi);
+        var posts = this.$restApi.posts();
+        posts.get().then(function (success) {
             console.log("posts suc: ", success);
         }, function (err) {
             console.log("posts er: ", err);
         });
     }
-    return Rest;
+    return RestApi;
 }());
-exports["default"] = Rest;
+exports["default"] = RestApi;

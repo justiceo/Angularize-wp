@@ -28,10 +28,10 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     _route;
     _modelRef;
     isLoaded: boolean;
-    constructor(public _endpoint, public _parent, public _schema, public _ajax) {
+    constructor(public _endpoint, public _parent, public _schema) {
         super();
         this._route = _parent + '/' + _endpoint;
-        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema, this._ajax);       
+        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route,  this._schema);       
     }
     
     // wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
@@ -43,7 +43,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     id = (postId) => {
         let res = this.find(o => o.id == postId);
         if(res == null) {            
-            res = new RestObject(postId, this._route, this._schema, this._ajax);
+            res = new RestObject(postId, this._route, this._schema);
             this.push(res);
             // todo: update internal model
         }
@@ -52,14 +52,13 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
 
     // wp.posts().get()       // returns a promise to get the posts, using default params
     get = () => {
-        let root = "/wp-json";
         // process args and append to route        
-        return this._ajax.get(root + this._route).then(
+        return this._schema.ajax.get(this._route).then(
             success => {
                 this._state = success;
                 console.log("restC: ", this._route, success)
                 this._state.forEach(o => {
-                    this.push(new RestObject(o.id, this._route, this._schema, this._ajax))
+                    this.push(new RestObject(o.id, this._route, this._schema))
                 })
                 this.isLoaded = true;
                 return this;
@@ -73,7 +72,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
         if (args.id && this.id(args.id).isLoaded) //buggy
             obj = this.id(args.id);
         else
-            obj = new RestObject("temporary_id", this._parent, this._schema, this._ajax);
+            obj = new RestObject("temporary_id", this._parent, this._schema);
         for (let key in args) {
             obj.attr(key, args[key])
         }
@@ -86,10 +85,11 @@ class RestObject implements RestObjectI {
     _route;
     _args;
     _state = {};
+    _ajax;
     id;
     isLoaded;
     isModified;
-    constructor(public _endpoint, public _parent, public _schema, public _ajax) {
+    constructor(public _endpoint, public _parent, public _schema) {
         this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
 
         // get the args for the different methods and append them
@@ -109,7 +109,7 @@ class RestObject implements RestObjectI {
     // wp.init('posts', {'per_page': 5}) // same as above
     init(type: string, args?): Array<RestObjectI> {
         let endpoint = type + this._serialize(args);
-        let collection = new RestCollection(endpoint, this._route, this._schema, this._ajax);
+        let collection = new RestCollection(endpoint, this._route, this._schema);
         return collection;
     }
     _serialize(obj): string {
@@ -125,8 +125,7 @@ class RestObject implements RestObjectI {
     }
     //// returns a promise to get the model and update rawVal
     get(): Promise<Object> {
-        let root = "/wp-json";
-        return this._ajax.get(root + this._route).then(
+        return this._schema.ajax.get(this._route).then(
             success => {
                 this._extend(this._state, success);
                 this.isLoaded = true;
@@ -161,7 +160,7 @@ class RestObject implements RestObjectI {
         else {
             attr.forEach(a => payload[a] = this._state[a]);
         }
-        return this._ajax.post(this._route, payload).then(
+        return this._schema.ajax.post(this._route, payload).then(
             success => {
                 return this;
             }
@@ -177,10 +176,14 @@ class RestObject implements RestObjectI {
 
 }
 
+/**
+ * Fetches the API discovery and creates the endpoints
+ * Provides methods for querying models and collections
+ */
 class Schema {
-    schema: any;
+    schema: any = {};
     routes: Array<string>;
-    constructor() {
+    constructor(public ajax, public index="/wp-json", public namespace="/wp/v2") {
         this.schema = {
             "routes": {
                 "/wp/v2": {
@@ -198,7 +201,12 @@ class Schema {
                 "/wp/v2/pages/(?P<id>[\\d]+)": {},
             }
         }
-        this.routes = Object.keys(this.schema.routes).map(r => r.replace("parent", "id"));
+
+        // all routes and requests need to have index+namepsace
+        // routes for this namespace is located in index+namepsace
+        ajax.root = index + namespace;        
+        this.routes = Object.keys(this.schema.routes).map(r => r.replace("parent", "id").replace(this.namespace, ""));
+        console.log("routes: ", this.routes);
     }
 
     getArgs(endpoint) {
@@ -233,21 +241,14 @@ class Schema {
 }
 
 
-export default class Rest {
-    schema = null;
-    wp = null;
-    constructor(Ajax) {
-        console.log("creating rest object")
-        this.schema = new Schema();
-        this.wp = new RestObject("/wp/v2", "", this.schema, Ajax);
-        window.$rest = this.wp;
-        console.log("wp: ", this.wp);
-        let posts = this.wp.posts();
-        console.log("post len: ", posts.length);
-        posts.push("test");
-        console.log("post len: ", posts.length);
-        console.log("wp.posts: ", posts);
-        this.wp.posts().get().then(
+export default class RestApi {
+    $restApi = null;
+    constructor($window, Ajax) {
+        this.$restApi = new RestObject("", "", new Schema(Ajax));
+        $window.$restApi = this.$restApi; 
+        console.log("restApi: ", this.$restApi);      
+        let posts = this.$restApi.posts();
+        posts.get().then(
             success => {
                 console.log("posts suc: ", success);
             },
