@@ -127,7 +127,6 @@ class RestObject implements RestObjectI {
     }
 
     getAttr(prop: string): any {
-        console.log("state: ", this._state)
         return this._state[prop];
     }
 
@@ -165,31 +164,20 @@ class RestObject implements RestObjectI {
  * Provides methods for querying models and collections
  */
 class Schema {
-    schema: any = {};
+    schema: any;
     routes: Array<string>;
-    constructor(public ajax, public index="/wp-json", public namespace="/wp/v2") {
-        this.schema = {
-            "routes": {
-                "/wp/v2": {
+    constructor(public ajax, public index="/wp-json", public namespace="/wp/v2") {        
+        ajax.root = index + namespace;   // todo: this affects all requests even those made outside rest api!!!!!!        
+    }
 
-                },
-                "/wp/v2/posts": {
-
-                },
-                "/wp/v2/posts/(?P<id>[\\d]+)": {
-
-                },
-                "/wp/v2/posts/(?P<id>[\\d]+)/revisions": {},
-                "/wp/v2/posts/(?P<parent>[\\d]+)/revisions/(?P<id>[\\d]+)": {},
-                "/wp/v2/pages": {},
-                "/wp/v2/pages/(?P<id>[\\d]+)": {},
+    load() {
+        return this.ajax.get("").then(
+            schema => {
+                console.log("schema: ", schema);
+                this.schema = schema;                      
+                this.routes = Object.keys(this.schema.routes).map(r => r.replace("parent", "id").replace(this.namespace, ""));
             }
-        }
-
-        // all routes and requests need to have index+namepsace
-        // routes for this namespace is located in index+namepsace
-        ajax.root = index + namespace;        
-        this.routes = Object.keys(this.schema.routes).map(r => r.replace("parent", "id").replace(this.namespace, ""));
+        )
     }
 
     getArgs(endpoint) {
@@ -225,20 +213,16 @@ class Schema {
 
 
 export default class RestApi {
-    $restApi = null;
+    $restApi = {};
     constructor($window, Ajax) {
-        this.$restApi = new RestObject("", "", new Schema(Ajax));
-        $window.$restApi = this.$restApi;     
-        let posts = this.$restApi.posts({'per_page': 6});        
-        posts.get().then(
+        let schema = new Schema(Ajax);        
+        return schema.load().then(
             success => {
-                console.log("posts get success: ", success);
-            },
-            err => {
-                console.log("posts er: ", err);
+                $window.angular.extend(this.$restApi, new RestObject("", "", schema));        
+                $window.$restApi = this.$restApi;
+                return this.$restApi;
             }
         )
-        return this.$restApi;
     }
 }
 

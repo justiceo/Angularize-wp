@@ -125,7 +125,6 @@ var RestObject = (function () {
             throw "Wrong number of arguments";
     };
     RestObject.prototype.getAttr = function (prop) {
-        console.log("state: ", this._state);
         return this._state[prop];
     };
     RestObject.prototype.setAttr = function (prop, value) {
@@ -165,27 +164,19 @@ var Schema = (function () {
     function Schema(ajax, index, namespace) {
         if (index === void 0) { index = "/wp-json"; }
         if (namespace === void 0) { namespace = "/wp/v2"; }
-        var _this = this;
         this.ajax = ajax;
         this.index = index;
         this.namespace = namespace;
-        this.schema = {};
-        this.schema = {
-            "routes": {
-                "/wp/v2": {},
-                "/wp/v2/posts": {},
-                "/wp/v2/posts/(?P<id>[\\d]+)": {},
-                "/wp/v2/posts/(?P<id>[\\d]+)/revisions": {},
-                "/wp/v2/posts/(?P<parent>[\\d]+)/revisions/(?P<id>[\\d]+)": {},
-                "/wp/v2/pages": {},
-                "/wp/v2/pages/(?P<id>[\\d]+)": {}
-            }
-        };
-        // all routes and requests need to have index+namepsace
-        // routes for this namespace is located in index+namepsace
-        ajax.root = index + namespace;
-        this.routes = Object.keys(this.schema.routes).map(function (r) { return r.replace("parent", "id").replace(_this.namespace, ""); });
+        ajax.root = index + namespace; // todo: this affects all requests even those made outside rest api!!!!!!        
     }
+    Schema.prototype.load = function () {
+        var _this = this;
+        return this.ajax.get("").then(function (schema) {
+            console.log("schema: ", schema);
+            _this.schema = schema;
+            _this.routes = Object.keys(_this.schema.routes).map(function (r) { return r.replace("parent", "id").replace(_this.namespace, ""); });
+        });
+    };
     Schema.prototype.getArgs = function (endpoint) {
         // todo: non-critical
         return {};
@@ -217,16 +208,14 @@ var Schema = (function () {
 }());
 var RestApi = (function () {
     function RestApi($window, Ajax) {
-        this.$restApi = null;
-        this.$restApi = new RestObject("", "", new Schema(Ajax));
-        $window.$restApi = this.$restApi;
-        var posts = this.$restApi.posts({ 'per_page': 6 });
-        posts.get().then(function (success) {
-            console.log("posts get success: ", success);
-        }, function (err) {
-            console.log("posts er: ", err);
+        var _this = this;
+        this.$restApi = {};
+        var schema = new Schema(Ajax);
+        return schema.load().then(function (success) {
+            $window.angular.extend(_this.$restApi, new RestObject("", "", schema));
+            $window.$restApi = _this.$restApi;
+            return _this.$restApi;
         });
-        return this.$restApi;
     }
     return RestApi;
 }());
