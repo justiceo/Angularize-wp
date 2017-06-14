@@ -14,8 +14,7 @@ export default class PostService {
         $log.debug("PostService: postObject ", this.post);
         this.postRoute = Ajax.restRoute + "/posts";
         
-        let rest = new RestApi($window, Ajax);
-        console.log("rest:", rest);
+        this.$restApi = new RestApi($window, Ajax);
     }
     
     // For properties, see: https://codex.wordpress.org/Function_Reference/$post

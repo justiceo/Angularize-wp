@@ -41,7 +41,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
                 this._state = success;
                 console.log("restC: ", this._route, success)
                 this._state.forEach(o => {
-                    this.push(new RestObject(o.id, this._route, this._schema))
+                    this.push(new RestObject(o.id, this._route, this._schema, o))
                 })
                 this.isLoaded = true;
                 return this;
@@ -67,12 +67,11 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
 class RestObject implements RestObjectI {
     _route;
     _args;
-    _state = {};
     _ajax;
     id;
     isLoaded;
     isModified;
-    constructor(public _endpoint, public _parent, public _schema) {
+    constructor(public _endpoint, public _parent, public _schema, public _state={}) {
         this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
 
         // get the args for the different methods and append them
@@ -128,6 +127,7 @@ class RestObject implements RestObjectI {
     }
 
     getAttr(prop: string): any {
+        console.log("state: ", this._state)
         return this._state[prop];
     }
 
@@ -238,6 +238,7 @@ export default class RestApi {
                 console.log("posts er: ", err);
             }
         )
+        return this.$restApi;
     }
 }
 

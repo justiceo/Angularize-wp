@@ -40,7 +40,7 @@ var RestCollection = (function (_super) {
                 _this._state = success;
                 console.log("restC: ", _this._route, success);
                 _this._state.forEach(function (o) {
-                    _this.push(new RestObject(o.id, _this._route, _this._schema));
+                    _this.push(new RestObject(o.id, _this._route, _this._schema, o));
                 });
                 _this.isLoaded = true;
                 return _this;
@@ -66,12 +66,13 @@ var RestCollection = (function (_super) {
     return RestCollection;
 }(Array));
 var RestObject = (function () {
-    function RestObject(_endpoint, _parent, _schema) {
+    function RestObject(_endpoint, _parent, _schema, _state) {
+        if (_state === void 0) { _state = {}; }
         var _this = this;
         this._endpoint = _endpoint;
         this._parent = _parent;
         this._schema = _schema;
-        this._state = {};
+        this._state = _state;
         this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
         // get the args for the different methods and append them
         var args = _schema.getArgs(this._route);
@@ -124,6 +125,7 @@ var RestObject = (function () {
             throw "Wrong number of arguments";
     };
     RestObject.prototype.getAttr = function (prop) {
+        console.log("state: ", this._state);
         return this._state[prop];
     };
     RestObject.prototype.setAttr = function (prop, value) {
@@ -224,6 +226,7 @@ var RestApi = (function () {
         }, function (err) {
             console.log("posts er: ", err);
         });
+        return this.$restApi;
     }
     return RestApi;
 }());

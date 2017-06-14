@@ -1,13 +1,8 @@
 export class RecentPostsCtrl {
-    constructor($log, $scope) {
+    constructor($log, $scope, PostService) {
         $log.info("RecentPost: Initializing...");
-        let postCollection = new wp.api.collections.Posts();
-        postCollection.fetch({ data: { per_page: 5}}).then(
-            top5 => {
-                this.posts = top5;
-                $scope.$apply(); // because angular doesn't catch the above line
-            }
-        )
+        this.posts = PostService.$restApi.posts({'per_page': 6})
+        this.posts.get();
     }
 }
 
@@ -17,8 +12,8 @@ let RecentPosts = {
     <h2>Recent Posts</h2>
     <ul>
         <li ng-repeat="post in $ctrl.posts">
-            <a href="{{ post.link }}">
-                {{ post.title.rendered }}
+            <a href="{{ post.attr('link') }}">
+                {{ post.attr('title').rendered }}
             </a>
         </li>
     </ul>
