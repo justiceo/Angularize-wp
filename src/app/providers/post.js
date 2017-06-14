@@ -2,7 +2,7 @@
  * PostService
  * contains information about the current post (could be page, attachement etc)
  */
-import RestApi from './schema2';
+import RestApi from './rest-api';
 
 export default class PostService {
     constructor($window, $q, $log, Ajax) {

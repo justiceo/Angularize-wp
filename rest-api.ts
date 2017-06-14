@@ -245,8 +245,7 @@ export default class RestApi {
     $restApi = null;
     constructor($window, Ajax) {
         this.$restApi = new RestObject("", "", new Schema(Ajax));
-        $window.$restApi = this.$restApi; 
-        console.log("restApi: ", this.$restApi);      
+        $window.$restApi = this.$restApi;     
         let posts = this.$restApi.posts();
         posts.get().then(
             success => {

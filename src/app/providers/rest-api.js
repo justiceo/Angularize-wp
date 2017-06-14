@@ -219,7 +219,6 @@ var RestApi = (function () {
         this.$restApi = null;
         this.$restApi = new RestObject("", "", new Schema(Ajax));
         $window.$restApi = this.$restApi;
-        console.log("restApi: ", this.$restApi);
         var posts = this.$restApi.posts();
         posts.get().then(function (success) {
             console.log("posts suc: ", success);
