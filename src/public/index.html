@@ -58,9 +58,12 @@
     <pre><code class="language-javascript">
 export class RecentPostsCtrl {
     constructor(PostService) {
-        PostService.get_posts().then(            
-            posts => this.posts = posts.slice(0,5)  // take top 5       
-        );
+        PostService.ready().then(
+            () => {
+                this.posts = PostService.$restApi.posts({'per_page': 5})
+                this.posts.get();
+            }
+        )
     }
 }
 
@@ -70,8 +73,8 @@ let RecentPosts = {
     &lt;h2>Recent Posts&lt;/h2>
     &lt;ul>
         &lt;li ng-repeat="post in $ctrl.posts">
-            &lt;a href="{{ post.link }}">
-                {{ post.title.rendered }}
+            &lt;a href="{{ post.attr('link') }}">
+                {{ post.attr('title').rendered }}
             &lt;/a>
         &lt;/li>
     &lt;/ul>

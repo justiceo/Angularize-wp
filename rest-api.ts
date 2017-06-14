@@ -10,7 +10,6 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     _state: Array<any> = [];
     _route;
     _modelRef;
-    isLoaded: boolean;
     constructor(public _endpoint, public _parent, public _schema) {
         super();
         this._route = _parent + '/' + _endpoint;
@@ -37,13 +36,11 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     get = () => {
         // process args and append to route        
         return this._schema.ajax.get(this._route).then(
-            success => {
-                this._state = success;
-                console.log("restC: ", this._route, success)
+            posts => {
+                this._state = posts;
                 this._state.forEach(o => {
                     this.push(new RestObject(o.id, this._route, this._schema, o))
-                })
-                this.isLoaded = true;
+                });
                 return this;
             }
         )
@@ -67,9 +64,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
 class RestObject implements RestObjectI {
     _route;
     _args;
-    _ajax;
     id;
-    isLoaded;
     isModified;
     constructor(public _endpoint, public _parent, public _schema, public _state={}) {
         this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
@@ -111,7 +106,6 @@ class RestObject implements RestObjectI {
         return this._schema.ajax.get(this._route).then(
             success => {
                 this._extend(this._state, success);
-                this.isLoaded = true;
                 return this;
             }
         )
@@ -218,8 +212,14 @@ export default class RestApi {
         let schema = new Schema(Ajax);        
         return schema.load().then(
             success => {
+                // cache this computation
                 $window.angular.extend(this.$restApi, new RestObject("", "", schema));        
                 $window.$restApi = this.$restApi;
+
+                // load & make current user easily accessible
+                let currentUser = this.$restApi.users().id("me");
+                currentUser.get();
+                $window.$restApi.currentUser = currentUser;
                 return this.$restApi;
             }
         )

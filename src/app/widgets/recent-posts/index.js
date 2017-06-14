@@ -3,7 +3,7 @@ export class RecentPostsCtrl {
         $log.info("RecentPost: Initializing...");
         PostService.ready().then(
             () => {
-                this.posts = PostService.$restApi.posts({'per_page': 6})
+                this.posts = PostService.$restApi.posts({'per_page': 5})
                 this.posts.get();
             }
         )
