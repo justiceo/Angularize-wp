@@ -9,9 +9,6 @@ import CurrentUser from './providers/current-user';
 import ToolbarService from './providers/toolbar.service';
 import AppComponent from './app';
 
-// for syntax highlighting on demo page
-require('prismjs');
-
 import '../style/app.scss';
 
 const MODULE_NAME = 'angularize';

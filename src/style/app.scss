@@ -1,6 +1,6 @@
 /* styles in src/style directory are applied to the whole page */
 
-// [customizable]
+/* [customizable]
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome';
 
@@ -12,7 +12,4 @@ $fa-font-path: "~font-awesome/fonts";
 @import '../../node_modules/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css';
 @import '../../node_modules/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin-frontend.min.css';
 
-// css for demo page
-@import './demo.css';
-@import '../../node_modules/prismjs/themes/prism.css';
-@import '../../node_modules/prismjs/themes/prism-coy.css';
+*/

@@ -36,13 +36,11 @@ var RestCollection = (function (_super) {
         // wp.posts().get()       // returns a promise to get the posts, using default params
         _this.get = function () {
             // process args and append to route        
-            return _this._schema.ajax.get(_this._route).then(function (success) {
-                _this._state = success;
-                console.log("restC: ", _this._route, success);
+            return _this._schema.ajax.get(_this._route).then(function (posts) {
+                _this._state = posts;
                 _this._state.forEach(function (o) {
                     _this.push(new RestObject(o.id, _this._route, _this._schema, o));
                 });
-                _this.isLoaded = true;
                 return _this;
             });
         };
@@ -108,7 +106,6 @@ var RestObject = (function () {
         var _this = this;
         return this._schema.ajax.get(this._route).then(function (success) {
             _this._extend(_this._state, success);
-            _this.isLoaded = true;
             return _this;
         });
     };
@@ -212,8 +209,13 @@ var RestApi = (function () {
         this.$restApi = {};
         var schema = new Schema(Ajax);
         return schema.load().then(function (success) {
+            // cache this computation
             $window.angular.extend(_this.$restApi, new RestObject("", "", schema));
             $window.$restApi = _this.$restApi;
+            // load & make current user easily accessible
+            var currentUser = _this.$restApi.users().id("me");
+            currentUser.get();
+            $window.$restApi.currentUser = currentUser;
             return _this.$restApi;
         });
     }

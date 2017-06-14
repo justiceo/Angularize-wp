@@ -1,12 +1,16 @@
-import ngMaterial from 'angular-material';
+/*import ngMaterial from 'angular-material';
 import svgAssetsCache from 'svg-assets-cache';
 import PostSettings from './settings/settings';
 import EditorDirective from './editor';
 import Toolbar from './toolbar';
 import NewPost from './new-post';
 
-let editorModule = angular.module('angularize.editor', [ngMaterial, svgAssetsCache]);
+*/
 
+let requires = []; // [ngMaterial, svgAssetsCache];
+let editorModule = angular.module('angularize.editor', requires);
+
+/*
 editorModule
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
@@ -17,5 +21,5 @@ editorModule
     .component('postSettings', PostSettings)
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)
-
+*/
 export default editorModule;
