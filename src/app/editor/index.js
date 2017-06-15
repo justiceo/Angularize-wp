@@ -4,14 +4,16 @@ import PostSettings from './settings/settings';
 import EditorDirective from './editor';
 import Toolbar from './toolbar';
 import NewPost from './new-post';
-
 */
+import EditPostDirective from './edit-button';
 
 let requires = []; // [ngMaterial, svgAssetsCache];
 let editorModule = angular.module('angularize.editor', requires);
 
+
+editorModule    
+    .component('editPost', EditPostDirective)
 /*
-editorModule
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
      .primaryPalette('purple')
