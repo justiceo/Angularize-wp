@@ -169,7 +169,6 @@ var Schema = (function () {
     Schema.prototype.load = function () {
         var _this = this;
         return this.ajax.get("").then(function (schema) {
-            console.log("schema: ", schema);
             _this.schema = schema;
             _this.routes = Object.keys(_this.schema.routes).map(function (r) { return r.replace("parent", "id").replace(_this.namespace, ""); });
         });

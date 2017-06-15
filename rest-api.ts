@@ -167,7 +167,6 @@ class Schema {
     load() {
         return this.ajax.get("").then(
             schema => {
-                console.log("schema: ", schema);
                 this.schema = schema;                      
                 this.routes = Object.keys(this.schema.routes).map(r => r.replace("parent", "id").replace(this.namespace, ""));
             }

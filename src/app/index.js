@@ -15,8 +15,9 @@ let requires = [
   LocalStorageModule,
   'angularize.widgets',
   'angularize.editor',
-]
-let angularize = angular.module('angularize', requires);
+];
+let MODULE_NAME = 'angularize';
+let angularize = angular.module(MODULE_NAME, requires);
 
 // make module available on window object
 window.angularize = angularize;
@@ -49,4 +50,4 @@ angularize
     $httpProvider.interceptors.push('httpRequestInterceptor')
   });
 
-export default angularize;
+export default MODULE_NAME;
