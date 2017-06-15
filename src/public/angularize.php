@@ -52,6 +52,8 @@ function ngwp_enque_scripts() {
         'nonce' => wp_create_nonce( 'wp_rest' ),
         'currentUser' => wp_get_current_user(),
         'serverTime' => current_time( 'timestamp', $gmt = 1),
+        'WpRestApiEnabled' => is_plugin_active('rest-api/plugin.php'),
+        'FrontEndEditorEnabled' => is_plugin_active('wp-front-end-editor/plugin.php'),
         'postObject' => get_post()
     );
     $translation_array = apply_filters( 'wp_rest_object', $translation_array );

@@ -11,13 +11,19 @@ import AppComponent from './app';
 
 import '../style/app.scss';
 
-const MODULE_NAME = 'angularize';
-
-angular.module(MODULE_NAME, [
+let requires = [
   LocalStorageModule,
   'angularize.widgets',
-  'angularize.editor' // allow us to use <settings> etc
-  ])
+  'angularize.editor',
+]
+let angularize = angular.module('angularize', requires);
+
+// make module available on window object
+window.angularize = angularize;
+
+// To prevent un-predictable behavior, only load when wp rest api is enabled
+if(window.wp_rest_object.WpRestApiEnabled)
+angularize
   .component('app', AppComponent)
   .service('Cache', Cache)
   .service('PostService', PostService)
@@ -43,4 +49,4 @@ angular.module(MODULE_NAME, [
     $httpProvider.interceptors.push('httpRequestInterceptor')
   });
 
-export default MODULE_NAME;
+export default angularize;
