@@ -23,6 +23,7 @@ and providing authentication and dumping the object for the current page in the 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Ensure WP-REST-API is active
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 register_activation_hook( __FILE__, 'ngwp_rest_api_plugin_activate' );
 function ngwp_rest_api_plugin_activate(){
     // Require parent plugin
