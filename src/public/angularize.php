@@ -24,8 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Ensure WP-REST-API is active
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-register_activation_hook( __FILE__, 'ngwp_rest_api_plugin_activate' );
-function ngwp_rest_api_plugin_activate(){
+register_activation_hook( __FILE__, 'angularize_rest_api_plugin_activate' );
+function angularize_rest_api_plugin_activate(){
     // Require parent plugin
     if ( ! is_plugin_active( 'rest-api/plugin.php' ) and current_user_can( 'activate_plugins' ) ) {
         // Stop activation redirect and show error
@@ -34,20 +34,20 @@ function ngwp_rest_api_plugin_activate(){
 }
 
 // Add ng-app directive to html tag
-add_filter('language_attributes', 'ngwp_add_ng_attribute');
-function ngwp_add_ng_attribute($attr) {
+add_filter('language_attributes', 'angularize_add_ng_attribute');
+function angularize_add_ng_attribute($attr) {
     return $attr . ' ng-app="angularize"';
 }
 
 // (Optional) Add the router holder for webpack
-add_action('wp_head', 'ngwp_add_meta_tags');
-function ngwp_add_meta_tags() {
+add_action('wp_head', 'angularize_add_meta_tags');
+function angularize_add_meta_tags() {
     echo '<base href="/">';
 }
 
 // Enque scripts and styles with localization
-add_action('wp_enqueue_scripts', 'ngwp_enque_scripts'); 
-function ngwp_enque_scripts() {
+add_action('wp_enqueue_scripts', 'angularize_enque_scripts'); 
+function angularize_enque_scripts() {
     wp_register_script('ng-script', plugin_dir_url(__FILE__) . '/app.bundle.js', array('wp-api'), '1.0.0', true);
     $translation_array = array(
         'nonce' => wp_create_nonce( 'wp_rest' ),
@@ -62,8 +62,8 @@ function ngwp_enque_scripts() {
     wp_enqueue_script('ng-script');
 }
 
-add_action('wp_footer', 'ngwp_add_app_tag');
-function ngwp_add_app_tag() {
+add_action('wp_footer', 'angularize_add_app_tag');
+function angularize_add_app_tag() {
     echo '<app></app>';
 }
 
