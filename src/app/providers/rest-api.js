@@ -23,6 +23,9 @@ var RestCollection = (function (_super) {
         _this.rawVal = function () {
             return _this._state;
         };
+        _this.current = function () {
+            return _this.id(window.angularize_server.postObject.ID);
+        };
         //* wp.posts().id(2)       // returns a rest object with this id.
         _this.id = function (postId) {
             var res = _this.find(function (o) { return o.id == postId; });

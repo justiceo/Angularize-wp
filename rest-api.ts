@@ -21,6 +21,10 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
         return this._state;
     }
 
+    currentID = () => {
+        return this.id(window.angularize_server.postObject.ID);
+    }
+
     //* wp.posts().id(2)       // returns a rest object with this id.
     id = (postId) => {
         let res = this.find(o => o.id == postId);

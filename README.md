@@ -148,3 +148,9 @@ X-WP-TotalPages: the total number of pages encompassing all available records
 ### Switch out PostService for Backbone js client.
 - add backwards support for front-end editor - editor
 - remove editor module
+
+
+- separate postSettings from postSettingsToolbar
+- where toolbar is reponsible for registering buttons and launching modal
+- add string binding on book flight
+- add is_single, is_archive to angularize_server, let toolbars choose post types to display one

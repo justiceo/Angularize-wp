@@ -50,6 +50,8 @@ function angularize_enque_scripts() {
         'WpRestApiEnabled' => is_plugin_active('rest-api/plugin.php'),
         'FrontEndEditorEnabled' => is_plugin_active('wp-front-end-editor/plugin.php'),
         'meta' => get_post_meta( get_the_ID() ),
+        'is_signle' => is_single(),
+        'is_archive' => is_archive(),
         'postObject' => get_post()
     );
     $translation_array = apply_filters( 'angularize_server', $translation_array );
