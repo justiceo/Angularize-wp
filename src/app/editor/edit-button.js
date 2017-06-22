@@ -6,7 +6,7 @@
 export class EditPostCtrl {
     constructor() {
         let origin = window.location.protocol + "//" + window.location.hostname;
-        let id = window.wp_rest_object.postObject.ID;
+        let id = window.angularize_server.postObject.ID;
         this.editLink = origin + '/wp-admin/post.php?post=' + id + '&action=edit&post_type=post'
 
         // todo: add this as a toolbar button

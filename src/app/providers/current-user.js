@@ -7,7 +7,7 @@ export default class CurrentUser {
         $log.info('CurrentUser: Initializing...')
         this.Ajax = Ajax;
         this.$q = $q;
-        this.$wp = $window.wp_rest_object || {};
+        this.$wp = $window.angularize_server || {};
         this.$wp.user = this.$wp.currentUser || {};
         this.$wp.user.meta = this.$wp.user.meta || {};
         let userInfo = this.$wp.user.data || {};

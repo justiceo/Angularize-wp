@@ -39,12 +39,6 @@ function angularize_add_ng_attribute($attr) {
     return $attr . ' ng-app="angularize"';
 }
 
-// (Optional) Add the router holder for webpack
-add_action('wp_head', 'angularize_add_meta_tags');
-function angularize_add_meta_tags() {
-    echo '<base href="/">';
-}
-
 // Enque scripts and styles with localization
 add_action('wp_enqueue_scripts', 'angularize_enque_scripts'); 
 function angularize_enque_scripts() {
@@ -57,8 +51,8 @@ function angularize_enque_scripts() {
         'FrontEndEditorEnabled' => is_plugin_active('wp-front-end-editor/plugin.php'),
         'postObject' => get_post()
     );
-    $translation_array = apply_filters( 'wp_rest_object', $translation_array );
-    wp_localize_script('ng-script', 'wp_rest_object', $translation_array);
+    $translation_array = apply_filters( 'angularize_server', $translation_array );
+    wp_localize_script('ng-script', 'angularize_server', $translation_array);
     wp_enqueue_script('ng-script');
 }
 

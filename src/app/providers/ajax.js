@@ -8,7 +8,7 @@ export default class Ajax {
         'ngInject';
         $log.info("Ajax: Initializing...");
         angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log, 'Cache': Cache});
-        this.$wp = $window.wp_rest_object;
+        this.$wp = $window.angularize_server;
 
         this.origin = $window.location.protocol + "//" + $window.location.hostname;
         this.restRoute = this.origin + "/wp-json/wp/v2";

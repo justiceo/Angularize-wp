@@ -23,7 +23,7 @@ let angularize = angular.module(MODULE_NAME, requires);
 window.angularize = angularize;
 
 // To prevent un-predictable behavior, only load when wp rest api is enabled
-if(window.wp_rest_object.WpRestApiEnabled)
+if(window.angularize_server.WpRestApiEnabled)
 angularize
   .component('app', AppComponent)
   .service('Cache', Cache)
@@ -35,8 +35,8 @@ angularize
     'ngInject';
     return {
       request: function (config) {
-        if($window.wp_rest_object)        
-          config.headers['X-WP-Nonce'] = $window.wp_rest_object.nonce;
+        if($window.angularize_server)        
+          config.headers['X-WP-Nonce'] = $window.angularize_server.nonce;
         return config;
       }
     };
