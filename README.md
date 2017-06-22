@@ -130,12 +130,14 @@ webpack
 - It is very heavy and bloated, 10X bootstrap
 - We'll still need bootstrap for some other tasks
 - The CSS benefits can be derived from a customized boostrap css like Bootswatch paper
-- It breaks CSS of other components - like editor, and can after style of website it's used on.
+- It breaks CSS of other components - like editor, and can alter style of website it's used on.
 
 
 ##### Things we stand to loose
 - Easy components like chips, modals and buttons
 - Cool animations and ripples
+- Too much leg work at the start.
+- Pre-mature optimization  means we'll never get there
 
 
 ### Keep Writing Editor out of this eventually
