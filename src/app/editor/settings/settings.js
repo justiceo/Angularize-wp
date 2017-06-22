@@ -31,25 +31,7 @@ export class PostSettingsCtrl {
             }
         };
 
-        this.post = new wp.api.models.Post({ id: PostService.the_post().ID });
-        this.post.fetch();
-        console.log("post: ", this.post);
-        let postCats = this.post.getCategories();
-        console.log("first cat: ", postCats);
-        this.post.getCategories().done(
-            cats => {
-                console.log("cats: ", cats);
-                this.$scope.categories = cats;
-                this.$scope.safeApply();
-            }
-        );
-        this.post.getTags().done(
-            tags => {
-                console.log("tags: ", tags);
-                this.$scope.tags = tags;
-                this.$scope.safeApply();
-            }
-        );
+        this.post = {};
     }
 
     settingsHandler() {

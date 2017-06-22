@@ -11,7 +11,7 @@ let requires = [ngMaterial, svgAssetsCache];
 let editorModule = angular.module('angularize.editor', requires);
 
 // only load if we have wp front end editor enabled
-if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
+//if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 editorModule    
   .component('editPost', EditPostDirective)
   .config(function($mdThemingProvider) {
