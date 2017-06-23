@@ -1,0 +1,54 @@
+<div class="post-header">
+    <div class="featured-image">
+        <i class="fa fa-picture-o fa-3x"></i>
+    </div>
+    <h2 class="post-title">Post title</h2>
+    <p class="excerpt">Post excerpt</p>
+    <p class="author">{{ $ctrl.authorName }}</p>
+</div>
+<div class="post-body">
+    post content
+</div>
+<div class="post-settings">
+    <md-input-container class="categories">
+        <label>Post Categories</label>
+        <md-chips ng-model="categories" placeholder="Enter a category then press Enter" delete-button-label="Remove Category" delete-hint="Press delete to remove category"
+            secondary-placeholder="+Category">
+        </md-chips>
+    </md-input-container>
+    <md-input-container class="tags">
+        <label>Post Tags</label>
+        <md-chips ng-model="tags" md-max-chips="10" placeholder="Enter a tag then press Entersd" delete-button-label="Remove Tag"
+            delete-hint="Press delete to remove tag" secondary-placeholder="+Tag">
+        </md-chips>
+    </md-input-container>
+</div>
+<style scoped>
+    .post-header {
+        height: 80vh;
+        text-align: center;
+        background: #222;
+        color: #eee;
+        overflow: auto;
+    }
+    .featured-image {
+        margin-top: 35%;
+        color: #aaa;
+    }
+    .post-title {
+        max-width: 90%;
+        margin: 20px auto;
+        font-size: 60px;
+    }
+    .post-body {
+        min-height: 400px;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+    .post-settings {
+        background: #eee;
+        padding: 30px;
+    }
+
+</style>

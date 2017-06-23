@@ -23,6 +23,9 @@ export class NewPostCtrl {
             console.log("EDITOR: creating post title");
             if (!title) return;
         }
+        $scope.categories = [];
+        $scope.tags = [];
+        $scope.authorName = "Justice Ogbonna";
 
     }
 
@@ -44,7 +47,7 @@ export class NewPostCtrl {
 
 let NewPost = {
     controller: NewPostCtrl,
-    template: require('./new-post.html')
+    template: require('./edit-post.html')
 }
 
 export default NewPost;

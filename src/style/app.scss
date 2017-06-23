@@ -1,8 +1,6 @@
 /* styles in src/style directory are applied to the whole page */
 
-// [customizable]
-$fa-font-path: "~font-awesome/fonts";
-@import '~font-awesome/scss/font-awesome';
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 // editor module imports
 // [customizable] - angular-material
