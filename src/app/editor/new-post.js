@@ -88,6 +88,7 @@ export class NewPostCtrl {
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
         let contentEditorOptions = {
 			buttonLabels: 'fontawesome',
+            targetBlank: true,
             placeholder: {
 				text: 'Write your story here',
 				hideOnClick: false
