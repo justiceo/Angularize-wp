@@ -2,13 +2,11 @@
     <div class="featured-image">
         <i class="fa fa-picture-o fa-3x"></i>
     </div>
-    <h2 class="post-title">Post title</h2>
-    <p class="excerpt">Post excerpt</p>
-    <p class="author">{{ $ctrl.authorName }}</p>
+    <h2 class="post-title"></h2>
+    <p class="post-excerpt"></p>
+    <p class="post-author">{{ authorName }}</p>
 </div>
-<div class="post-body">
-    post content
-</div>
+<div class="post-body"></div>
 <div class="post-settings">
     <md-input-container class="categories">
         <label>Post Categories</label>
@@ -25,30 +23,51 @@
 </div>
 <style scoped>
     .post-header {
-        height: 80vh;
+        min-height: 80vh;
         text-align: center;
         background: #222;
-        color: #eee;
+        color: #fff;
         overflow: auto;
     }
     .featured-image {
-        margin-top: 35%;
-        color: #aaa;
+        margin-top: 200px;
+        margin-bottom: 40px;
     }
     .post-title {
         max-width: 90%;
-        margin: 20px auto;
+        margin: 0px auto;
+        padding-top: 20px;
+        padding-bottom: 20px;
         font-size: 60px;
+        color: #fff;
+    }
+    .post-excerpt {
+        margin: 0 auto;
+        max-width: 70%;
+    }
+    .post-author {
+        margin-top:100px;
+        margin-bottom: 50px;
     }
     .post-body {
         min-height: 400px;
         max-width: 800px;
-        margin: 0 auto;
-        padding: 30px;
+        margin: 0 auto 100px;
+        padding: 30px;        
     }
+
     .post-settings {
         background: #eee;
         padding: 30px;
+    }
+
+
+    /* medium editor */
+    .medium-editor-placeholder:after {
+        color: #999;
+        font-style: normal;
+        width: 100%;
+        margin: 0 auto;        
     }
 
 </style>

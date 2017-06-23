@@ -1,3 +1,7 @@
+import MediumEditor from 'medium-editor';
+import AutoList from 'medium-editor-autolist';
+var $ = require('jquery');
+require('medium-editor-insert-plugin')($);
 
 export class NewPostCtrl {
     constructor($scope, $mdDialog, $log, ToolbarService, PostService) {
@@ -26,7 +30,8 @@ export class NewPostCtrl {
         $scope.categories = [];
         $scope.tags = [];
         $scope.authorName = "Justice Ogbonna";
-
+        this.initHeader();
+        this.initBody();
     }
 
     newPostHandler() {
@@ -40,6 +45,72 @@ export class NewPostCtrl {
             closeTo: '#le_toolbar',
             fullscreen: true // Only for -xs, -sm breakpoints.
         });
+    }
+
+    initHeader() {
+        let titleElem = $('.post-title');
+        let titleEditorOptions = {
+            disableReturn: true,
+            disableExtraSpaces: true,
+            placeholder: {
+                text: 'Name your story',
+                hideOnClick: false
+            },
+            paste: {
+                forcePlainText: true
+            },
+            toolbar: {
+                buttons: []
+            }
+        }
+        this.titleEditor = new MediumEditor(titleElem, titleEditorOptions);
+
+        let excerptElem = $('.post-excerpt');
+        let excerptEditorOptions = {
+            disableReturn: true,
+            disableExtraSpaces: true,
+            placeholder: {
+                text: 'A little more about your story please',
+                hideOnClick: false
+            },
+            paste: {
+                forcePlainText: true
+            },
+            toolbar: {
+                buttons: []
+            }
+        }
+        this.exerptEditor = new MediumEditor(excerptElem, excerptEditorOptions);
+    }
+
+    initBody() {
+        let autolist = new AutoList();
+        // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
+        let contentEditorOptions = {
+			buttonLabels: 'fontawesome',
+            placeholder: {
+				text: 'Write your story here',
+				hideOnClick: false
+			},
+            extensions: {
+                'auotlist': autolist
+            },
+			toolbar: {
+				buttons: ['h1', 'h2', 'bold', 'italic', 'quote', 'pre', 'unorderedlist','orderedlist', 'justifyLeft', 'justifyCenter', 'anchor']
+			}
+
+		};
+
+        let elem = $('.post-body');
+        this.contentEditor = new MediumEditor(elem, contentEditorOptions);
+        //this.contentEditor.destroy(); // fix this later
+        /*$(function () {
+            elem.mediumInsert({
+                editor: this.contentEditor
+            });
+        });*/
+
+        // todo: add save and cancel handlers
     }
 
 

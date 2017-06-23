@@ -1,7 +1,5 @@
 /* styles in src/style directory are applied to the whole page */
 
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
 // editor module imports
 // [customizable] - angular-material
 @import '../../node_modules/angular-material/angular-material.scss';
@@ -9,3 +7,5 @@
 @import '../../node_modules/medium-editor/dist/css/themes/default.min.css';
 @import '../../node_modules/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css';
 @import '../../node_modules/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin-frontend.min.css';
+
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
