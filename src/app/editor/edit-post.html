@@ -4,23 +4,25 @@
     </div>
     <h2 class="post-title"></h2>
     <p class="post-excerpt"></p>
-    <p class="post-author">{{ authorName }}</p>
+    <p class="post-author">{{ $ctrl.authorName }}</p>
 </div>
 <div class="post-body"></div>
 <div class="post-settings">
     <md-input-container class="categories">
         <label>Post Categories</label>
-        <md-chips ng-model="categories" placeholder="Enter a category then press Enter" delete-button-label="Remove Category" delete-hint="Press delete to remove category"
+        <md-chips ng-model="$ctrl.categories" placeholder="Enter a category then press Enter" delete-button-label="Remove Category" delete-hint="Press delete to remove category"
             secondary-placeholder="+Category">
         </md-chips>
     </md-input-container>
     <md-input-container class="tags">
         <label>Post Tags</label>
-        <md-chips ng-model="tags" md-max-chips="10" placeholder="Enter a tag then press Entersd" delete-button-label="Remove Tag"
+        <md-chips ng-model="$ctrl.tags" md-max-chips="10" placeholder="Enter a tag then press Entersd" delete-button-label="Remove Tag"
             delete-hint="Press delete to remove tag" secondary-placeholder="+Tag">
         </md-chips>
     </md-input-container>
 </div>
+<i class="icons icon-user"><i>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
 <style scoped>
     new-post.cover-content {
         position: absolute;
@@ -68,6 +70,10 @@
         padding: 30px;
     }
 
+    md-input-container.categories, md-input-container.tags {
+        width: 100%;
+        margin-bottom: 40px;
+    }
 
     /* medium editor */
     .medium-editor-placeholder:after {
@@ -76,5 +82,6 @@
         width: 100%;
         margin: 0 auto;        
     }
+    .md-errors-spacer { display: none }
 
 </style>

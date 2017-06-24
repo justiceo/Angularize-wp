@@ -20,7 +20,7 @@ let Toolbar = {
             ng-class="button.class"
             ng-click="button.handler()" 
             ng-disabled="button.disabled">
-            <md-icon md-font-icon="{{ button.icon }}"></md-icon>       
+            <i class="icons icon-{{ button.icon }}"></i>
             <md-tooltip md-direction="top" md-delay="200">
                 {{ button.title }}
             </md-tooltip>

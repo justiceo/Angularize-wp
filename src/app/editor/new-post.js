@@ -10,41 +10,13 @@ export class NewPostCtrl {
             'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log
         });
 
-        $log.log("NewPost: Initializing...")
-        let button = {
-            id: 'le_new_post',
-            title: 'New Post',
-            icon: 'icon-pencil',
-            position: 2,
-            handler: () => this.newPostHandler()
-        };
-        ToolbarService.add(button);
-
-
-        $scope.cancel =  () => $mdDialog.hide();        
-
-        $scope.create = function (title) {
-            console.log("EDITOR: creating post title");
-            if (!title) return;
-        }
-        $scope.categories = [];
-        $scope.tags = [];
-        $scope.authorName = "Justice Ogbonna";
+        $log.log("NewPost: Initializing...") 
+        this.categories = ["cat", "ego", "ry"];
+        this.tags = ["#ta", "gs"];
+        this.authorName = "Justice Ogbonna";
         this.initHeader();
         this.initBody();
-    }
-
-    newPostHandler() {
-        this.$mdDialog.show({
-            template: require('./new-post.html'),
-            scope: this.$scope,
-            preserveScope: true,
-            parent: angular.element(document.body),
-            clickOutsideToClose: true,
-            openFrom: '#le_toolbar',
-            closeTo: '#le_toolbar',
-            fullscreen: true // Only for -xs, -sm breakpoints.
-        });
+        this.addToolbarButtons();
     }
 
     initHeader() {
@@ -66,20 +38,8 @@ export class NewPostCtrl {
         this.titleEditor = new MediumEditor(titleElem, titleEditorOptions);
 
         let excerptElem = $('.post-excerpt');
-        let excerptEditorOptions = {
-            disableReturn: true,
-            disableExtraSpaces: true,
-            placeholder: {
-                text: 'A little more about your story please',
-                hideOnClick: false
-            },
-            paste: {
-                forcePlainText: true
-            },
-            toolbar: {
-                buttons: []
-            }
-        }
+        let excerptEditorOptions = titleEditorOptions;
+        excerptEditorOptions.placeholder.text = "Write a short introduction";
         this.exerptEditor = new MediumEditor(excerptElem, excerptEditorOptions);
     }
 
@@ -114,7 +74,48 @@ export class NewPostCtrl {
         // todo: add save and cancel handlers
     }
 
+    addToolbarButtons() {
+        let cancelButton = {
+            id: 'angularize_editor_cancel',
+            title: 'Discard',
+            icon: 'home',
+            position: 1,
+            handler: () => this.discard()
+        };
+        let saveButton = {
+            id: 'angularize_editor_save',
+            title: 'Save Changes',
+            icon: 'leaf',
+            position: 2,
+            handler: () => this.save()
+        };
+        this.ToolbarService.add(cancelButton);
+        this.ToolbarService.add(saveButton);
+    }
 
+    /**
+     * No changes are post to the server, but do we restore previous changes?
+     * Is this like a delete function?
+     * Will do both, if there are changes then discard otherwise delete
+     */
+    discard() {
+        console.log("post discard called");
+        // show "Are you sure you want to discard your changes?"
+        // if there are no changes to discard, replace with delete button
+    }
+
+    save() {
+        console.log("post save called");
+        // grab all the editors and extract their contents
+        let post = {};
+        post.title = this.titleElem.text()
+        post.content = "content here"; 
+        post.excert = this.exerptElem.text();
+        post.id = this.postId; // bound
+        post.categories = this.categories;
+        post.tags = this.tags;
+
+    }
 }
 
 let NewPost = {
