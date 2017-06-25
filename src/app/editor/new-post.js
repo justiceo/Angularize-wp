@@ -4,23 +4,24 @@ var $ = require('jquery');
 require('medium-editor-insert-plugin')($);
 
 export class NewPostCtrl {
-    constructor($scope, $mdDialog, $log, ToolbarService, PostService) {
+    constructor($scope, $mdDialog, $log, Cache, ToolbarService, PostService) {
         angular.extend(this, {
-            '$scope': $scope, 'ToolbarService': ToolbarService,
+            '$scope': $scope, 'Cache': Cache, 'ToolbarService': ToolbarService,
             'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log
         });
 
-        $log.log("NewPost: Initializing...") 
+        $log.log("NewPost: Initializing...")
         this.categories = ["cat", "ego", "ry"];
         this.tags = ["#ta", "gs"];
         this.authorName = "Justice Ogbonna";
+        this.state = {};
+        this.lastModified = 0;
         this.initHeader();
         this.initBody();
         this.addToolbarButtons();
     }
 
     initHeader() {
-        let titleElem = $('.post-title');
         let titleEditorOptions = {
             disableReturn: true,
             disableExtraSpaces: true,
@@ -35,35 +36,40 @@ export class NewPostCtrl {
                 buttons: []
             }
         }
+        let titleElem = $('.post-title');
         this.titleEditor = new MediumEditor(titleElem, titleEditorOptions);
+        this.titleChanged = 0;
 
         let excerptElem = $('.post-excerpt');
         let excerptEditorOptions = titleEditorOptions;
         excerptEditorOptions.placeholder.text = "Write a short introduction";
-        this.exerptEditor = new MediumEditor(excerptElem, excerptEditorOptions);
+        this.excerptEditor = new MediumEditor(excerptElem, excerptEditorOptions);
+        this.excerptChanged = 0;
     }
 
     initBody() {
         let autolist = new AutoList();
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
         let contentEditorOptions = {
-			buttonLabels: 'fontawesome',
+            buttonLabels: 'fontawesome',
             targetBlank: true,
             placeholder: {
-				text: 'Write your story here',
-				hideOnClick: false
-			},
+                text: 'Write your story here',
+                hideOnClick: false
+            },
             extensions: {
                 'auotlist': autolist
             },
-			toolbar: {
-				buttons: ['h1', 'h2', 'bold', 'italic', 'quote', 'pre', 'unorderedlist','orderedlist', 'justifyLeft', 'justifyCenter', 'anchor']
-			}
+            toolbar: {
+                buttons: ['h1', 'h2', 'bold', 'italic', 'quote', 'pre', 'unorderedlist', 'orderedlist', 'justifyLeft', 'justifyCenter', 'anchor']
+            }
 
-		};
+        };
 
         let elem = $('.post-body');
         this.contentEditor = new MediumEditor(elem, contentEditorOptions);
+        this.contentChanged = 0;
+
         //this.contentEditor.destroy(); // fix this later
         /*$(function () {
             elem.mediumInsert({
@@ -93,28 +99,63 @@ export class NewPostCtrl {
         this.ToolbarService.add(saveButton);
     }
 
+    anyModified() {
+        let somethingChanged = (event, elem) => {
+            console.log("something changed: ", event, elem);
+            if (event.timeStamp > this.lastModified)
+                this.lastModified = event.timeStamp;
+        }
+        let registerListeners = () => {
+            this.titleEditor.subscribe('editableInput', somethingChanged);
+            this.exerptEditor.subscribe('editableInput', somethingChanged);
+            this.contentEditor.subscribe('editableInput', somethingChanged);
+        }
+        let unregisterListeners = () => {
+            this.titleEditor.unsubscribe('editableInput', somethingChanged);
+            this.exerptEditor.unsubscribe('editableInput', somethingChanged);
+            this.contentEditor.unsubscribe('editableInput', somethingChanged);
+        }
+        let checkForChanges = () => {
+            this.titleEditor.checkContentChanged();
+            this.excerptEditor.checkContentChanged();
+            this.contentEditor.checkContentChanged();
+        }
+
+        registerListeners();
+        checkForChanges();
+        unregisterListeners();
+
+        let anyModified = this.lastModified > this.Cache.get('post_last_modified');
+        this.Cache.set('post_last_modified', this.lastModified);
+        return anyModified;
+    }
+
     /**
      * No changes are post to the server, but do we restore previous changes?
      * Is this like a delete function?
      * Will do both, if there are changes then discard otherwise delete
      */
     discard() {
-        console.log("post discard called");
-        // show "Are you sure you want to discard your changes?"
-        // if there are no changes to discard, replace with delete button
+        var confirm = this.$mdDialog.confirm()
+            .title('Irreparable Damage Ahead')
+            .textContent('Are you positively absolutely certain you want to discard all changes?')
+            .ariaLabel('Confirm discard')
+            .ok('Please do it!')
+            .cancel('No, I changed my mind');
+        this.$mdDialog.show(confirm).then(
+            () => { // user agreed
+                this.titleEditor.resetContent();
+                this.excerptEditor.resetContent();
+                this.contentEditor.resetContent();
+            }, () => { // user changed their mind
+                // do nothing
+            });
+        // todo: later: if there are no changes to discard, replace with delete button
     }
 
     save() {
         console.log("post save called");
         // grab all the editors and extract their contents
-        let post = {};
-        post.title = this.titleElem.text()
-        post.content = "content here"; 
-        post.excert = this.exerptElem.text();
-        post.id = this.postId; // bound
-        post.categories = this.categories;
-        post.tags = this.tags;
-
     }
 }
 
