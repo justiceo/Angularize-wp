@@ -10,8 +10,12 @@
 <div class="post-settings">
     <md-input-container class="categories">
         <label>Post Categories</label>
-        <md-chips ng-model="$ctrl.categories" placeholder="Enter a category then press Enter" delete-button-label="Remove Category" delete-hint="Press delete to remove category"
+        <md-chips ng-model="$ctrl.chips.categories" placeholder="Enter a category then press Enter" delete-button-label="Remove Category" delete-hint="Press delete to remove category"
             secondary-placeholder="+Category">
+            <md-chip-template>
+                <span>{{ $chip.name }}</span>
+            </md-chip-template>
+            
         </md-chips>
     </md-input-container>
     <md-input-container class="tags">

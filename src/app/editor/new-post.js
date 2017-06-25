@@ -11,22 +11,46 @@ export class NewPostCtrl {
         });
 
         $log.log("NewPost: Initializing...")
-        this.categories = ["cat", "ego", "ry"];
-        this.tags = ["#ta", "gs"];
+        this.categories = [];
+        this.tags = [{
+            type: 2,
+            name: "hello"
+        }];
         this.authorName = "Justice Ogbonna";
         this.state = {};
         this.lastModified = 0;
+        this.meta = {};     // holds all categories, tags, statuses, user info
+        this.chips = {}; // holds data for md-chips
         this.PostService.ready().then(
             () => {
+                //this.fetchPost();
+                this.loadMeta();
                 this.initHeader();
                 this.initBody();
-                this.addToolbarButtons();   
+                this.addToolbarButtons();
             },
             (err) => {
                 // show a toaster with the error
                 console.log("error: ", err);
             }
-        )     
+        )
+    }
+
+    // get author info, post categories, post tags, post status
+    loadMeta() {
+        this.meta.categories = this.PostService.$restApi.categories();
+        this.meta.categories.get().then(
+            () => {
+                this.chips.categories = this.meta.categories.rawVal().map(c => {
+                    return {
+                        'type': c.id,
+                        'name': c.name
+                    }
+                })
+            }
+        )
+
+        // create model for chips input, grab cat ids from post, find names in meta        
     }
 
     initHeader() {
@@ -135,9 +159,11 @@ export class NewPostCtrl {
         let data = {
             title: this.titleEditor.getContent(),
             excerpt: this.excerptEditor.getContent(),
-            content: this.contentEditor.getContent()
+            content: this.contentEditor.getContent(),
+            categories: this.categories,
+            tags: this.tags
         }
-        if(this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
+        if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
             this.PostService.$restApi.posts().id(this.postId).post(data);
         }
         else {
