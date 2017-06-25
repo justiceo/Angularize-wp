@@ -64,29 +64,29 @@ export class NewPostCtrl {
                 });
                 this.chips.tags = [];
             }
-        )        
+        )
     }
 
-    categorySearch (query) {
-      let results = query ? this.chips.allCategories.filter(this.createFilterFor(query)) : [];
-      return results;
+    categorySearch(query) {
+        let results = query ? this.chips.allCategories.filter(this.createFilterFor(query)) : [];
+        return results;
     }
 
-    tagSearch (query) {
-      let results = query ? this.chips.allTags.filter(this.createFilterFor(query)) : [];
-      return results;
-    }    
+    tagSearch(query) {
+        let results = query ? this.chips.allTags.filter(this.createFilterFor(query)) : [];
+        return results;
+    }
 
     /**
      * Create filter function for a query string
      */
     createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
+        var lowercaseQuery = angular.lowercase(query);
 
-      return function filterFn(taxonomy) {
-        return (taxonomy.name.indexOf(lowercaseQuery) === 0) ||
-            (taxonomy.slug.indexOf(lowercaseQuery) === 0);
-      };
+        return function filterFn(taxonomy) {
+            return (taxonomy.name.indexOf(lowercaseQuery) === 0) ||
+                (taxonomy.slug.indexOf(lowercaseQuery) === 0);
+        };
 
     }
 
