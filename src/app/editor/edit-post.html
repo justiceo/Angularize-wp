@@ -10,12 +10,24 @@
 <div class="post-settings">
     <md-input-container class="categories">
         <label>Post Categories</label>
-        <md-chips ng-model="$ctrl.chips.categories" placeholder="Enter a category then press Enter" delete-button-label="Remove Category" delete-hint="Press delete to remove category"
+        <md-chips ng-model="$ctrl.chips.categories" md-autocomplete-snap
+            placeholder="Enter a category then press Enter" 
+            delete-button-label="Remove Category" 
+            delete-hint="Press delete to remove category"
             secondary-placeholder="+Category">
+            <md-autocomplete
+
+          md-search-text="$ctrl.searchText"
+          md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                md-items="item in $ctrl.meta.categories"
+                md-item-text="item.name"
+                placeholder="Search for a category">
+                <span>{{ item.name }} </span>
+            </md-autocomplete>
             <md-chip-template>
                 <span>{{ $chip.name }}</span>
             </md-chip-template>
-            
+
         </md-chips>
     </md-input-container>
     <md-input-container class="tags">

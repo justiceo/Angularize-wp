@@ -41,17 +41,37 @@ export class NewPostCtrl {
         this.meta.categories = this.PostService.$restApi.categories();
         this.meta.categories.get().then(
             () => {
-                this.chips.categories = this.meta.categories.rawVal().map(c => {
+                this.chips.allCategories = this.meta.categories.rawVal().map(c => {
                     return {
-                        'type': c.id,
-                        'name': c.name
+                        'id': c.id,
+                        'name': c.name,
+                        'slug': c.slug
                     }
-                })
+                });
+                this.chips.categories = [];
             }
         )
 
         // create model for chips input, grab cat ids from post, find names in meta        
     }
+    querySearch (query) {
+      let results = query ? this.chips.allCategories.filter(this.createFilterFor(query)) : [];
+      return results;
+    }
+
+    /**
+     * Create filter function for a query string
+     */
+    createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+
+      return function filterFn(category) {
+        return (category.name.indexOf(lowercaseQuery) === 0) ||
+            (category.slug.indexOf(lowercaseQuery) === 0);
+      };
+
+    }
+
 
     initHeader() {
         let titleEditorOptions = {
