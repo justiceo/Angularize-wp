@@ -68,13 +68,11 @@ export class NewPostCtrl {
     }
 
     categorySearch(query) {
-        let results = query ? this.chips.allCategories.filter(this.createFilterFor(query)) : [];
-        return results;
+        return query ? this.chips.allCategories.filter(this.createFilterFor(query)) : [];;
     }
 
     tagSearch(query) {
-        let results = query ? this.chips.allTags.filter(this.createFilterFor(query)) : [];
-        return results;
+        return query ? this.chips.allTags.filter(this.createFilterFor(query)) : [];
     }
 
     /**
@@ -154,14 +152,14 @@ export class NewPostCtrl {
         let cancelButton = {
             id: 'angularize_editor_cancel',
             title: 'Discard',
-            icon: 'home',
+            icon: 'action-undo',
             position: 1,
             handler: () => this.discard()
         };
         let saveButton = {
             id: 'angularize_editor_save',
             title: 'Save Changes',
-            icon: 'leaf',
+            icon: 'check',
             position: 2,
             handler: () => this.save()
         };
@@ -198,8 +196,8 @@ export class NewPostCtrl {
             title: this.titleEditor.getContent(),
             excerpt: this.excerptEditor.getContent(),
             content: this.contentEditor.getContent(),
-            categories: this.categories,
-            tags: this.tags
+            categories: this.chips.categories.map(c => c.id),
+            tags: this.chips.tags.map(t => t.id)
         }
         if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
             this.PostService.$restApi.posts().id(this.postId).post(data);
@@ -211,6 +209,17 @@ export class NewPostCtrl {
                 }
             )
         }
+    }
+
+    transformChip(chip) {
+      // If it is an object, it's already a known chip
+      if (angular.isObject(chip)) {
+        return chip;
+      }
+
+      // Otherwise, create a new one
+      // todo: ensure new chips have ids upon save
+      return { name: chip, slug: chip.toLowerCase() }
     }
 }
 
