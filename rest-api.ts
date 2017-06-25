@@ -56,7 +56,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
         if (args.id) //buggy
             obj = this.id(args.id);
         else
-            obj = new RestObject("temporary_id", this._parent, this._schema);
+            obj = new RestObject("", this._route, this._schema);
         for (let key in args) {
             obj.attr(key, args[key])
         }
@@ -133,16 +133,18 @@ class RestObject implements RestObjectI {
         this.isModified = true;
     }
 
-    post(...attr): Promise<Object> {
+    post(args: any): Promise<Object> {
         let payload = {};
         // if nothing is specified in payload, then push the whole object, else push only what's specified
-        if (attr.length == 0)
+        if (!args)
             payload = this._state;
         else {
-            attr.forEach(a => payload[a] = this._state[a]);
+            payload = args;
         }
         return this._schema.ajax.post(this._route, payload).then(
             success => {
+                this._state = success;
+                // use self_link this._route = 
                 return this;
             }
         )

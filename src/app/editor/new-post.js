@@ -16,9 +16,17 @@ export class NewPostCtrl {
         this.authorName = "Justice Ogbonna";
         this.state = {};
         this.lastModified = 0;
-        this.initHeader();
-        this.initBody();
-        this.addToolbarButtons();
+        this.PostService.ready().then(
+            () => {
+                this.initHeader();
+                this.initBody();
+                this.addToolbarButtons();   
+            },
+            (err) => {
+                // show a toaster with the error
+                console.log("error: ", err);
+            }
+        )     
     }
 
     initHeader() {
@@ -99,37 +107,6 @@ export class NewPostCtrl {
         this.ToolbarService.add(saveButton);
     }
 
-    anyModified() {
-        let somethingChanged = (event, elem) => {
-            console.log("something changed: ", event, elem);
-            if (event.timeStamp > this.lastModified)
-                this.lastModified = event.timeStamp;
-        }
-        let registerListeners = () => {
-            this.titleEditor.subscribe('editableInput', somethingChanged);
-            this.exerptEditor.subscribe('editableInput', somethingChanged);
-            this.contentEditor.subscribe('editableInput', somethingChanged);
-        }
-        let unregisterListeners = () => {
-            this.titleEditor.unsubscribe('editableInput', somethingChanged);
-            this.exerptEditor.unsubscribe('editableInput', somethingChanged);
-            this.contentEditor.unsubscribe('editableInput', somethingChanged);
-        }
-        let checkForChanges = () => {
-            this.titleEditor.checkContentChanged();
-            this.excerptEditor.checkContentChanged();
-            this.contentEditor.checkContentChanged();
-        }
-
-        registerListeners();
-        checkForChanges();
-        unregisterListeners();
-
-        let anyModified = this.lastModified > this.Cache.get('post_last_modified');
-        this.Cache.set('post_last_modified', this.lastModified);
-        return anyModified;
-    }
-
     /**
      * No changes are post to the server, but do we restore previous changes?
      * Is this like a delete function?
@@ -144,6 +121,7 @@ export class NewPostCtrl {
             .cancel('No, I changed my mind');
         this.$mdDialog.show(confirm).then(
             () => { // user agreed
+                console.log("content: ", this.titleEditor.getContent(), this.titleEditor.serialize())
                 this.titleEditor.resetContent();
                 this.excerptEditor.resetContent();
                 this.contentEditor.resetContent();
@@ -154,8 +132,21 @@ export class NewPostCtrl {
     }
 
     save() {
-        console.log("post save called");
-        // grab all the editors and extract their contents
+        let data = {
+            title: this.titleEditor.getContent(),
+            excerpt: this.excerptEditor.getContent(),
+            content: this.contentEditor.getContent()
+        }
+        if(this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
+            this.PostService.$restApi.posts().id(this.postId).post(data);
+        }
+        else {
+            this.PostService.$restApi.posts().add(data).post().then(
+                (post) => {
+                    this.postId = post.attr('id');
+                }
+            )
+        }
     }
 }
 

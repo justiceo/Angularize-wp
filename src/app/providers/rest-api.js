@@ -53,7 +53,7 @@ var RestCollection = (function (_super) {
             if (args.id)
                 obj = _this.id(args.id);
             else
-                obj = new RestObject("temporary_id", _this._parent, _this._schema);
+                obj = new RestObject("", _this._route, _this._schema);
             for (var key in args) {
                 obj.attr(key, args[key]);
             }
@@ -131,20 +131,18 @@ var RestObject = (function () {
         this._state[prop] = value;
         this.isModified = true;
     };
-    RestObject.prototype.post = function () {
+    RestObject.prototype.post = function (args) {
         var _this = this;
-        var attr = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            attr[_i] = arguments[_i];
-        }
         var payload = {};
         // if nothing is specified in payload, then push the whole object, else push only what's specified
-        if (attr.length == 0)
+        if (!args)
             payload = this._state;
         else {
-            attr.forEach(function (a) { return payload[a] = _this._state[a]; });
+            payload = args;
         }
         return this._schema.ajax.post(this._route, payload).then(function (success) {
+            _this._state = success;
+            // use self_link this._route = 
             return _this;
         });
     };
