@@ -21,6 +21,7 @@ export class NewPostCtrl {
         this.lastModified = 0;
         this.meta = {};     // holds all categories, tags, statuses, user info
         this.chips = {}; // holds data for md-chips
+        this.featuredImage = 'https://www.kidscodecs.com/wp-content/uploads/2013/07/oskay-hello-world-toast1.jpg';
         this.PostService.ready().then(
             () => {
                 //this.fetchPost();
@@ -34,6 +35,10 @@ export class NewPostCtrl {
                 console.log("error: ", err);
             }
         )
+    }
+
+    onFileSelect(files) {
+        console.log("files: ", files);
     }
 
     // get author info, post categories, post tags, post status

@@ -9,11 +9,9 @@ export class UploadFileCtrl {
             var tag = elem[0].nodeName;
             return ''
         }
-
     }
 
     link(scope, element, attr) {
-        console.log("upload file directive link called");
         element.bind('click', function(e) {
             angular.element(e.target).siblings('#upload').trigger('click');
         });

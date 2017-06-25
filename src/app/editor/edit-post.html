@@ -1,6 +1,6 @@
-<div class="post-header">
+<div class="post-header" style="background-image: {{ 'url(' + $ctrl.featuredImage + ')' }}">
     <div class="featured-image">
-        <input id="upload" type="file" ng-file-select="onFileSelect($files)" style="display: none;">
+        <input id="upload" type="file" ng-file-select="$ctrl.onFileSelect($files)" style="display: none;">
         <button type="button" class="fa fa-picture-o fa-3x" upload-file></button>
     </div>
     <h2 class="post-title"></h2>
