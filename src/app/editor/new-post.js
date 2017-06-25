@@ -38,10 +38,10 @@ export class NewPostCtrl {
 
     // get author info, post categories, post tags, post status
     loadMeta() {
-        this.meta.categories = this.PostService.$restApi.categories();
-        this.meta.categories.get().then(
+        let categories = this.PostService.$restApi.categories();
+        categories.get().then(
             () => {
-                this.chips.allCategories = this.meta.categories.rawVal().map(c => {
+                this.chips.allCategories = categories.rawVal().map(c => {
                     return {
                         'id': c.id,
                         'name': c.name,
@@ -52,12 +52,30 @@ export class NewPostCtrl {
             }
         )
 
-        // create model for chips input, grab cat ids from post, find names in meta        
+        let tags = this.PostService.$restApi.tags();
+        tags.get().then(
+            () => {
+                this.chips.allTags = tags.rawVal().map(t => {
+                    return {
+                        'id': t.id,
+                        'name': t.name,
+                        'slug': t.slug
+                    }
+                });
+                this.chips.tags = [];
+            }
+        )        
     }
-    querySearch (query) {
+
+    categorySearch (query) {
       let results = query ? this.chips.allCategories.filter(this.createFilterFor(query)) : [];
       return results;
     }
+
+    tagSearch (query) {
+      let results = query ? this.chips.allTags.filter(this.createFilterFor(query)) : [];
+      return results;
+    }    
 
     /**
      * Create filter function for a query string
@@ -65,9 +83,9 @@ export class NewPostCtrl {
     createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
 
-      return function filterFn(category) {
-        return (category.name.indexOf(lowercaseQuery) === 0) ||
-            (category.slug.indexOf(lowercaseQuery) === 0);
+      return function filterFn(taxonomy) {
+        return (taxonomy.name.indexOf(lowercaseQuery) === 0) ||
+            (taxonomy.slug.indexOf(lowercaseQuery) === 0);
       };
 
     }

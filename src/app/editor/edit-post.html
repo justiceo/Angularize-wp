@@ -16,10 +16,9 @@
             delete-hint="Press delete to remove category"
             secondary-placeholder="+Category">
             <md-autocomplete
-
           md-search-text="$ctrl.searchText"
-          md-items="item in $ctrl.querySearch($ctrl.searchText)"
-                md-items="item in $ctrl.meta.categories"
+          md-items="item in $ctrl.categorySearch($ctrl.searchText)"
+                md-items="item in $ctrl.chips.categories"
                 md-item-text="item.name"
                 placeholder="Search for a category">
                 <span>{{ item.name }} </span>
@@ -27,13 +26,26 @@
             <md-chip-template>
                 <span>{{ $chip.name }}</span>
             </md-chip-template>
-
         </md-chips>
     </md-input-container>
     <md-input-container class="tags">
         <label>Post Tags</label>
-        <md-chips ng-model="$ctrl.tags" md-max-chips="10" placeholder="Enter a tag then press Entersd" delete-button-label="Remove Tag"
-            delete-hint="Press delete to remove tag" secondary-placeholder="+Tag">
+        <md-chips ng-model="$ctrl.chips.tags" md-autocomplete-snap
+            placeholder="Enter a tag then press Enter" 
+            delete-button-label="Remove Tag" 
+            delete-hint="Press delete to remove tag"
+            secondary-placeholder="+Tag">
+            <md-autocomplete
+          md-search-text="$ctrl.tagSearchText"
+          md-items="item in $ctrl.tagSearch($ctrl.tagSearchText)"
+                md-items="item in $ctrl.chips.tags"
+                md-item-text="item.name"
+                placeholder="Search for a tag">
+                <span>{{ item.name }} </span>
+            </md-autocomplete>
+            <md-chip-template>
+                <span>{{ $chip.name }}</span>
+            </md-chip-template>
         </md-chips>
     </md-input-container>
 </div>
