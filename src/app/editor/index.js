@@ -6,6 +6,7 @@ import Toolbar from './toolbar';
 import NewPost from './new-post';
 
 import EditPostDirective from './edit-button';
+import UploadFileDirective from './upload-file.js';
 
 let requires = [ngMaterial, svgAssetsCache];
 let editorModule = angular.module('angularize.editor', requires);
@@ -20,6 +21,7 @@ editorModule
      .accentPalette('indigo')
   })
     .directive('editable', EditorDirective)
+    .directive('uploadFile', UploadFileDirective)
     .component('postSettings', PostSettings)
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)

@@ -212,14 +212,14 @@ export class NewPostCtrl {
     }
 
     transformChip(chip) {
-      // If it is an object, it's already a known chip
-      if (angular.isObject(chip)) {
-        return chip;
-      }
+        // If it is an object, it's already a known chip
+        if (angular.isObject(chip)) {
+            return chip;
+        }
 
-      // Otherwise, create a new one
-      // todo: ensure new chips have ids upon save
-      return { name: chip, slug: chip.toLowerCase() }
+        // Otherwise, create a new one
+        // todo: ensure new chips have ids upon save
+        return { name: chip, slug: chip.toLowerCase() }
     }
 }
 
