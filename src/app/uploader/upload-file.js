@@ -4,17 +4,19 @@
 export class UploadFileCtrl {
     constructor($scope, Upload) {
         // upload later on form submit or something similar
+        this.Upload = Upload;
+        this.$scope = $scope;
         $scope.submit = function () {
             if ($scope.form.file.$valid && $scope.file) {
-                $scope.upload($scope.file);
+                this.upload($scope.file);
             }
         };
+    }
 
-        // upload on file select or drop
-        $scope.upload = function (file) {
-            console.log("file to upload: ", file);
-            Upload.upload({
-                url: 'http://localhost/wp-json/wp/v2/media',
+    upload(file, alt_text = "", caption = "") {
+            let mediaUrl = 'http://localhost/wp-json/wp/v2/media'
+            this.Upload.upload({
+                url: mediaUrl,
                 method: 'POST',
                 file: file,
                 headers: {
@@ -24,31 +26,19 @@ export class UploadFileCtrl {
                     "Data-Binary": file.name
                 },
                 data: {
-                    'caption': 'some file caption here',
-                    'alt_text': 'the alt text here'
+                    'caption': caption,
+                    'alt_text': alt_text
                 }
             })
-            .then(function (resp) {
-                console.log("f-success: ", resp);
+            .then((resp) => {
+                this.fileUrl = resp.data.source_url;
                 console.log('Success ' + resp.data.title.rendered + ' uploaded.');
             }, function (resp) {
-                console.log("err: ", resp);
-                console.log('Error status: ' + resp.status);
-            }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                console.log('Error uploading file: ' + resp);
+            }, (evt) => {
+                this.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + this.progressPercentage + '% ' + evt.config.data.file.name);
             });
-        };
-        // for multiple files:
-        $scope.uploadFiles = function (files) {
-            if (files && files.length) {
-                for (var i = 0; i < files.length; i++) {
-                    //Upload.upload({ ..., data: { file: files[i] }, ...})...;
-                }
-                // or send them all together for HTML5 browsers:
-                //Upload.upload({ ..., data: { file: files }, ...})...;
-            }
-        }
     }
 }
 
