@@ -22,11 +22,15 @@ export class UploadFileCtrl {
                     "Content-Type": file.type,
                     "Cache-Control": "no-cache",
                     "Data-Binary": file.name
+                },
+                data: {
+                    'caption': 'some file caption here',
+                    'alt_text': 'the alt text here'
                 }
             })
             .then(function (resp) {
                 console.log("f-success: ", resp);
-                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                console.log('Success ' + resp.data.title.rendered + ' uploaded.');
             }, function (resp) {
                 console.log("err: ", resp);
                 console.log('Error status: ' + resp.status);
