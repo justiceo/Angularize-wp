@@ -4,11 +4,12 @@ import PostSettings from './settings/settings';
 import EditorDirective from './editor';
 import Toolbar from './toolbar';
 import NewPost from './new-post';
+import ngFileUpload from 'ng-file-upload';
 
 import EditPostDirective from './edit-button';
 import UploadFileDirective from './upload-file.js';
 
-let requires = [ngMaterial, svgAssetsCache];
+let requires = [ngMaterial, svgAssetsCache, ngFileUpload ];
 let editorModule = angular.module('angularize.editor', requires);
 
 // only load if we have wp front end editor enabled

@@ -2,8 +2,10 @@
     <div class="featured-image">
         <input id="upload" type="file" ng-file-select="$ctrl.onFileSelect($files)" style="display: none;">
         <button type="button" class="fa fa-picture-o fa-3x" upload-file></button>
+        <div class="button" ngf-select="$ctrl.uploadFile($file)" ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB"
+            ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Select</div>
     </div>
-    <h2 md-autofocus class="post-title"></h2>
+    <h2 class="post-title"></h2>
     <p class="post-excerpt"></p>
     <p class="post-author">{{ $ctrl.authorName }}</p>
 </div>
@@ -11,9 +13,8 @@
 <div class="post-settings">
     <md-input-container class="categories">
         <label>Post Categories</label>
-        <md-chips ng-model="$ctrl.chips.categories" md-autocomplete-snap md-require-match="true"
-            placeholder="Enter a category then press Enter" delete-button-label="Remove Category" delete-hint="Press delete to remove category"
-            secondary-placeholder="+Category">
+        <md-chips ng-model="$ctrl.chips.categories" md-autocomplete-snap md-require-match="true" placeholder="Enter a category then press Enter"
+            delete-button-label="Remove Category" delete-hint="Press delete to remove category" secondary-placeholder="+Category">
             <md-autocomplete md-search-text="$ctrl.searchText" md-items="item in $ctrl.categorySearch($ctrl.searchText)" md-items="item in $ctrl.chips.categories"
                 md-item-text="item.name" placeholder="Search for a category">
                 <span md-highlight-text="$ctrl.searchText">{{ item.name }} </span>
@@ -25,8 +26,8 @@
     </md-input-container>
     <md-input-container class="tags">
         <label>Post Tags</label>
-        <md-chips ng-model="$ctrl.chips.tags" md-autocomplete-snap placeholder="Enter a tag then press Enter" md-transform-chip="$ctrl.transformChip($chip)" delete-button-label="Remove Tag"
-            delete-hint="Press delete to remove tag" secondary-placeholder="+Tag">
+        <md-chips ng-model="$ctrl.chips.tags" md-autocomplete-snap placeholder="Enter a tag then press Enter" md-transform-chip="$ctrl.transformChip($chip)"
+            delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" secondary-placeholder="+Tag">
             <md-autocomplete md-search-text="$ctrl.tagSearchText" md-items="item in $ctrl.tagSearch($ctrl.tagSearchText)" md-items="item in $ctrl.chips.tags"
                 md-item-text="item.name" placeholder="Search for a tag">
                 <span md-highlight-text="$ctrl.tagSearchText">{{ item.name }} </span>

@@ -4,22 +4,14 @@ var $ = require('jquery');
 require('medium-editor-insert-plugin')($);
 
 export class NewPostCtrl {
-    constructor($scope, $mdDialog, $log, Cache, ToolbarService, PostService) {
+    constructor($scope, $mdDialog, $log, Upload, Cache, ToolbarService, PostService) {
         angular.extend(this, {
-            '$scope': $scope, 'Cache': Cache, 'ToolbarService': ToolbarService,
+            '$scope': $scope, 'Upload': Upload, 'Cache': Cache, 'ToolbarService': ToolbarService,
             'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log
         });
 
-        $log.log("NewPost: Initializing...")
-        this.categories = [];
-        this.tags = [{
-            type: 2,
-            name: "hello"
-        }];
+        $log.log("NewPost: Initializing...");
         this.authorName = "Justice Ogbonna";
-        this.state = {};
-        this.lastModified = 0;
-        this.meta = {};     // holds all categories, tags, statuses, user info
         this.chips = {}; // holds data for md-chips
         this.featuredImage = 'https://www.kidscodecs.com/wp-content/uploads/2013/07/oskay-hello-world-toast1.jpg';
         this.PostService.ready().then(
@@ -39,6 +31,21 @@ export class NewPostCtrl {
 
     onFileSelect(files) {
         console.log("files: ", files);
+    }
+
+    uploadFile(file) {
+        console.log("upload file: ", file);
+        this.Upload.upload({
+            url: 'wp-json/wp/v2/media/',
+            data: {file: file, 'username': 'justice'}
+        }).then(function (resp) {
+            console.log('Success ', resp.config.data.file.name, ' uploaded. Response: ', resp.data);
+        }, function (resp) {
+            console.log('Error status: ', resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ', progressPercentage, '% ', evt.config.data.file.name);
+        });
     }
 
     // get author info, post categories, post tags, post status
@@ -92,7 +99,6 @@ export class NewPostCtrl {
         };
 
     }
-
 
     initHeader() {
         let titleEditorOptions = {
@@ -234,3 +240,7 @@ let NewPost = {
 }
 
 export default NewPost;
+
+// todo: add postId binding to component
+// - if postId is specified, load post and prepopulate title, excerpt, content, cats..etc
+// 
