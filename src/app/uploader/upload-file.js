@@ -19,8 +19,9 @@ export class UploadFileCtrl {
                 file: file,
                 headers: {
                     "Content-Disposition": 'attachment; filename=' + file.name,
-                    "content-type": "image/png",
-                    "data-binary": file.name
+                    "Content-Type": file.type,
+                    "Cache-Control": "no-cache",
+                    "Data-Binary": file.name
                 }
             })
             .then(function (resp) {
