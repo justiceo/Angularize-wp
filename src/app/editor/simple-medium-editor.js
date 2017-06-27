@@ -2,9 +2,10 @@ import MediumEditor from 'medium-editor';
 var $ = require('jquery');
 
 export class SimpleEditorCtrl {
-    constructor() {
+    constructor($timeout) {
+        this.$timeout = $timeout;
     }
-    $postLink() {
+    $onInit() {
         let editorOptions = {
             disableReturn: true,
             disableExtraSpaces: true,
@@ -19,25 +20,29 @@ export class SimpleEditorCtrl {
                 buttons: []
             }
         }
-        let editorElem = $('.simple-medium-editor');
-        this.editor = new MediumEditor(editorElem, editorOptions);
-        this.editor.subscribe('editable', ()=>{
-            this.text = this.editor.getContent();
-            console.log("new text: ", this.text);
+        console.log("initializing simple ", this.name);
+        this.$timeout(() => {
+            let editorElem = $('.simple-medium-editor.' + this.name);
+            this.editor = new MediumEditor(editorElem, editorOptions);
+            this.editor.subscribe('editable', () => {
+                this.text = this.editor.getContent();
+                console.log("new text: ", this.text);
+            })
         })
     }
-    
+
 
 }
 
 let SimpleEditor = {
     controller: SimpleEditorCtrl,
     template: `
-    <div class="simple-medium-editor" style="outline:none; padding: 10px 0px; max-width:300px"></div>    
+    <div class="simple-medium-editor" ng-class="$ctrl.name"></div>    
     `,
     bindings: {
         placeholder: '@',
-        text: '='
+        text: '=',
+        name: '@'
     }
 }
 

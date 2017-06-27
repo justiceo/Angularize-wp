@@ -127,7 +127,7 @@ export class NewPostCtrl {
             }
         }
         let titleElem = $('.post-title');
-        this.titleEditor = new MediumEditor(titleElem, titleEditorOptions);
+        //this.titleEditor = new MediumEditor(titleElem, titleEditorOptions);
         this.titleChanged = 0;
 
         let excerptElem = $('.post-excerpt');
