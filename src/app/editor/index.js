@@ -8,6 +8,8 @@ import SimpleEditor from './simple-medium-editor';
 
 import EditPostDirective from './edit-button';
 
+let cities = require('all-the-cities');
+
 let requires = [ngMaterial, svgAssetsCache ];
 let editorModule = angular.module('angularize.editor', requires);
 
@@ -21,6 +23,7 @@ editorModule
      .accentPalette('indigo')
   })
     .directive('editable', EditorDirective)
+    .constant('ALL_CITIES', cities)
     .component('postSettings', PostSettings)
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)

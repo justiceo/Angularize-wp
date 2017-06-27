@@ -4,10 +4,10 @@ var $ = require('jquery');
 require('medium-editor-insert-plugin')($);
 
 export class NewPostCtrl {
-    constructor($scope, $mdDialog, $log, Upload, Cache, ToolbarService, PostService) {
+    constructor($scope, $mdDialog, $log, Upload, Cache, ToolbarService, PostService, ALL_CITIES) {
         angular.extend(this, {
             '$scope': $scope, 'Upload': Upload, 'Cache': Cache, 'ToolbarService': ToolbarService,
-            'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log
+            'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log, 'ALL_CITIES': ALL_CITIES
         });
 
         $log.log("NewPost: Initializing...");
@@ -95,6 +95,12 @@ export class NewPostCtrl {
 
     tagSearch(query) {
         return query ? this.chips.allTags.filter(this.createFilterFor(query)) : [];
+    }
+
+    citySearch(query) {
+        return query ? this.ALL_CITIES.filter(city => {
+            return city.name.match(query)
+        }) : [];
     }
 
     /**
