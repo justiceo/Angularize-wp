@@ -4,7 +4,7 @@ var $ = require('jquery');
 export class SimpleEditorCtrl {
     constructor() {
     }
-    $onInit() {
+    $postLink() {
         let editorOptions = {
             disableReturn: true,
             disableExtraSpaces: true,
@@ -23,16 +23,20 @@ export class SimpleEditorCtrl {
         this.editor = new MediumEditor(editorElem, editorOptions);
         this.editor.subscribe('editable', ()=>{
             this.text = this.editor.getContent();
+            console.log("new text: ", this.text);
         })
     }
+    
 
 }
 
 let SimpleEditor = {
-    component: SimpleEditorCtrl,
-    template: '<span class="simple-medium-editor"></span>',
+    controller: SimpleEditorCtrl,
+    template: `
+    <div class="simple-medium-editor" style="outline:none; padding: 10px 0px; max-width:300px"></div>    
+    `,
     bindings: {
-        placeholder: '<',
+        placeholder: '@',
         text: '='
     }
 }

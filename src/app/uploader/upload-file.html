@@ -5,7 +5,7 @@
   <div class="angularize-select-file fa fa-picture-o fa-5x" ngf-select="$ctrl.upload($file)" ng-model="$ctrl.file" name="file"
     ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 200, height: 200}">
   </div>
-  <simple-editor class="angularize-caption" placeholder="What's happening in this photo?" text="$ctrl.caption"></simple-editor>
+  <simple-editor class="angularize-caption" placeholder="What is happening in this photo?" text="$ctrl.caption"></simple-editor>
 </div>
 <style scoped>
   .angularize-drop-box {
@@ -31,7 +31,7 @@
 
   .angularize-caption {
     position: relative;
-    bottom: 10px;
+    bottom: 20px;
     left: 10px;
     outline: none;
     border:none;
