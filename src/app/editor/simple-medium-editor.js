@@ -1,5 +1,4 @@
 import MediumEditor from 'medium-editor';
-var $ = require('jquery');
 
 export class SimpleEditorCtrl {
     constructor($timeout) {
@@ -20,13 +19,11 @@ export class SimpleEditorCtrl {
                 buttons: []
             }
         }
-        console.log("initializing simple ", this.name);
         this.$timeout(() => {
-            let editorElem = $('.simple-medium-editor.' + this.name);
+            let editorElem = document.getElementsByClassName('simple-medium-editor ' + this.name)[0];
             this.editor = new MediumEditor(editorElem, editorOptions);
-            this.editor.subscribe('editable', () => {
+            this.editor.subscribe('editableInput', () => {
                 this.text = this.editor.getContent();
-                console.log("new text: ", this.text);
             })
         })
     }
