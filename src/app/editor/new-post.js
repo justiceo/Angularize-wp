@@ -18,7 +18,6 @@ export class NewPostCtrl {
             () => {
                 //this.fetchPost();
                 this.loadMeta();
-                this.initHeader();
                 this.initBody();
                 this.addToolbarButtons();
             },
@@ -111,32 +110,6 @@ export class NewPostCtrl {
 
     }
 
-    initHeader() {
-        let titleEditorOptions = {
-            disableReturn: true,
-            disableExtraSpaces: true,
-            placeholder: {
-                text: 'Name your story',
-                hideOnClick: false
-            },
-            paste: {
-                forcePlainText: true
-            },
-            toolbar: {
-                buttons: []
-            }
-        }
-        let titleElem = $('.post-title');
-        //this.titleEditor = new MediumEditor(titleElem, titleEditorOptions);
-        this.titleChanged = 0;
-
-        let excerptElem = $('.post-excerpt');
-        let excerptEditorOptions = titleEditorOptions;
-        excerptEditorOptions.placeholder.text = "Write a short introduction";
-        this.excerptEditor = new MediumEditor(excerptElem, excerptEditorOptions);
-        this.excerptChanged = 0;
-    }
-
     initBody() {
         let autolist = new AutoList();
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
@@ -224,8 +197,8 @@ export class NewPostCtrl {
 
     save() {
         let data = {
-            title: this.titleEditor.getContent(),
-            excerpt: this.excerptEditor.getContent(),
+            title: this.postTitle,
+            excerpt: this.postExcerpt,
             content: this.contentEditor.getContent(),
             categories: this.chips.categories.map(c => c.id),
             tags: this.chips.tags.map(t => t.id)
@@ -244,8 +217,8 @@ export class NewPostCtrl {
 
     publish() {
         let data = {
-            title: this.titleEditor.getContent(),
-            excerpt: this.excerptEditor.getContent(),
+            title: this.postTitle,
+            excerpt: this.postExcerpt,
             content: this.contentEditor.getContent(),
             categories: this.chips.categories.map(c => c.id),
             tags: this.chips.tags.map(t => t.id),
