@@ -5,7 +5,7 @@
         <div class="button" ngf-select="$ctrl.uploadFile($file)" ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB"
             ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Select</div>
     </div>
-    <h2 class="post-title"></h2>
+    <simple-editor class="post-title" placeholder="Name Your Story" text="$ctrl.post-title"></simple-editor>
     <p class="post-excerpt"></p>
     <p class="post-author">{{ $ctrl.authorName }}</p>
 </div>

@@ -185,8 +185,17 @@ export class NewPostCtrl {
             position: 2,
             handler: () => this.save()
         };
+        let publishButton = {
+            id: 'angularize_editor_publish',
+            title: 'Save & Publish',
+            icon: 'check',
+            position: 3,
+            handler: () => this.publish()
+        };
         this.ToolbarService.add(cancelButton);
         this.ToolbarService.add(saveButton);
+        // todo: only add if post is not published
+        this.ToolbarService.add(publishButton);
     }
 
     /**
@@ -220,6 +229,27 @@ export class NewPostCtrl {
             content: this.contentEditor.getContent(),
             categories: this.chips.categories.map(c => c.id),
             tags: this.chips.tags.map(t => t.id)
+        }
+        if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
+            this.PostService.$restApi.posts().id(this.postId).post(data);
+        }
+        else {
+            this.PostService.$restApi.posts().add(data).post().then(
+                (post) => {
+                    this.postId = post.attr('id');
+                }
+            )
+        }
+    }
+
+    publish() {
+        let data = {
+            title: this.titleEditor.getContent(),
+            excerpt: this.excerptEditor.getContent(),
+            content: this.contentEditor.getContent(),
+            categories: this.chips.categories.map(c => c.id),
+            tags: this.chips.tags.map(t => t.id),
+            status: 'publish'
         }
         if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
             this.PostService.$restApi.posts().id(this.postId).post(data);
