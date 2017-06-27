@@ -14,8 +14,8 @@ Upload right away after file selection:
 <div class="button" ngf-select="upload($file)">Upload on file select</div>
 <div class="button" ngf-select="uploadFiles($files)" multiple="multiple">Upload on file select</div>
   Drop File:
-<div ngf-drop="uploadFiles($files)" class="drop-box"
-  ngf-drag-over-class="'dragover'" ngf-multiple="true"
+<div ngf-drop="$ctrl.upload($file)" ng-model="$ctrl.file" class="drop-box" style="width: 200px; height:200px; background: #ccc"
+  ngf-drag-over-class="'dragover'"
   ngf-pattern="'image/*,application/pdf'">Drop Images or PDFs files here</div>
 <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
 
