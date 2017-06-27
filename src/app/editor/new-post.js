@@ -10,6 +10,21 @@ export class NewPostCtrl {
             'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log, 'ALL_CITIES': ALL_CITIES
         });
 
+        this.ALL_CITIES = [
+            {
+                name: "Lagos",
+                country: "NG",
+                lat: 12345,
+                lon: 54332
+            },
+            {
+                name: "Philadelphia",
+                country: "US",
+                lat: 342342,
+                lon: 74534
+            }
+        ];
+
         $log.log("NewPost: Initializing...");
         this.authorName = "Justice Ogbonna";
         this.chips = {}; // holds data for md-chips
@@ -99,7 +114,7 @@ export class NewPostCtrl {
 
     citySearch(query) {
         return query ? this.ALL_CITIES.filter(city => {
-            return city.name.match(query)
+            return city.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
         }) : [];
     }
 
@@ -110,8 +125,8 @@ export class NewPostCtrl {
         var lowercaseQuery = angular.lowercase(query);
 
         return function filterFn(taxonomy) {
-            return (taxonomy.name.indexOf(lowercaseQuery) === 0) ||
-                (taxonomy.slug.indexOf(lowercaseQuery) === 0);
+            return (taxonomy.name.indexOf(lowercaseQuery) !== -1) ||
+                (taxonomy.slug.indexOf(lowercaseQuery) !== -1);
         };
 
     }

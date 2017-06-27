@@ -8,7 +8,7 @@ import SimpleEditor from './simple-medium-editor';
 
 import EditPostDirective from './edit-button';
 
-let cities = require('all-the-cities');
+let cities = [];
 
 let requires = [ngMaterial, svgAssetsCache ];
 let editorModule = angular.module('angularize.editor', requires);

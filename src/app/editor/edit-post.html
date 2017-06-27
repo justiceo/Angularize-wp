@@ -9,13 +9,17 @@
     <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
     <p class="post-author">{{ $ctrl.authorName }}</p>
     <md-input-container class="cities">
-        <md-input ng-model="$ctrl.postLocation md-autocomplete-snap">
-            <md-autocomplete md-search-text="$ctrl.citySearch"
-                md-items="item in $ctrl.citySearch($ctrl.citySearch)"
-                md-item-text="item.name" placeholder="Where are you writing from?">
-                <span md-highlight-text="$ctrl.citySearch">{{ item.name }}</span>
-            </md-autocomplete>
-        </md-input>
+        <md-autocomplete
+          md-selected-item="$ctrl.postLocation"
+          md-search-text="$ctrl.cityQuery"
+          md-items="item in $ctrl.citySearch($ctrl.cityQuery)"
+          md-item-text="item.name"
+          md-min-length="0"
+          placeholder="Where are you writing from?">
+        <md-item-template>
+          <span md-highlight-text="$ctrl.cityQuery">{{item.name + ', ' + item.country}}</span>
+        </md-item-template>
+      </md-autocomplete>
     </md-input-container>
 </div>
 <div class="post-body"></div>
