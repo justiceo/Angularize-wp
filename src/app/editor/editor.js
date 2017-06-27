@@ -17,6 +17,8 @@ export class AbstractEditorCtrl {
     }
 
     compile(elem, attr) {
+
+        // takes placeholder as input
         // add the edit button with handler here here
         elem.css("background", "#ddd");
 

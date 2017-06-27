@@ -4,6 +4,7 @@ import PostSettings from './settings/settings';
 import EditorDirective from './editor';
 import Toolbar from './toolbar';
 import NewPost from './new-post';
+import SimpleEditor from './simple-medium-editor';
 
 import EditPostDirective from './edit-button';
 
@@ -23,5 +24,6 @@ editorModule
     .component('postSettings', PostSettings)
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)
+    .component('simpleEditor', SimpleEditor);
 
 export default editorModule;
