@@ -3,14 +3,8 @@
  */
 export class UploadFileCtrl {
     constructor($scope, Upload) {
-        // upload later on form submit or something similar
         this.Upload = Upload;
         this.$scope = $scope;
-        $scope.submit = function () {
-            if ($scope.form.file.$valid && $scope.file) {
-                this.upload($scope.file);
-            }
-        };
     }
 
     upload(file, alt_text = "", caption = "") {

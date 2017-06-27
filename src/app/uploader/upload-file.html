@@ -1,24 +1,9 @@
-Upload on form submit or button click
-Single Image with validations
-  <div class="button" ngf-select="$ctrl.upload($file)" ng-model="$ctrl.file" name="file" ngf-pattern="'image/*'"
-    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-    ngf-resize="{width: 200, height: 200}">Select Image</div>
-
-<form name="form"> 
+Upload on form submit or button click Single Image with validations
+<div class="button" ngf-select="$ctrl.upload($file)" ng-model="$ctrl.file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'"
+  ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 200, height: 200}">Select Image</div>
   
-  Drop files: <div ngf-drop ng-model="$ctrl.droppedFile" class="drop-box">Drop</div>
-  <button type="submit" ng-click="submit()">submit</button>
-</form>
-
-Upload right away after file selection:
-<div class="button" ngf-select="upload($file)">Upload on file select</div>
-<div class="button" ngf-select="uploadFiles($files)" multiple="multiple">Upload on file select</div>
-  Drop File:
+Drop File:
 <div ngf-drop="$ctrl.upload($file)" ng-model="$ctrl.file" class="drop-box" style="width: 200px; height:200px; background: #ccc"
-  ngf-drag-over-class="'dragover'"
-  ngf-pattern="'image/*,application/pdf'">Drop Images or PDFs files here</div>
-<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+  ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'">Drop Images or PDFs files here</div>
 
 Image thumbnail: <img ngf-thumbnail="$ctrl.file">
-Audio preview: <audio controls ngf-src="$ctrl.file"></audio>
-Video preview: <video controls ngf-src="$ctrl.file"></video>
