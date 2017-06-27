@@ -2,9 +2,10 @@
  * todo: make me a component
  */
 export class UploadFileCtrl {
-    constructor($scope, Upload) {
+    constructor($scope, $mdDialog, Upload) {
         this.Upload = Upload;
         this.$scope = $scope;
+        this.$mdDialog = $mdDialog;
     }
 
     upload(file, alt_text = "", caption = "") {

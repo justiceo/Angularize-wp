@@ -1,9 +1,41 @@
-Upload on form submit or button click Single Image with validations
-<div class="button" ngf-select="$ctrl.upload($file)" ng-model="$ctrl.file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'"
-  ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 200, height: 200}">Select Image</div>
-  
-Drop File:
-<div ngf-drop="$ctrl.upload($file)" ng-model="$ctrl.file" class="drop-box" style="width: 200px; height:200px; background: #ccc"
-  ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'">Drop Images or PDFs files here</div>
+<div 
+  ngf-drop="$ctrl.upload($file)" 
+  ng-model="$ctrl.file" 
+  class="angularize-drop-box" 
+  ngf-drag-over-class="'dragover'" 
+  ngf-pattern="'image/*,application/pdf'">
 
-Image thumbnail: <img ngf-thumbnail="$ctrl.file">
+
+  <img class="preview" ngf-thumbnail="$ctrl.file">
+  <div 
+    class="angularize-select-file fa fa-picture-o fa-5x" 
+    ngf-select="$ctrl.upload($file)" 
+    ng-model="$ctrl.file" 
+    name="file" 
+    ngf-pattern="'image/*'" 
+    ngf-accept="'image/*'"
+    ngf-max-size="20MB" 
+    ngf-min-height="100" 
+    ngf-resize="{width: 200, height: 200}"
+    >   
+  </div>
+</div>
+<style scoped>
+  .angularize-drop-box {
+    background: #f1f1f1;
+    border: 1px dashed #ccc;
+    position: relative;
+    overflow: hidden;
+  }
+  .angularize-select-file {
+    padding: 100px 50px;
+    text-align: center;
+    width: 100%;
+    color: #bbb;
+    position: relative;
+  }
+  img.preview {
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }

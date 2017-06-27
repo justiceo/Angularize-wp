@@ -29,6 +29,17 @@ export class NewPostCtrl {
         )
     }
 
+    openFeaturedImage() {
+        this.$mdDialog.show({
+            template: '<upload-file>',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true,
+            openFrom: '#le_toolbar', // use elem
+            closeTo: '#le_toolbar',
+            fullscreen: true // Only for -xs, -sm breakpoints.
+        });
+    }
+
     onFileSelect(files) {
         console.log("files: ", files);
     }
