@@ -3,20 +3,21 @@
         <simple-editor name="post-title-editor" class="post-title" placeholder="Name Your Story" text="$ctrl.postTitle"></simple-editor>
         <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
-        <md-input-container class="cities">
-            <label></label>
-            <md-autocomplete
-            md-selected-item="$ctrl.postLocation"
-            md-search-text="$ctrl.cityQuery"
-            md-items="item in $ctrl.citySearch($ctrl.cityQuery)"
-            md-item-text="item.name"
-            md-min-length="0"
-            placeholder="Where are you writing from?">
-            <md-item-template>
-            <span md-highlight-text="$ctrl.cityQuery">{{item.name + ', ' + item.country}}</span>
-            </md-item-template>
-        </md-autocomplete>
-        </md-input-container>
+        <div class="cities">
+            <md-input-container>
+                <label></label>
+                <md-autocomplete
+                md-selected-item="$ctrl.postLocation"
+                md-search-text="$ctrl.cityQuery"
+                md-items="item in $ctrl.citySearch($ctrl.cityQuery)"
+                md-item-text="item.name"
+                placeholder="Where are you writing from?">
+                <md-item-template>
+                <span md-highlight-text="$ctrl.cityQuery">{{item.name + ', ' + item.country}}</span>
+                </md-item-template>
+            </md-autocomplete>
+            </md-input-container>
+        </div>
     </upload-file>
 </div>
 <div class="post-body"></div>
@@ -134,5 +135,13 @@
     .md-button.md-fab {
         width: 80px;
         height: 80px;
+    }
+    .cities md-autocomplete, .cities input { background: transparent; color: #fff; }
+    md-autocomplete-wrap { box-shadow: none !important; }
+    .cities md-autocomplete input {
+        border-bottom: none;
+    }
+    .cities md-autocomplete input::placeholder {
+        color: #aaa;
     }
 </style>
