@@ -28,12 +28,8 @@ export class NewPostCtrl {
         $log.log("NewPost: Initializing...");
         this.chips = {}; // holds data for md-chips
         this.PostService.ready().then(
-            () => {
-                if(this.postId) {
-                    this.state = this.PostService.$restApi.posts().id(postId);
-                    this.state.get({embed: true});
-                }                
-                this.authorName = this.postId ? this.state.embeddedAttr('author') : this.PostService.$wp.currentUser.data.display_name; // get from post cause it might be editor
+            () => {             
+                this.authorName = this.postId ? this.state.attr('author') : this.PostService.$wp.currentUser.data.display_name; // get from post cause it might be editor
                 this.loadMeta();
                 this.initBody();
                 this.addToolbarButtons();
@@ -120,6 +116,16 @@ export class NewPostCtrl {
                 (taxonomy.slug.indexOf(lowercaseQuery) !== -1);
         };
 
+    }
+
+    initState() {
+        if(this.postId) {
+            this.state = this.PostService.$restApi.posts().id(postId);
+            this.state.get({embed: true});
+        }
+        else {
+            this.state = {}
+        }   
     }
 
     initBody() {
@@ -262,7 +268,10 @@ export class NewPostCtrl {
 
 let NewPost = {
     controller: NewPostCtrl,
-    template: require('./edit-post.html')
+    template: require('./edit-post.html'),
+    bindings: {
+        postId: '@'
+    }
 }
 
 export default NewPost;
