@@ -1,6 +1,5 @@
 import ngFileUpload from 'ng-file-upload';
-import UploadFile from './upload-file';
-import UploadFileDirective from './upload-filed';
+import UploadFileDirective from './upload-file';
 
 
 let requires = [
@@ -10,7 +9,6 @@ let requires = [
 let uploaderModule = angular.module('angularize.uploader', requires);
 
 uploaderModule
-    //.component('uploadFile', UploadFile)
     .directive('uploadFile', UploadFileDirective)
 
 export default uploaderModule;

@@ -16,7 +16,7 @@
     ngf-max-size="20MB" 
     ngf-min-height="100">
   </div>
-  <div class="inner" ng-transclude></div>
+  <div class="transcluded" ng-transclude></div>
   <simple-editor 
     name="angularize-caption-editor" 
     class="angularize-caption" 
@@ -57,5 +57,8 @@
       outline:none; 
       padding: 10px 0px; 
       max-width:300px;
+  }
+  .transcluded {
+    position: relative;
   }
 </style>
