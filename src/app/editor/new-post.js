@@ -43,6 +43,19 @@ export class NewPostCtrl {
         )
     }
 
+    upload(url) {
+        console.log('upload on new post');
+    }
+
+    setFeaturedImage(url){
+        console.log("setting featured image: ", url);
+        this.featuredImage = url;
+    }
+
+    progress(percent) {
+        console.log("progress: ", percent);
+    }
+
     openFeaturedImage() {
         this.$mdDialog.show({
             template: '<upload-file>',
@@ -51,25 +64,6 @@ export class NewPostCtrl {
             openFrom: '#le_toolbar', // use elem
             closeTo: '#le_toolbar',
             fullscreen: true // Only for -xs, -sm breakpoints.
-        });
-    }
-
-    onFileSelect(files) {
-        console.log("files: ", files);
-    }
-
-    uploadFile(file) {
-        console.log("upload file: ", file);
-        this.Upload.upload({
-            url: 'wp-json/wp/v2/media/',
-            data: {file: file, 'username': 'justice'}
-        }).then(function (resp) {
-            console.log('Success ', resp.config.data.file.name, ' uploaded. Response: ', resp.data);
-        }, function (resp) {
-            console.log('Error status: ', resp.status);
-        }, function (evt) {
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ', progressPercentage, '% ', evt.config.data.file.name);
         });
     }
 
