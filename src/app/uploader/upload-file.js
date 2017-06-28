@@ -2,23 +2,7 @@
 export class UploadFileCtrl {
     constructor($mdDialog, Upload) {
         this.Upload = Upload;
-        this.$mdDialog = $mdDialog;
-
-        this.restrict = 'E';
-        this.scope = {
-            onUploaded: '&',
-            progress: '&'
-        };
-        this.transclude = true;
-        this.template = require('./upload-file.html');
-    }
-
-    compile(elem, attr) {
-        return this.link
-    }
-
-    link(scope, elem, attr) {
-        this.scope = scope;
+        this.$mdDialog = $mdDialog;        
     }
 
     upload(file, alt_text = "", caption = "") {
@@ -42,19 +26,23 @@ export class UploadFileCtrl {
             .then((resp) => {
                 this.fileUrl = resp.data.source_url;
                 console.log('Success ' + resp.data.title.rendered + ' uploaded.');
-                this.scope.onUploaded({$uploadLink: this.fileUrl});
+                //this.scope.onUploaded({$uploadLink: this.fileUrl});
             }, function (resp) {
                 console.log('Error uploading file: ' + resp);
             }, (evt) => {
                 this.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 console.log('progress: ' + this.progressPercentage + '% ' + evt.config.data.file.name);
-                this.scope.progress({$uploadPercent: this.progressPercentage});
+                //this.scope.progress({$uploadPercent: this.progressPercentage});
             });
     }
 }
 
-let UploadFileDirective = function($mdDialog, Upload) {
-    return new UploadFileCtrl($mdDialog, Upload);
+
+
+let UploadFile = {
+    controller: UploadFileCtrl,
+    template: require('./upload-file.html'),
+    transclude: true
 }
 
-export default UploadFileDirective;
+export default UploadFile;
