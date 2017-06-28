@@ -33,9 +33,7 @@ export class SimpleEditorCtrl {
 
 let SimpleEditor = {
     controller: SimpleEditorCtrl,
-    template: `
-    <div class="simple-medium-editor" ng-class="$ctrl.name"></div>    
-    `,
+    template: '<div class="simple-medium-editor" ng-class="$ctrl.name" style="outline:none"></div>',
     bindings: {
         placeholder: '@',
         text: '=',

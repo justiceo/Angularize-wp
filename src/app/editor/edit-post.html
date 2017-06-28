@@ -1,26 +1,22 @@
-<div class="post-header" style="background-image: {{ 'url(' + $ctrl.featuredImage + ')' }}">
-    <div class="featured-image">
-        <input id="upload" type="file" ng-file-select="$ctrl.onFileSelect($files)" style="display: none;">
-        <button type="button" class="fa fa-picture-o fa-3x" ng-click="$ctrl.openFeaturedImage()"></button>
-        <div class="button" ngf-select="$ctrl.uploadFile($file)" ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB"
-            ngf-min-height="100" ngf-resize="{width: 100, height: 100}">Select</div>
-    </div>
-    <simple-editor name="post-title-editor" class="post-title" placeholder="Name Your Story" text="$ctrl.postTitle"></simple-editor>
-    <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
-    <p class="post-author">{{ $ctrl.authorName }}</p>
-    <md-input-container class="cities">
-        <md-autocomplete
-          md-selected-item="$ctrl.postLocation"
-          md-search-text="$ctrl.cityQuery"
-          md-items="item in $ctrl.citySearch($ctrl.cityQuery)"
-          md-item-text="item.name"
-          md-min-length="0"
-          placeholder="Where are you writing from?">
-        <md-item-template>
-          <span md-highlight-text="$ctrl.cityQuery">{{item.name + ', ' + item.country}}</span>
-        </md-item-template>
-      </md-autocomplete>
-    </md-input-container>
+<div class="post-header">
+    <upload-file>    
+        <simple-editor name="post-title-editor" class="post-title" placeholder="Name Your Story" text="$ctrl.postTitle"></simple-editor>
+        <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
+        <p class="post-author">{{ $ctrl.authorName }}</p>
+        <md-input-container class="cities">
+            <md-autocomplete
+            md-selected-item="$ctrl.postLocation"
+            md-search-text="$ctrl.cityQuery"
+            md-items="item in $ctrl.citySearch($ctrl.cityQuery)"
+            md-item-text="item.name"
+            md-min-length="0"
+            placeholder="Where are you writing from?">
+            <md-item-template>
+            <span md-highlight-text="$ctrl.cityQuery">{{item.name + ', ' + item.country}}</span>
+            </md-item-template>
+        </md-autocomplete>
+        </md-input-container>
+    </upload-file>
 </div>
 <div class="post-body"></div>
 <div class="post-settings">
