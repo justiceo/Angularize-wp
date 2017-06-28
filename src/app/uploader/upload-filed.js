@@ -1,11 +1,20 @@
-/**
- * todo: make me a component
- */
-export class UploadFileCtrl2 {
-    constructor($scope, $mdDialog, Upload) {
+
+export class UploadFileCtrl {
+    constructor($mdDialog, Upload) {
         this.Upload = Upload;
-        this.$scope = $scope;
         this.$mdDialog = $mdDialog;
+
+        this.scope = {};
+        this.transclude = true;
+        //this.template = '<div> some content <span ng-transclude></span></div>'
+        this.template = require('./upload-file.html');
+    }
+
+    compile(elem, attr) {
+        return this.link
+    }
+
+    link(scope, elem, attr) {
     }
 
     upload(file, alt_text = "", caption = "") {
@@ -37,9 +46,8 @@ export class UploadFileCtrl2 {
     }
 }
 
-let UploadFile = {
-    controller: UploadFileCtrl2,
-    template: require('./upload-file.html')
+let UploadFileDirective = function($mdDialog, Upload) {
+    return new UploadFileCtrl($mdDialog, Upload);
 }
 
-export default UploadFile;
+export default UploadFileDirective;
