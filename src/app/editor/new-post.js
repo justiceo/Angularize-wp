@@ -179,7 +179,7 @@ export class NewPostCtrl {
         let publishButton = {
             id: 'angularize_editor_publish',
             title: 'Save & Publish',
-            icon: 'check',
+            icon: 'paper-plane-o',
             position: 3,
             handler: () => this.publish()
         };

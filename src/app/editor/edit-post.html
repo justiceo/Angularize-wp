@@ -3,7 +3,7 @@
         <simple-editor name="post-title-editor" class="post-title" placeholder="Name Your Story" text="$ctrl.postTitle"></simple-editor>
         <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
-        <div class="cities">
+        <div class="cities hidden">
             <md-input-container>
                 <label></label>
                 <md-autocomplete
@@ -48,7 +48,7 @@
             </md-chip-template>
         </md-chips>
     </md-input-container>
-    <button md-button>More Options</button>
+    <button md-button class="hidden">More Options</button>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
 <style scoped>
@@ -142,6 +142,8 @@
         border-bottom: none;
     }
     .cities md-autocomplete input::placeholder {
-        color: #aaa;
+        color: #ccc;
+        font-size: 90%;
     }
+    .hidden { display: none; }
 </style>
