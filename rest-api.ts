@@ -106,10 +106,13 @@ class RestObject implements RestObjectI {
         return this._state;
     }
     //// returns a promise to get the model and update rawVal
-    get(): Promise<Object> {
-        return this._schema.ajax.get(this._route).then(
+    get(args): Promise<Object> {
+        return this._schema.ajax.get(this._route + this._serialize(args)).then(
             success => {
                 this._extend(this._state, success);
+                if(args) {
+                    console.log("get args: ", success);
+                }
                 return this;
             }
         )

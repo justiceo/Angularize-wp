@@ -26,12 +26,14 @@ export class NewPostCtrl {
         ];
 
         $log.log("NewPost: Initializing...");
-        this.authorName = "Justice Ogbonna";
         this.chips = {}; // holds data for md-chips
-        this.featuredImage = 'https://www.kidscodecs.com/wp-content/uploads/2013/07/oskay-hello-world-toast1.jpg';
         this.PostService.ready().then(
             () => {
-                //this.fetchPost();
+                if(this.postId) {
+                    this.state = this.PostService.$restApi.posts().id(postId);
+                    this.state.get({embed: true});
+                }                
+                this.authorName = this.postId ? this.state.embeddedAttr('author') : this.PostService.$wp.currentUser.data.display_name; // get from post cause it might be editor
                 this.loadMeta();
                 this.initBody();
                 this.addToolbarButtons();
@@ -43,12 +45,7 @@ export class NewPostCtrl {
         )
     }
 
-    upload(url) {
-        console.log('upload on new post');
-    }
-
     setFeaturedImage(url){
-        console.log("setting featured image: ", url);
         this.featuredImage = url;
     }
 

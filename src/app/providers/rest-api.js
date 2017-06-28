@@ -105,10 +105,13 @@ var RestObject = (function () {
         return this._state;
     };
     //// returns a promise to get the model and update rawVal
-    RestObject.prototype.get = function () {
+    RestObject.prototype.get = function (args) {
         var _this = this;
-        return this._schema.ajax.get(this._route).then(function (success) {
+        return this._schema.ajax.get(this._route + this._serialize(args)).then(function (success) {
             _this._extend(_this._state, success);
+            if (args) {
+                console.log("get args: ", success);
+            }
             return _this;
         });
     };
