@@ -8,7 +8,6 @@ import PostService from './providers/post';
 import Ajax from './providers/ajax';
 import CurrentUser from './providers/current-user';
 import ToolbarService from './providers/toolbar.service';
-import AppComponent from './app';
 
 import '../style/app.scss';
 
@@ -28,7 +27,6 @@ console.log("angularize_server: ", window.angularize_server);
 // To prevent un-predictable behavior, only load when wp rest api is enabled
 if(window.angularize_server.WpRestApiEnabled)
 angularize
-  .component('app', AppComponent)
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)

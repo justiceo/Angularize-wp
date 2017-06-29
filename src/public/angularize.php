@@ -50,8 +50,9 @@ function angularize_enque_scripts() {
         'WpRestApiEnabled' => is_plugin_active('rest-api/plugin.php'),
         'FrontEndEditorEnabled' => is_plugin_active('wp-front-end-editor/plugin.php'),
         'meta' => get_post_meta( get_the_ID() ),
-        'is_signle' => is_single(),
+        'is_single' => is_single(),
         'is_archive' => is_archive(),
+        'is_logged_in' => is_user_logged_in(),
         'postObject' => get_post()
     );
     $translation_array = apply_filters( 'angularize_server', $translation_array );
@@ -59,9 +60,9 @@ function angularize_enque_scripts() {
     wp_enqueue_script('ng-script');
 }
 
-add_action('wp_footer', 'angularize_add_app_tag');
-function angularize_add_app_tag() {
-    echo '<app></app>';
+add_action('wp_footer', 'angularize_add_toolbar_tag');
+function angularize_add_toolbar_tag() {
+    echo '<toolbar></toolbar>';
 }
 
 // Disables the WYSIWYG editor of tinyMce
