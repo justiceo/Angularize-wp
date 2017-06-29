@@ -3,20 +3,8 @@
         <simple-editor name="post-title-editor" class="post-title" placeholder="Name Your Story" text="$ctrl.postTitle"></simple-editor>
         <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
-        <div class="cities hidden">
-            <md-input-container>
-                <label></label>
-                <md-autocomplete
-                md-selected-item="$ctrl.postLocation"
-                md-search-text="$ctrl.cityQuery"
-                md-items="item in $ctrl.citySearch($ctrl.cityQuery)"
-                md-item-text="item.name"
-                placeholder="Where are you writing from?">
-                <md-item-template>
-                <span md-highlight-text="$ctrl.cityQuery">{{item.name + ', ' + item.country}}</span>
-                </md-item-template>
-            </md-autocomplete>
-            </md-input-container>
+        <div class="cities">
+            <autocomplete ng-model="$ctrl.postLocation" data="$ctrl.ALL_CITIES"></autocomplete>
         </div>
     </upload-file>
 </div>

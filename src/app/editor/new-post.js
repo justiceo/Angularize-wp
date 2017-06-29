@@ -24,6 +24,7 @@ export class NewPostCtrl {
                 lon: 74534
             }
         ];
+        this.ALL_CITIES = ["Lagos", "Abuja", "london", "austy"];
 
         $log.log("NewPost: Initializing...");
         this.chips = {}; // holds data for md-chips

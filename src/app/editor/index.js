@@ -6,11 +6,13 @@ import Toolbar from './toolbar';
 import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
 
+import autocomplete from 'almighty-autocomplete';
+
 import EditPostDirective from './edit-button';
 
 let cities = [];
 
-let requires = [ngMaterial, svgAssetsCache ];
+let requires = [ngMaterial, svgAssetsCache, autocomplete ];
 let editorModule = angular.module('angularize.editor', requires);
 
 // only load if we have wp front end editor enabled
