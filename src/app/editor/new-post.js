@@ -41,8 +41,9 @@ export class NewPostCtrl {
         )
     }
 
-    setFeaturedImage(url){
+    setFeaturedImage(url, fileId){
         this.featuredImage = url;
+        this.featuredImageId = fileId;
     }
 
     progress(percent) {
@@ -179,7 +180,7 @@ export class NewPostCtrl {
         let publishButton = {
             id: 'angularize_editor_publish',
             title: 'Save & Publish',
-            icon: 'paper-plane-o',
+            icon: 'cursor',
             position: 3,
             handler: () => this.publish()
         };
@@ -219,8 +220,10 @@ export class NewPostCtrl {
             excerpt: this.postExcerpt,
             content: this.contentEditor.getContent(),
             categories: this.chips.categories.map(c => c.id),
-            tags: this.chips.tags.map(t => t.id)
+            tags: this.chips.tags.map(t => t.id),
+            featured_media: this.fileId
         }
+
         if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
             this.PostService.$restApi.posts().id(this.postId).post(data);
         }
@@ -240,8 +243,10 @@ export class NewPostCtrl {
             content: this.contentEditor.getContent(),
             categories: this.chips.categories.map(c => c.id),
             tags: this.chips.tags.map(t => t.id),
+            featured_media: this.fileId,
             status: 'publish'
         }
+
         if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
             this.PostService.$restApi.posts().id(this.postId).post(data);
         }

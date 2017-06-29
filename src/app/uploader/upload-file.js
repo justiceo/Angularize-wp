@@ -23,7 +23,8 @@ export class UploadFileCtrl {
         })
             .then((resp) => {
                 this.fileUrl = resp.data.source_url;
-                this.onUploaded({ $uploadLink: this.fileUrl });
+                this.fileId = resp.data.id;
+                this.onUploaded({ $uploadLink: this.fileUrl, $fileId: this.fileId });
             }, function (resp) {
                 console.log('Error uploading file: ' + resp);
             }, (evt) => {

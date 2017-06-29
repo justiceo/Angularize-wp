@@ -1,5 +1,5 @@
 <div class="post-header">
-    <upload-file progress="$ctrl.progress($uploadPercent)" on-uploaded="$ctrl.setFeaturedImage($uploadLink)">    
+    <upload-file progress="$ctrl.progress($uploadPercent)" on-uploaded="$ctrl.setFeaturedImage($uploadLink, $fileId)">    
         <simple-editor name="post-title-editor" class="post-title" placeholder="Name Your Story" text="$ctrl.postTitle"></simple-editor>
         <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
