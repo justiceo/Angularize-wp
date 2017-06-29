@@ -221,7 +221,7 @@ export class NewPostCtrl {
             content: this.contentEditor.getContent(),
             categories: this.chips.categories.map(c => c.id),
             tags: this.chips.tags.map(t => t.id),
-            featured_media: this.fileId
+            featured_media: this.featuredImageId
         }
 
         if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
@@ -243,7 +243,7 @@ export class NewPostCtrl {
             content: this.contentEditor.getContent(),
             categories: this.chips.categories.map(c => c.id),
             tags: this.chips.tags.map(t => t.id),
-            featured_media: this.fileId,
+            featured_media: this.featuredImageId,
             status: 'publish'
         }
 
