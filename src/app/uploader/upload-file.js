@@ -22,14 +22,16 @@ export class UploadFileCtrl {
             }
         })
             .then((resp) => {
-                this.fileUrl = resp.data.source_url;
-                this.fileId = resp.data.id;
-                this.onUploaded({ $uploadLink: this.fileUrl, $fileId: this.fileId });
+                this.uploadUrl = resp.data.source_url;
+                this.uploadId = resp.data.id;
+                if(this.onUploaded)
+                    this.onUploaded({ $uploadLink: this.uploadUrl, $fileId: this.uploadId });
             }, function (resp) {
                 console.log('Error uploading file: ' + resp);
             }, (evt) => {
                 this.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                this.progress({ $uploadPercent: this.progressPercentage });
+                if(this.progress)
+                    this.progress({ $uploadPercent: this.progressPercentage });
             });
     }
 }
@@ -40,7 +42,9 @@ let UploadFile = {
     transclude: true,
     bindings: {
         progress: '&',
-        onUploaded: '&'
+        onUploaded: '&',
+        uploadId: '=',
+        uploadUrl: '='
     }
 }
 
