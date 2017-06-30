@@ -1,23 +1,25 @@
 <div class="post-header">
-    <upload-file progress="$ctrl.progress($uploadPercent)" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage">    
+    <upload-file progress="$ctrl.progress($uploadPercent)" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage">
         <simple-editor name="post-title-editor" placeholder="Name Your Story" text="$ctrl.state.title.rendered"></simple-editor>
         <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt.rendered"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
-            <autocomplete ng-model="$ctrl.postLocation2" data="$ctrl.ALL_CITIES"></autocomplete>
-            <input type="text" ng-model="$ctrl.postLocation" uib-typeahead="state for state in $ctrl.ALL_CITIES | filter:$viewValue | limitTo:5" class="form-control">
+            <input placeholder="Where are you writing from?" type="text" ng-model="$ctrl.postLocation" uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue | limitTo:5"
+                class="form-control">
         </div>
     </upload-file>
 </div>
 <div class="post-body"></div>
 <div class="post-settings">
-    <input type="text" ng-model="$ctrl.category" uib-typeahead="cat for cat in $ctrl.list | filter:$viewValue | limitTo:5" class="form-control">
+    <label>Categories</label>
+    <input placeholder="Search for Categories" type="text" ng-model="$ctrl.category" uib-typeahead="cat for cat in $ctrl.list | filter:$viewValue | limitTo:5"
+        class="categories form-control">
     <md-input-container class="categories">
         <label>Post Categories</label>
         <md-chips ng-model="$ctrl.chips.categories" md-autocomplete-snap md-require-match="true" placeholder="Enter a category then press Enter"
             delete-button-label="Remove Category" delete-hint="Press delete to remove category" secondary-placeholder="+Category">
-            <md-autocomplete md-search-text="$ctrl.searchText" md-items="item in $ctrl.categorySearch($ctrl.searchText)" 
-                md-item-text="item.name" placeholder="Search for a category">
+            <md-autocomplete md-search-text="$ctrl.searchText" md-items="item in $ctrl.categorySearch($ctrl.searchText)" md-item-text="item.name"
+                placeholder="Search for a category">
                 <span md-highlight-text="$ctrl.searchText">{{ item.name }} </span>
             </md-autocomplete>
             <md-chip-template>
@@ -25,13 +27,13 @@
             </md-chip-template>
         </md-chips>
     </md-input-container>
-    
+
     <md-input-container class="tags">
         <label>Post Tags</label>
         <md-chips ng-model="$ctrl.chips.tags" md-autocomplete-snap placeholder="Enter a tag then press Enter" md-transform-chip="$ctrl.transformChip($chip)"
             delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" secondary-placeholder="+Tag">
-            <md-autocomplete md-search-text="$ctrl.tagSearchText" md-items="item in $ctrl.tagSearch($ctrl.tagSearchText)" 
-                md-item-text="item.name" placeholder="Search for a tag">
+            <md-autocomplete md-search-text="$ctrl.tagSearchText" md-items="item in $ctrl.tagSearch($ctrl.tagSearchText)" md-item-text="item.name"
+                placeholder="Search for a tag">
                 <span md-highlight-text="$ctrl.tagSearchText">{{ item.name }} </span>
             </md-autocomplete>
             <md-chip-template>
@@ -55,7 +57,6 @@
         text-align: center;
         background: #222;
         color: #fff;
-        overflow: auto;
     }
 
     .featured-image {
@@ -100,6 +101,19 @@
         padding: 30px;
     }
 
+    .post-settings ul.dropdown-menu,
+    .cities ul.dropdown-menu {
+        position: absolute;
+        background: white;
+        z-index: 999;
+        padding: 10px 15px;
+        list-style: none;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
+    input.categories {}
+
     md-input-container.categories,
     md-input-container.tags {
         width: 100%;
@@ -127,14 +141,34 @@
         width: 80px;
         height: 80px;
     }
-    .cities md-autocomplete, .cities input { background: transparent; color: #fff; }
-    md-autocomplete-wrap { box-shadow: none !important; }
+
+    .cities {
+        position: absolute;
+        right: 0;
+        bottom: -30px;
+        z-index: 1;
+    }
+
+    .cities md-autocomplete,
+    .cities input {
+        background: transparent;
+        color: #fff;
+    }
+
+    md-autocomplete-wrap {
+        box-shadow: none !important;
+    }
+
     .cities md-autocomplete input {
         border-bottom: none;
     }
+
     .cities md-autocomplete input::placeholder {
         color: #ccc;
         font-size: 90%;
     }
-    .hidden { display: none; }
+
+    .hidden {
+        display: none;
+    }
 </style>
