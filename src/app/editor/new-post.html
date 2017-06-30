@@ -1,7 +1,7 @@
 <div class="post-header">
     <upload-file progress="$ctrl.progress($uploadPercent)" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage">
-        <simple-editor name="post-title-editor" placeholder="Name Your Story" text="$ctrl.state.title.rendered"></simple-editor>
-        <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt.rendered"></simple-editor>
+        <simple-editor name="post-title-editor" placeholder="Name Your Story" text="$ctrl.state.title"></simple-editor>
+        <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
             <input placeholder="Where are you writing from?" type="text" ng-model="$ctrl.postLocation" uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue | limitTo:5"

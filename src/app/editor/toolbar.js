@@ -44,6 +44,7 @@ let Toolbar = {
             background: #222;
             color: white;
         }
+        /* todo: animate hover, add icons, add tooltip, proper centering */
     </style>
     `
 };

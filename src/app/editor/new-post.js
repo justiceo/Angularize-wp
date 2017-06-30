@@ -75,9 +75,6 @@ export class NewPostCtrl {
 
     initState() {
         this.state = {
-            title: {},
-            excerpt: {},
-            content: {},
             categories: [],
             tags: []
         };
@@ -125,7 +122,7 @@ export class NewPostCtrl {
 
         let elem = $('.post-body');
         this.contentEditor = new MediumEditor(elem, contentEditorOptions);
-        this.contentEditor.subscribe('editableInput', () => this.state.content.rendered = this.contentEditor.getContent())
+        this.contentEditor.subscribe('editableInput', () => this.state.content = this.contentEditor.getContent())
             
 
         //this.contentEditor.destroy(); // fix this later
@@ -191,7 +188,7 @@ export class NewPostCtrl {
     }
 
     save() {
-        if(this.state.id !== null && this.state.id !== undefined) {
+        if(this.state.id !== null && this.state.id !== undefined) {            
             // todo: bind categories and tags            
             this.state.categories = this.chips.categories.map(c => c.id);
             this.state.tags = this.chips.tags.map(t => t.id);
@@ -200,7 +197,8 @@ export class NewPostCtrl {
         else {
             this.PostService.$restApi.posts().add(this.state).post().then(
                 (post) => {
-                    angular.extend(this.state, post);
+                    angular.extend(this.state, post.rawVal());
+                    angular.extend(this.state, {title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered})
                     this.postId = this.state.id;
                 }
             )
