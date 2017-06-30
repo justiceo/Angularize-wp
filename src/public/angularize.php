@@ -62,7 +62,7 @@ function angularize_enque_scripts() {
 
 add_action('wp_footer', 'angularize_add_toolbar_tag');
 function angularize_add_toolbar_tag() {
-    echo '<toolbar></toolbar>';
+    //echo '<toolbar></toolbar>';
 }
 
 // Disables the WYSIWYG editor of tinyMce
