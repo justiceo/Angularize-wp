@@ -2,7 +2,6 @@ import angular from 'angular';
 import LocalStorageModule from 'angular-local-storage';
 import './editor';
 import './widgets';
-import './uploader';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
@@ -15,7 +14,6 @@ let requires = [
   LocalStorageModule,
   'angularize.widgets',
   'angularize.editor',
-  'angularize.uploader',
 ];
 let MODULE_NAME = 'angularize';
 let angularize = angular.module(MODULE_NAME, requires);
