@@ -1,7 +1,7 @@
 <div class="post-header">
     <upload-file progress="$ctrl.progress($uploadPercent)" on-uploaded="$ctrl.setFeaturedImage($uploadLink, $fileId)">    
-        <simple-editor name="post-title-editor" class="post-title" placeholder="Name Your Story" text="$ctrl.postTitle"></simple-editor>
-        <simple-editor name="post-excerpt-editor" class="post-excerpt" placeholder="Write a short introduction" text="$ctrl.postExcerpt"></simple-editor>
+        <simple-editor name="post-title-editor" placeholder="Name Your Story" text="$ctrl.state.title.rendered"></simple-editor>
+        <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt.rendered"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
             <autocomplete ng-model="$ctrl.postLocation" data="$ctrl.ALL_CITIES"></autocomplete>
@@ -60,7 +60,7 @@
         margin-bottom: 40px;
     }
 
-    .post-title {
+    .post-title-editor {
         max-width: 90%;
         margin: 0px auto;
         padding-top: 20px;
@@ -69,13 +69,13 @@
         color: #fff;
     }
 
-    .post-excerpt {
+    .post-excerpt-editor {
         margin: 0 auto;
         max-width: 70%;
     }
 
-    .post-title,
-    .post-excerpt,
+    .post-title-editor,
+    .post-excerpt-editor,
     .post-body {
         outline: none;
     }

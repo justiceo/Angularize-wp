@@ -23,7 +23,8 @@ export class SimpleEditorCtrl {
             let editorElem = document.getElementsByClassName('simple-medium-editor ' + this.name)[0];
             this.editor = new MediumEditor(editorElem, editorOptions);
             this.editor.subscribe('editableInput', () => {
-                this.text = this.editor.getContent();
+                // get content and strip any html tags
+                this.text = this.editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
             })
         })
     }

@@ -42,24 +42,13 @@ export class NewPostCtrl {
         )
     }
 
-    setFeaturedImage(url, fileId){
+    setFeaturedImage(url, fileId){        
         this.featuredImage = url;
-        this.featuredImageId = fileId;
+        this.state.featured_media = fileId;
     }
 
     progress(percent) {
         console.log("progress: ", percent);
-    }
-
-    openFeaturedImage() {
-        this.$mdDialog.show({
-            template: '<upload-file>',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true,
-            openFrom: '#le_toolbar', // use elem
-            closeTo: '#le_toolbar',
-            fullscreen: true // Only for -xs, -sm breakpoints.
-        });
     }
 
     // get author info, post categories, post tags, post status
@@ -74,7 +63,9 @@ export class NewPostCtrl {
                         'slug': c.slug
                     }
                 });
+                // ensure this.state is done loading
                 this.chips.categories = [];
+                //this.chips.categories = this.chips.allCategories.filter(c => this.state.categories.contains(c.id))
             }
         )
 
@@ -89,6 +80,7 @@ export class NewPostCtrl {
                     }
                 });
                 this.chips.tags = [];
+                //this.chips.tags = this.chips.allTags.filter(t => this.state.tags.contains(t.id));
             }
         )
     }
@@ -121,17 +113,24 @@ export class NewPostCtrl {
     }
 
     initState() {
+        this.state = {
+                title: {},
+                excerpt: {},
+                content: {},
+                categories: [],
+                tags: []
+            }
         if(this.postId) {
-            this.state = this.PostService.$restApi.posts().id(postId);
-            this.state.get({embed: true});
-        }
-        else {
-            this.state = {}
-        }   
+            this.PostService.$restApi.posts().id(postId).get({embed: true}).then(
+                post => {
+                    angular.extend(this.state, post);
+                    // fetch featured image;
+                    // populate chips
+                });
+        } 
     }
 
     initBody() {
-        let autolist = new AutoList();
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
         let contentEditorOptions = {
             buttonLabels: 'fontawesome',
@@ -141,7 +140,7 @@ export class NewPostCtrl {
                 hideOnClick: false
             },
             extensions: {
-                'auotlist': autolist
+                'auotlist':  new AutoList()
             },
             toolbar: {
                 buttons: ['h1', 'h2', 'bold', 'italic', 'quote', 'pre', 'unorderedlist', 'orderedlist', 'justifyLeft', 'justifyCenter', 'anchor']
@@ -151,7 +150,8 @@ export class NewPostCtrl {
 
         let elem = $('.post-body');
         this.contentEditor = new MediumEditor(elem, contentEditorOptions);
-        this.contentChanged = 0;
+        this.contentEditor.subscribe('editableInput', () => this.state.content.rendered = this.contentEditor.getContent())
+            
 
         //this.contentEditor.destroy(); // fix this later
         /*$(function () {
@@ -216,48 +216,25 @@ export class NewPostCtrl {
     }
 
     save() {
-        let data = {
-            title: this.postTitle,
-            excerpt: this.postExcerpt,
-            content: this.contentEditor.getContent(),
-            categories: this.chips.categories.map(c => c.id),
-            tags: this.chips.tags.map(t => t.id),
-            featured_media: this.featuredImageId
-        }
-
-        if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
-            this.PostService.$restApi.posts().id(this.postId).post(data);
+        if(this.state.id !== null && this.state.id !== undefined) {
+            // todo: bind categories and tags            
+            this.state.categories = this.chips.categories.map(c => c.id);
+            this.state.tags = this.chips.tags.map(t => t.id);
+            this.PostService.$restApi.posts().id(this.state.id).post(this.state);
         }
         else {
-            this.PostService.$restApi.posts().add(data).post().then(
+            this.PostService.$restApi.posts().add(this.state).post().then(
                 (post) => {
-                    this.postId = post.attr('id');
+                    angular.extend(this.state, post);
+                    this.postId = this.state.id;
                 }
             )
         }
     }
 
     publish() {
-        let data = {
-            title: this.postTitle,
-            excerpt: this.postExcerpt,
-            content: this.contentEditor.getContent(),
-            categories: this.chips.categories.map(c => c.id),
-            tags: this.chips.tags.map(t => t.id),
-            featured_media: this.featuredImageId,
-            status: 'publish'
-        }
-
-        if (this.postId) { // we're editing. **bug: 0 is valid post-id but falsy 
-            this.PostService.$restApi.posts().id(this.postId).post(data);
-        }
-        else {
-            this.PostService.$restApi.posts().add(data).post().then(
-                (post) => {
-                    this.postId = post.attr('id');
-                }
-            )
-        }
+        this.state.status = 'publish';
+        this.save();
     }
 
     transformChip(chip) {
@@ -281,7 +258,3 @@ let NewPost = {
 }
 
 export default NewPost;
-
-// todo: add postId binding to component
-// - if postId is specified, load post and prepopulate title, excerpt, content, cats..etc
-// 
