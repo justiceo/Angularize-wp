@@ -4,12 +4,14 @@
         <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt.rendered"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
-            <autocomplete ng-model="$ctrl.postLocation" data="$ctrl.ALL_CITIES"></autocomplete>
+            <autocomplete ng-model="$ctrl.postLocation2" data="$ctrl.ALL_CITIES"></autocomplete>
+            <input type="text" ng-model="$ctrl.postLocation" uib-typeahead="state for state in $ctrl.ALL_CITIES | filter:$viewValue | limitTo:5" class="form-control">
         </div>
     </upload-file>
 </div>
 <div class="post-body"></div>
 <div class="post-settings">
+    <input type="text" ng-model="$ctrl.category" uib-typeahead="cat for cat in $ctrl.list | filter:$viewValue | limitTo:5" class="form-control">
     <md-input-container class="categories">
         <label>Post Categories</label>
         <md-chips ng-model="$ctrl.chips.categories" md-autocomplete-snap md-require-match="true" placeholder="Enter a category then press Enter"
@@ -23,6 +25,7 @@
             </md-chip-template>
         </md-chips>
     </md-input-container>
+    
     <md-input-container class="tags">
         <label>Post Tags</label>
         <md-chips ng-model="$ctrl.chips.tags" md-autocomplete-snap placeholder="Enter a tag then press Enter" md-transform-chip="$ctrl.transformChip($chip)"

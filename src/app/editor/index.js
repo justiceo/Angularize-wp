@@ -1,5 +1,6 @@
 import ngMaterial from 'angular-material';
 import svgAssetsCache from 'svg-assets-cache';
+import typeahead from 'angular-ui-bootstrap/src/typeahead';
 import PostSettings from './settings/settings';
 import EditorDirective from './editor';
 import Toolbar from './toolbar';
@@ -12,7 +13,7 @@ import EditPostDirective from './edit-button';
 
 let cities = [];
 
-let requires = [ngMaterial, svgAssetsCache, 'autocomplete' ];
+let requires = [ngMaterial, svgAssetsCache, 'autocomplete', typeahead ];
 let editorModule = angular.module('angularize.editor', requires);
 
 // only load if we have wp front end editor enabled
