@@ -12,36 +12,11 @@
 <div class="post-body"></div>
 <div class="post-settings">
     <label>Categories</label>
-    <input placeholder="Search for Categories" type="text" ng-model="$ctrl.category" uib-typeahead="cat for cat in $ctrl.list | filter:$viewValue | limitTo:5"
+    <input placeholder="Search for Categories" type="text" ng-model="$ctrl.chips.categories" uib-typeahead="c.slug for c in $ctrl.chips.allCategories | filter:$viewValue | limitTo:5"
         class="categories form-control">
-    <md-input-container class="categories">
-        <label>Post Categories</label>
-        <md-chips ng-model="$ctrl.chips.categories" md-autocomplete-snap md-require-match="true" placeholder="Enter a category then press Enter"
-            delete-button-label="Remove Category" delete-hint="Press delete to remove category" secondary-placeholder="+Category">
-            <md-autocomplete md-search-text="$ctrl.searchText" md-items="item in $ctrl.categorySearch($ctrl.searchText)" md-item-text="item.name"
-                placeholder="Search for a category">
-                <span md-highlight-text="$ctrl.searchText">{{ item.name }} </span>
-            </md-autocomplete>
-            <md-chip-template>
-                <span>{{ $chip.name }}</span>
-            </md-chip-template>
-        </md-chips>
-    </md-input-container>
-
-    <md-input-container class="tags">
-        <label>Post Tags</label>
-        <md-chips ng-model="$ctrl.chips.tags" md-autocomplete-snap placeholder="Enter a tag then press Enter" md-transform-chip="$ctrl.transformChip($chip)"
-            delete-button-label="Remove Tag" delete-hint="Press delete to remove tag" secondary-placeholder="+Tag">
-            <md-autocomplete md-search-text="$ctrl.tagSearchText" md-items="item in $ctrl.tagSearch($ctrl.tagSearchText)" md-item-text="item.name"
-                placeholder="Search for a tag">
-                <span md-highlight-text="$ctrl.tagSearchText">{{ item.name }} </span>
-            </md-autocomplete>
-            <md-chip-template>
-                <span>{{ $chip.name }}</span>
-            </md-chip-template>
-        </md-chips>
-    </md-input-container>
-    <button md-button class="hidden">More Options</button>
+    <label>Tags</label>
+    <input placeholder="Search for tags" type="text" ng-model="$ctrl.chips.tags" uib-typeahead="t.slug for t in $ctrl.chips.allTags | filter:$viewValue | limitTo:5"
+        class="tags form-control">
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
 <style scoped>
@@ -89,6 +64,23 @@
         margin-bottom: 50px;
     }
 
+    .cities {
+        position: absolute;
+        right: 10px;
+        bottom: -33px;
+        z-index: 1;
+        font-size: 90%;
+    }
+
+    .cities input, .cities input:focus {
+        background: transparent;
+        color: #fff;
+        border: 2px solid transparent;        
+    }
+    .cities input:focus {
+        border-bottom: 2px solid #aaa;
+    }
+
     .post-body {
         min-height: 400px;
         max-width: 800px;
@@ -101,6 +93,30 @@
         padding: 30px;
     }
 
+    .post-settings label {
+        background: white;
+        padding: 10px 18px;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        background: #f3f3f3;
+        text-transform: uppercase;
+        font-family: sans-serif;
+        font-size: 70%;
+        font-weight: 600;
+    }
+
+    .post-settings input {
+        margin: 15px auto;
+        border: none;
+        box-shadow: 0 0 20px #d1d1d1;
+        border: 1px solid #ccc;
+        padding: 16px;
+        margin-top: 3px;
+    }
+    .post-settings input.categories {
+        margin-bottom: 40px;
+    }
+
     .post-settings ul.dropdown-menu,
     .cities ul.dropdown-menu {
         position: absolute;
@@ -110,14 +126,6 @@
         list-style: none;
         border: 1px solid #ccc;
         border-top: none;
-    }
-
-    input.categories {}
-
-    md-input-container.categories,
-    md-input-container.tags {
-        width: 100%;
-        margin-bottom: 40px;
     }
 
     i.icons {
@@ -135,37 +143,6 @@
 
     .md-errors-spacer {
         display: none
-    }
-
-    .md-button.md-fab {
-        width: 80px;
-        height: 80px;
-    }
-
-    .cities {
-        position: absolute;
-        right: 0;
-        bottom: -30px;
-        z-index: 1;
-    }
-
-    .cities md-autocomplete,
-    .cities input {
-        background: transparent;
-        color: #fff;
-    }
-
-    md-autocomplete-wrap {
-        box-shadow: none !important;
-    }
-
-    .cities md-autocomplete input {
-        border-bottom: none;
-    }
-
-    .cities md-autocomplete input::placeholder {
-        color: #ccc;
-        font-size: 90%;
     }
 
     .hidden {
