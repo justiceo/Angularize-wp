@@ -9,7 +9,9 @@ export class NewPostCtrl {
             '$scope': $scope, 'Upload': Upload, 'Cache': Cache, 'ToolbarService': ToolbarService,
             'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log, 'ALL_CITIES': ALL_CITIES
         });
+    }
 
+    $onInit() {
         this.ALL_CITIES = [
             {
                 name: "Lagos",
@@ -26,12 +28,10 @@ export class NewPostCtrl {
         ];
         this.ALL_CITIES = ["Lagos", "Abuja", "london", "austy"];
 
-        $log.log("NewPost: Initializing...");
-        this.chips = {}; // holds data for md-chips
+        this.$log.log("NewPost: Initializing...");
         this.PostService.ready().then(
-            () => {             
-                this.authorName = this.postId ? this.state.attr('author') : this.PostService.$wp.currentUser.data.display_name; // get from post cause it might be editor
-                this.loadMeta();
+            () => {   
+                this.initState();
                 this.initBody();
                 this.addToolbarButtons();
             },
@@ -42,47 +42,8 @@ export class NewPostCtrl {
         )
     }
 
-    setFeaturedImage(url, fileId){        
-        this.featuredImage = url;
-        this.state.featured_media = fileId;
-    }
-
     progress(percent) {
         console.log("progress: ", percent);
-    }
-
-    // get author info, post categories, post tags, post status
-    loadMeta() {
-        let categories = this.PostService.$restApi.categories();
-        categories.get().then(
-            () => {
-                this.chips.allCategories = categories.rawVal().map(c => {
-                    return {
-                        'id': c.id,
-                        'name': c.name,
-                        'slug': c.slug
-                    }
-                });
-                // ensure this.state is done loading
-                this.chips.categories = [];
-                //this.chips.categories = this.chips.allCategories.filter(c => this.state.categories.contains(c.id))
-            }
-        )
-
-        let tags = this.PostService.$restApi.tags();
-        tags.get().then(
-            () => {
-                this.chips.allTags = tags.rawVal().map(t => {
-                    return {
-                        'id': t.id,
-                        'name': t.name,
-                        'slug': t.slug
-                    }
-                });
-                this.chips.tags = [];
-                //this.chips.tags = this.chips.allTags.filter(t => this.state.tags.contains(t.id));
-            }
-        )
     }
 
     categorySearch(query) {
@@ -114,20 +75,31 @@ export class NewPostCtrl {
 
     initState() {
         this.state = {
-                title: {},
-                excerpt: {},
-                content: {},
-                categories: [],
-                tags: []
-            }
+            title: {},
+            excerpt: {},
+            content: {},
+            categories: [],
+            tags: []
+        };
+        this.chips = {
+            categories: [],
+            tags: [],
+            allCategories: [],
+            allTags: []
+        }; // holds data for md-chips
         if(this.postId) {
             this.PostService.$restApi.posts().id(postId).get({embed: true}).then(
                 post => {
-                    angular.extend(this.state, post);
-                    // fetch featured image;
-                    // populate chips
+                    angular.extend(this.state, post.rawVal());
+                    this.featuredImage = this.state._embedded['wp:featuredmedia'][0].link;
+                    this.authorName = this.state._embedded.author.name;
+                    this.chips.categories = this.state._embedded['wp:term'].filter(t => t.taxonomy === 'category');
+                    this.chips.tags = this.state._embedded['wp:term'].filter(t => t.taxonomy === 'post_tags');
                 });
-        } 
+        }
+
+        this.PostService.$restApi.categories().get().then((c) => this.chips.allCategories = c.rawVal());
+        this.PostService.$restApi.tags().get().then(t => this.chips.allTags = t.rawVal());
     }
 
     initBody() {
