@@ -26,6 +26,7 @@
     "angular-aria": "^1.6.4",
     "angular-local-storage": "^0.6.0",
     "angular-material": "^1.1.4",
+    "angular-ui-bootstrap": "^2.5.0",
     "font-awesome": "^4.7.0",
     "jquery.ui.widget": "^1.10.3",
     "medium-editor": "^5.23.0",

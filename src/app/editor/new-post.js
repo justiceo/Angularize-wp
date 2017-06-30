@@ -274,7 +274,7 @@ export class NewPostCtrl {
 
 let NewPost = {
     controller: NewPostCtrl,
-    template: require('./edit-post.html'),
+    template: require('./new-post.html'),
     bindings: {
         postId: '@'
     }
