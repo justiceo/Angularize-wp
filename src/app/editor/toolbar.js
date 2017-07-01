@@ -39,10 +39,11 @@ let Toolbar = {
             box-shadow: 1px 0 8px #ccc;
             padding: 30px 32px;
             outline: none;
+            transition: background 0.8s, color 0.8s;
         }
         .angularize-toolbar li button:hover, .angularize-toolbar li button:focus {
             background: #222;
-            color: white;
+            color: white;           
         }
         /* todo: animate hover, add icons, add tooltip, proper centering */
     </style>
