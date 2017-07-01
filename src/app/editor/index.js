@@ -2,7 +2,6 @@ import ngMaterial from 'angular-material';
 import svgAssetsCache from 'svg-assets-cache';
 import typeahead from 'angular-ui-bootstrap/src/typeahead';
 import ngFileUpload from 'ng-file-upload';
-import PostSettings from './settings/settings';
 import EditorDirective from './editor';
 import Toolbar from './toolbar';
 import NewPost from './new-post';
@@ -29,7 +28,6 @@ editorModule
   })
     .directive('editable', EditorDirective)
     .constant('ALL_CITIES', cities)
-    .component('postSettings', PostSettings)
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)

@@ -1,41 +1,28 @@
-/** Adds edit button to single-post if front-end editor is available
- * Instead of adding an angular plugin for this, let's echo the edit link in the page
- * If wp-front-editor is installed
+/** Adds edit-button to toolbar, that which clicked launches the "new-post" component with the current post as it's postId
  */
 
 export class EditPostCtrl {
-    constructor() {
-        let origin = window.location.protocol + "//" + window.location.hostname;
-        let id = window.angularize_server.postObject.ID;
-        this.editLink = origin + '/wp-admin/post.php?post=' + id + '&action=edit&post_type=post'
+    constructor(ToolbarService) {
+        ToolbarService.add({
+            id: 'angularize_editor_post',
+            title: 'Edit',
+            icon: 'check',
+            position: 1,
+            handler: () => this.launchEdit()
+        })
+    }
 
-        // todo: add this as a toolbar button
+    launchEdit() {
+        // opens a fullpage modal of the post? -- winner - better performance, more feasible too
+        // or take them to edit-page? how to we pass in post id?
+        // use localStorage to store post to edit? - faster to implement tho
 
-        // todo: hide the button when already in edit mode
-        // check if wp front end editor has hooks you can use to set this var on the server
-        this.state = this.isDisabled ? "disabled" : "enabled"; 
+        console.log("edit post clicked")
     }
 }
 
 let EditPost = {
-    controller: EditPostCtrl,
-    template: `
-    <a href="{{ $ctrl.editLink }}" class="post-edit-link {{ $ctrl.state }}">Edit Post</a>
-    <style>
-        .post-edit-link {
-            position: fixed;
-            top: 150px;
-            left: 20px;
-            background: yellow;
-            color: black !important;
-            padding: 5px 8px;
-            
-        }
-        .post-edit-link.disabled {
-            display: none;
-        }
-    </style>
-    `
+    controller: EditPostCtrl
 }
 
 export default EditPost;
