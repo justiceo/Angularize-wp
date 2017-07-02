@@ -128,11 +128,11 @@ export class NewPostCtrl {
             
 
         //this.contentEditor.destroy(); // fix this later
-        /*$(function () {
+        $(function () {
             elem.mediumInsert({
                 editor: this.contentEditor
             });
-        });*/
+        });
 
         // todo: add save and cancel handlers
     }

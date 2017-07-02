@@ -5,7 +5,6 @@ import './widgets';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
-import CurrentUser from './providers/current-user';
 import ToolbarService from './providers/toolbar.service';
 
 import '../style/app.scss';
@@ -28,7 +27,6 @@ angularize
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)
-  .service('CurrentUser', CurrentUser)
   .service('ToolbarService', ToolbarService)
   .factory('httpRequestInterceptor', function ($window) {
     'ngInject';
