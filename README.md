@@ -140,17 +140,17 @@ webpack
 - Pre-mature optimization  means we'll never get there
 
 
-### Keep Writing Editor out of this eventually
-### Add all wp widgets as components
-### Consume the headers:
-X-WP-Total: the total number of records in the collection
-X-WP-TotalPages: the total number of pages encompassing all available records
-### Switch out PostService for Backbone js client.
-- add backwards support for front-end editor - editor
-- remove editor module
-
-
-- separate postSettings from postSettingsToolbar
-- where toolbar is reponsible for registering buttons and launching modal
-- add string binding on book flight
-- add is_single, is_archive to angularize_server, let toolbars choose post types to display one
+todo
+====
+- only display edit-button on single post pages
+- for new-post element, we're not using a modal
+- on new-post page, display a loading sign while component loads
+- use real icons for toolbar buttons
+- add chips plugin for categories and tags
+- make post categories actually work
+- make post tags actually work
+- make post cities actually work
+- create a wrapper component for these select?
+- completely remove angular material dependency
+- fix font-awesome once and for all man
+- fix webpack build and separate css. use gulp?

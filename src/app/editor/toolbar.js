@@ -24,7 +24,12 @@ let Toolbar = {
         </ul>
     </div>
     <style scoped>
-        .angularize-toolbar { margin-left: 30%; }
+        .angularize-toolbar { 
+            margin-left: 30%;
+            position: fixed;
+            bottom: 40px;
+            width: 100%;
+        }
         .angularize-toolbar li {
             list-style: none;
             float: left;

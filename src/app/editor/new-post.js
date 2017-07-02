@@ -12,6 +12,8 @@ export class NewPostCtrl {
     }
 
     $onInit() {
+        //todo: show a progressbar or loading icon while we setup and fetch data
+        
         this.ALL_CITIES = [
             {
                 name: "Lagos",
@@ -157,6 +159,7 @@ export class NewPostCtrl {
             position: 3,
             handler: () => this.publish()
         };
+        // todo: add a ToolbarService.create("id", "title", "icon", 1) function
         this.ToolbarService.add(cancelButton);
         this.ToolbarService.add(saveButton);
         // todo: only add if post is not published

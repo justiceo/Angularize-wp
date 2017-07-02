@@ -3,13 +3,18 @@
 
 export class EditPostCtrl {
     constructor(ToolbarService) {
-        ToolbarService.add({
-            id: 'angularize_editor_post',
-            title: 'Edit',
-            icon: 'check',
-            position: 1,
-            handler: () => this.launchEdit()
-        })
+        // todo: only display this on single posts
+        if(PostService.$wp.isSingle && PostService.$wp.postObject.post_type == 'post')
+            ToolbarService.add({
+                id: 'angularize_editor_post',
+                title: 'Edit',
+                icon: 'check',
+                position: 1,
+                handler: () => this.launchEdit()
+            })
+        else {
+            console.log("EditPost not getting initialized on this page")
+        }
     }
 
     launchEdit() {
@@ -17,6 +22,8 @@ export class EditPostCtrl {
         // or take them to edit-page? how to we pass in post id?
         // use localStorage to store post to edit? - faster to implement tho
 
+        // the modal should be lg or fullscreen
+        // it should be appended to post-content element
         console.log("edit post clicked")
     }
 }
