@@ -4,16 +4,16 @@ var $ = require('jquery');
 require('medium-editor-insert-plugin')($);
 
 export class NewPostCtrl {
-    constructor($scope, $mdDialog, $log, Upload, Cache, ToolbarService, PostService, ALL_CITIES) {
+    constructor($scope, $log, Upload, Cache, ToolbarService, PostService, ALL_CITIES) {
         angular.extend(this, {
             '$scope': $scope, 'Upload': Upload, 'Cache': Cache, 'ToolbarService': ToolbarService,
-            'PostService': PostService, '$mdDialog': $mdDialog, '$log': $log, 'ALL_CITIES': ALL_CITIES
+            'PostService': PostService, '$log': $log, 'ALL_CITIES': ALL_CITIES
         });
     }
 
     $onInit() {
         //todo: show a progressbar or loading icon while we setup and fetch data
-        
+
         this.ALL_CITIES = [
             {
                 name: "Lagos",
