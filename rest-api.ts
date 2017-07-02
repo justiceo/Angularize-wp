@@ -1,11 +1,5 @@
 
-interface RestObjectI {
-    id: number;
-}
-
-interface RestCollectionI {}
-
-class RestCollection extends Array<RestObjectI> implements RestCollectionI {
+class RestCollection extends Array<RestObject> {
     _state: Array<any> = [];
     _route;
     _modelRef;
@@ -64,7 +58,7 @@ class RestCollection extends Array<RestObjectI> implements RestCollectionI {
     }
 }
 
-class RestObject implements RestObjectI {
+class RestObject {
     _route;
     _args;
     id;
@@ -87,7 +81,7 @@ class RestObject implements RestObjectI {
     }
 
     // wp.init('posts', {'per_page': 5}) // same as above
-    init(type: string, args?): Array<RestObjectI> {
+    init(type: string, args?): Array<RestObject> {
         let endpoint = type + this._serialize(args);
         let collection = new RestCollection(endpoint, this._route, this._schema);
         return collection;
