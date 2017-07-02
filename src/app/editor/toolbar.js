@@ -19,7 +19,7 @@ let Toolbar = {
                     ng-click="button.handler()"
                     data-id="{{ button.id }}"
                     aria-label="{{ button.title }}"
-                    ng-disabled="button.disabled">B</button>
+                    ng-disabled="button.disabled">{{ button.title }}</button>
             </li>
         </ul>
     </div>

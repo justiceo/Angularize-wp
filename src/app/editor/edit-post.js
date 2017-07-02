@@ -4,14 +4,17 @@
 export class EditPostCtrl {
     constructor(ToolbarService) {
         // todo: only display this on single posts
-        if(PostService.$wp.isSingle && PostService.$wp.postObject.post_type == 'post')
+        // use window
+        if(PostService.$wp.isSingle && PostService.$wp.postObject.post_type == 'post'){
+            console.log("adding edit post")
             ToolbarService.add({
                 id: 'angularize_editor_post',
-                title: 'Edit',
+                title: 'Edit Post',
                 icon: 'check',
                 position: 1,
                 handler: () => this.launchEdit()
             })
+        }
         else {
             console.log("EditPost not getting initialized on this page")
         }
