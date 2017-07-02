@@ -1,5 +1,5 @@
 import angular from 'angular';
-import RecentPosts from './recent-posts/';
+import RecentPosts from './recent-posts';
 import AuthorPopover from './author-popover';
 import BookFlight from './book-flight';
 import LikeDirective from './like';
