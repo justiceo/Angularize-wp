@@ -151,6 +151,6 @@ todo
 - make post tags actually work
 - make post cities actually work
 - create a wrapper component for these select?
-- completely remove angular material dependency
+- [DONE] completely remove angular material dependency
 - fix font-awesome once and for all man
 - fix webpack build and separate css. use gulp?
