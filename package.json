@@ -20,12 +20,10 @@
   },
   "homepage": "https://justiceo.github.io/Angularize-wp/",
   "dependencies": {
-    "almighty-autocomplete": "^1.1.0",
     "angular": "^1.5.0",
     "angular-animate": "^1.6.4",
     "angular-aria": "^1.6.4",
     "angular-local-storage": "^0.6.0",
-    "angular-material": "^1.1.4",
     "angular-ui-bootstrap": "^2.5.0",
     "font-awesome": "^4.7.0",
     "jquery.ui.widget": "^1.10.3",
@@ -33,9 +31,7 @@
     "medium-editor-autolist": "^1.0.1",
     "medium-editor-insert-plugin": "^2.4.1",
     "ng-file-upload": "^12.2.13",
-    "prismjs": "^1.6.0",
-    "svg-assets-cache": "^1.1.3",
-    "underscore": "^1.8.3"
+    "prismjs": "^1.6.0"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.32",
