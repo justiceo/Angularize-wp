@@ -154,5 +154,7 @@ todo
 - [DONE] completely remove angular material dependency
 - fix font-awesome once and for all man
 - fix webpack build and separate css. use gulp?
+- drop angular-local-storage dependency
+- move out widgets and editor from core
 - move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
     also, post service would be freed from functions it neither uses nor needs.

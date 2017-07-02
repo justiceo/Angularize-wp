@@ -1,36 +1,42 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+exports.__esModule = true;
 var RestCollection = (function (_super) {
     __extends(RestCollection, _super);
     function RestCollection(_endpoint, _parent, _schema) {
-        var _this = this;
-        _super.call(this);
-        this._endpoint = _endpoint;
-        this._parent = _parent;
-        this._schema = _schema;
-        this._state = [];
+        var _this = _super.call(this) || this;
+        _this._endpoint = _endpoint;
+        _this._parent = _parent;
+        _this._schema = _schema;
+        _this._state = [];
         // wp.posts().rawVal()    // returns an empty collection, the raw reference - do not use
-        this.rawVal = function () {
+        _this.rawVal = function () {
             return _this._state;
         };
-        this.currentID = function () {
+        _this.currentID = function () {
             return _this.id(window.angularize_server.postObject.ID);
         };
         //* wp.posts().id(2)       // returns a rest object with this id.
-        this.id = function (postId) {
+        _this.id = function (postId) {
             var res = _this.find(function (o) { return o.id == postId; });
             if (res == null) {
                 res = new RestObject(postId, _this._route, _this._schema);
                 _this.push(res);
+                // todo: update internal model
             }
             return res;
         };
         // wp.posts().get()       // returns a promise to get the posts, using default params
-        this.get = function () {
+        _this.get = function () {
             // process args and append to route        
             return _this._schema.ajax.get(_this._route).then(function (posts) {
                 _this._state = posts;
@@ -41,7 +47,7 @@ var RestCollection = (function (_super) {
             });
         };
         //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
-        this.add = function (args) {
+        _this.add = function (args) {
             var obj;
             if (args.id)
                 obj = _this.id(args.id);
@@ -53,15 +59,16 @@ var RestCollection = (function (_super) {
             _this.push(obj);
             return obj;
         };
-        this._route = _parent + '/' + _endpoint;
-        this._modelRef = new RestObject(this._schema.getModel(this._route), this._route, this._schema);
+        _this._route = _parent + '/' + _endpoint;
+        _this._modelRef = new RestObject(_this._schema.getModel(_this._route), _this._route, _this._schema);
+        return _this;
     }
     return RestCollection;
 }(Array));
 var RestObject = (function () {
     function RestObject(_endpoint, _parent, _schema, _state) {
-        var _this = this;
         if (_state === void 0) { _state = {}; }
+        var _this = this;
         this._endpoint = _endpoint;
         this._parent = _parent;
         this._schema = _schema;
@@ -110,7 +117,7 @@ var RestObject = (function () {
     RestObject.prototype.attr = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i - 0] = arguments[_i];
+            args[_i] = arguments[_i];
         }
         if (args.length == 1)
             return this.getAttr(args[0]);
@@ -216,5 +223,4 @@ var RestApi = (function () {
     }
     return RestApi;
 }());
-exports.__esModule = true;
 exports["default"] = RestApi;

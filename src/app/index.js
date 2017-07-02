@@ -28,12 +28,11 @@ angularize
   .service('PostService', PostService)
   .service('Ajax', Ajax)
   .service('ToolbarService', ToolbarService)
-  .factory('httpRequestInterceptor', function ($window) {
-    'ngInject';
+  .factory('httpRequestInterceptor', function () {
     return {
       request: function (config) {
-        if($window.angularize_server)        
-          config.headers['X-WP-Nonce'] = $window.angularize_server.nonce;
+        if(window.angularize_server)        
+          config.headers['X-WP-Nonce'] = window.angularize_server.nonce;
         return config;
       }
     };
