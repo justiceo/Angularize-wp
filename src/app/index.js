@@ -1,5 +1,4 @@
 import angular from 'angular';
-import LocalStorageModule from 'angular-local-storage';
 import './editor';
 import './widgets';
 import Cache from './providers/cache';
@@ -10,7 +9,6 @@ import ToolbarService from './providers/toolbar.service';
 import '../style/app.scss';
 
 let requires = [
-  LocalStorageModule,
   'angularize.widgets',
   'angularize.editor',
 ];
@@ -37,12 +35,7 @@ angularize
       }
     };
   })
-  .config(function (localStorageServiceProvider, $httpProvider) {
-    localStorageServiceProvider
-      .setPrefix(MODULE_NAME)
-      .setStorageType('localStorage') // or sessionStorage
-      .setNotify(true, true);
-
+  .config(function ($httpProvider) {
     $httpProvider.interceptors.push('httpRequestInterceptor')
   });
 

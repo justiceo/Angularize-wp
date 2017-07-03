@@ -1,12 +1,10 @@
 export default class Cache {
-    constructor($log, localStorageService) {
-        "ngInject";
-        $log.info("Cache: Initializing...");
-        this.storage = localStorageService;
+    constructor($window) {
+        this.storage = $window.localStorage;
     }
 
     get(key, anytime = false) {
-        let val = this.storage.get(key);
+        let val = this.storage.getItem(key);
         if(val && (anytime || val.expiresIn > Date.now)) 
             return val.value;
         return null;
@@ -17,15 +15,15 @@ export default class Cache {
             "value": value,
             "expiresIn": Date.now + this.toMilliseconds(timeInDays)
         }
-        this.storage.set(key, val);
+        this.storage.setItem(key, val);
     }
 
     remove(key) {
-        this.storage.remove(key);
+        this.storage.removeItem(key);
     }
 
     clearAll() {
-        this.storage.clearAll();
+        this.storage.clear();
     }
 
     toMilliseconds(days) {
