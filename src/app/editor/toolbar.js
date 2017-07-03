@@ -15,11 +15,11 @@ let Toolbar = {
         <ul>
             <li ng-repeat="button in $ctrl.buttons track by $index">
                 <button 
-                    ng-class="button.class" 
+                    ng-class="[button.class, button.icon]" 
                     ng-click="button.handler()"
                     data-id="{{ button.id }}"
                     aria-label="{{ button.title }}"
-                    ng-disabled="button.disabled">{{ button.title }}</button>
+                    ng-disabled="button.disabled"></button>
             </li>
         </ul>
     </div>

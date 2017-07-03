@@ -10,7 +10,7 @@ export class EditPostCtrl {
             ToolbarService.add({
                 id: 'angularize_editor_post',
                 title: 'Edit Post',
-                icon: 'check',
+                icon: 'fa fa-2x fa-sticky-note-o',
                 position: 1,
                 handler: () => this.launchEdit()
             })

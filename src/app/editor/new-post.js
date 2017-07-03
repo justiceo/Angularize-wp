@@ -137,29 +137,38 @@ export class NewPostCtrl {
     }
 
     addToolbarButtons() {
+
+        let deleteButton = {
+            id: 'angularize_editor_delete',
+            title: 'Discard',
+            icon: 'fa fa-2x fa-trash-o',
+            position: 1,
+            handler: () => this.discard()
+        };
         let cancelButton = {
             id: 'angularize_editor_cancel',
             title: 'Discard',
-            icon: 'action-undo',
+            icon: 'fa fa-2x fa-times',
             position: 1,
             handler: () => this.discard()
         };
         let saveButton = {
             id: 'angularize_editor_save',
             title: 'Save Changes',
-            icon: 'check',
+            icon: 'fa fa-2x fa-floppy-o',
             position: 2,
             handler: () => this.save()
         };
         let publishButton = {
             id: 'angularize_editor_publish',
             title: 'Save & Publish',
-            icon: 'cursor',
+            icon: 'fa fa-2x fa-star-o',
             position: 3,
             handler: () => this.publish()
         };
         // todo: add a ToolbarService.create("id", "title", "icon", 1) function
         this.ToolbarService.add(cancelButton);
+        this.ToolbarService.add(deleteButton);
         this.ToolbarService.add(saveButton);
         // todo: only add if post is not published
         this.ToolbarService.add(publishButton);
