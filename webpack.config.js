@@ -110,7 +110,20 @@ module.exports = function makeWebpackConfig() {
           {loader: 'postcss-loader'}
         ],
       })
-    }, {
+    }, 
+    {
+      test: /\.scss$/,
+      use: [
+        {
+            loader: "style-loader" // creates style nodes from JS strings
+        }, {
+            loader: "css-loader" // translates CSS into CommonJS
+        }, {
+            loader: "sass-loader" // compiles Sass to CSS
+        }
+      ]
+    },    
+    {
       // ASSET LOADER
       // Reference: https://github.com/webpack/file-loader
       // Copy png, jpg, jpeg, gif, svg, woff, woff2, ttf, eot files to output
@@ -125,15 +138,7 @@ module.exports = function makeWebpackConfig() {
       // Allow loading html through js
       test: /\.html$/,
       loader: 'raw-loader'
-    },
-    {
-      test: require.resolve("blueimp-file-upload"),
-      loader: "imports-loader?define=>false"
-    },
-    {
-      test: require.resolve("medium-editor-insert-plugin"),
-      loader: "imports-loader?define=>false"
-    }    
+    }
     ]
   };
 

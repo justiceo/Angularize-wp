@@ -1,24 +1,26 @@
-import ngMaterial from 'angular-material';
-import svgAssetsCache from 'svg-assets-cache';
-import PostSettings from './settings/settings';
-import EditorDirective from './editor';
+import typeahead from 'angular-ui-bootstrap/src/typeahead';
+import ngFileUpload from 'ng-file-upload';
 import Toolbar from './toolbar';
 import NewPost from './new-post';
+import SimpleEditor from './simple-medium-editor';
+import UploadFile from './upload-file';
+import EditPost from './edit-post';
+import Chips from './chips';
 
-let MODULE_NAME = "AngularizeEditor";
+let cities = [];
 
-angular.module(MODULE_NAME, [
-    ngMaterial,
-    svgAssetsCache,
-  ])
-  .config(function($mdThemingProvider) {
-    $mdThemingProvider.theme('default')
-     .primaryPalette('purple')
-     .accentPalette('indigo')
-  })
-    .directive('editable', EditorDirective)
-    .component('postSettings', PostSettings)
+let requires = [typeahead, ngFileUpload];
+let editorModule = angular.module('angularize.editor', requires);
+
+// only load if we have wp front end editor enabled
+//if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
+editorModule    
+  .component('editPost', EditPost)
+    .constant('ALL_CITIES', cities)
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)
+    .component('uploadFile', UploadFile)
+    .component('simpleEditor', SimpleEditor)
+    .component('chips', Chips)
 
-export default MODULE_NAME;
+export default editorModule;

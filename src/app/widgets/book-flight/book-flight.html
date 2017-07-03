@@ -1,0 +1,31 @@
+<widget>
+    <div class="widget-wrapper">
+        <div ng-hide="$ctrl.showLocations" class="guage-interest">
+            <h3><a ng-click="$ctrl.showLocations = true">I would like to travel to {{ $ctrl.to }}!</a></h3>
+        </div>
+        <div ng-show="$ctrl.showLocations && !$ctrl.showThanks" class="locations">
+            <input ng-model="$ctrl.from" placeholder="From: " />
+            <input ng-model="$ctrl.to" value="$ctrl.to" placeholder="To: " />
+            <button ng-click="$ctrl.fly(); $ctrl.showThanks = true">Go!</button>
+        </div>
+        <div ng-show="$ctrl.showThanks" class="thanks">
+            <h2><strong>Thank you!</strong></h2>
+        </div>
+    </div>
+    <style scoped>
+        .widget-wrapper {
+            padding: 30px 20px;
+            background: rgba(245,243,245, 0.9);
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 2px #ccc;
+        }
+        .widget-wrapper .hidden { display: none; }
+        .widget-wrapper input {
+            height: 50px;
+            box-shadow: 1px 1px 6px #ccc;
+            border: 1px solid #aaa;
+            margin: 10px 5px 10px 0;
+            padding: 10px;
+        }
+    </style>
+</widget>

@@ -1,41 +1,38 @@
 import angular from 'angular';
 import LocalStorageModule from 'angular-local-storage';
-import AngularizeEditor from './editor';
+import './editor';
+import './widgets';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
-import CurrentUser from './providers/current-user';
 import ToolbarService from './providers/toolbar.service';
-import AppComponent from './app';
-import RecentPosts from './components/recent-posts/';
-import AuthorPopover from './components/author-popover';
-import BookFlight from './components/book-flight';
-import LikeDirective from './components/like';
 
-import '../style/app.css';
+import '../style/app.scss';
 
-const MODULE_NAME = 'angularize';
-
-angular.module(MODULE_NAME, [
+let requires = [
   LocalStorageModule,
-  AngularizeEditor // allow us to use <settings> etc
-  ])
-  .component('app', AppComponent)
-  .component('recentPost', RecentPosts)
-  .component('authorPopover', AuthorPopover)
-  .component('bookFlight', BookFlight)
-  .directive('like', LikeDirective)
+  'angularize.widgets',
+  'angularize.editor',
+];
+let MODULE_NAME = 'angularize';
+let angularize = angular.module(MODULE_NAME, requires);
+
+// make module available on window object
+window.angularize = angularize;
+console.log("angularize_server: ", window.angularize_server);
+
+// To prevent un-predictable behavior, only load when wp rest api is enabled
+if(window.angularize_server.WpRestApiEnabled)
+angularize
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)
-  .service('CurrentUser', CurrentUser)
   .service('ToolbarService', ToolbarService)
-  .factory('httpRequestInterceptor', function ($window) {
-    'ngInject';
+  .factory('httpRequestInterceptor', function () {
     return {
       request: function (config) {
-        if($window.wp_rest_object)        
-          config.headers['X-WP-Nonce'] = $window.wp_rest_object.nonce;
+        if(window.angularize_server)        
+          config.headers['X-WP-Nonce'] = window.angularize_server.nonce;
         return config;
       }
     };

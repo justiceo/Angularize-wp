@@ -11,22 +11,46 @@ let Toolbar = {
         placement: '@'
     },
     template: `    
-    <div class="toolbar-wrapper bottom">
-    <section layout="row" layout-align="center center" theme="default">
-        <button md-button ng-repeat="button in $ctrl.buttons track by $index"
-            class="md-fab"
-            aria-label="{{ button.title }}"
-            data-id="{{ button.id }}"            
-            ng-class="button.class"
-            ng-click="button.handler()" 
-            ng-disabled="button.disabled">
-            <md-icon md-font-icon="{{ button.icon }}"></md-icon>       
-            <md-tooltip md-direction="top" md-delay="200">
-                {{ button.title }}
-            </md-tooltip>
-        </button md-button>
-    </section>
+    <div class="angularize-toolbar toolbar-wrapper bottom">
+        <ul>
+            <li ng-repeat="button in $ctrl.buttons track by $index">
+                <button 
+                    ng-class="[button.class, button.icon]" 
+                    ng-click="button.handler()"
+                    data-id="{{ button.id }}"
+                    aria-label="{{ button.title }}"
+                    ng-disabled="button.disabled"></button>
+            </li>
+        </ul>
     </div>
+    <style scoped>
+        .angularize-toolbar { 
+            position: fixed;
+            bottom: 40px;
+            width: 100%;
+        }
+        .angularize-toolbar li {
+            list-style: none;
+            float: left;
+            margin: 0 10px;
+            outline: none;
+        }
+        .angularize-toolbar li button {
+            color: #222;
+            background: white;
+            border-radius: 50%;
+            border: 1px solid #bbb;
+            box-shadow: 1px 0 8px rgba(0,0,0,0.2);
+            padding: 20px 22px;
+            outline: none;
+            transition: background 0.8s, color 0.8s;
+        }
+        .angularize-toolbar li button:hover, .angularize-toolbar li button:focus {
+            background: #222;
+            color: white;           
+        }
+        /* todo: animate hover, add icons, add tooltip, proper centering */
+    </style>
     `
 };
 

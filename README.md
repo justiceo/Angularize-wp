@@ -106,3 +106,55 @@ webpack
 # License
 
 [MIT](/LICENSE)
+
+
+#### Release 1.0.0 Goals
+- working documentation
+- working demo
+- optional inclusion of extra components
+- optional inclusion of extra modules
+- working tests
+
+##### Release 1.0.0-beta.3
+- move extra components to a common module
+- complete book-flight component
+- complete author-popover component
+- remove <app> component and tests
+- add test for <recent-post> component
+- thin down demo.css to the basics
+- make prismjs work smoothly on live reload
+- ensure demo.css isn't overriding import angluar-material styles
+
+##### Why not use Angular Material
+- Js needs to be parsed before any html can render
+- It is very heavy and bloated, 10X bootstrap
+- We'll still need bootstrap for some other tasks
+- The CSS benefits can be derived from a customized boostrap css like Bootswatch paper
+- It breaks CSS of other components - like editor, and can alter style of website it's used on.
+
+
+##### Things we stand to loose
+- Easy components like chips, modals and buttons
+- Cool animations and ripples
+- Too much leg work at the start.
+- Pre-mature optimization  means we'll never get there
+
+
+todo
+====
+- only display edit-button on single post pages
+- for new-post element, we're not using a modal
+- on new-post page, display a loading sign while component loads
+- use real icons for toolbar buttons
+- add chips plugin for categories and tags
+- make post categories actually work
+- make post tags actually work
+- make post cities actually work
+- create a wrapper component for these select?
+- [DONE] completely remove angular material dependency
+- fix font-awesome once and for all man
+- fix webpack build and separate css. use gulp?
+- drop angular-local-storage dependency
+- move out widgets and editor from core
+- move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
+    also, post service would be freed from functions it neither uses nor needs.

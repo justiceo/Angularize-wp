@@ -23,8 +23,9 @@ and providing authentication and dumping the object for the current page in the 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Ensure WP-REST-API is active
-register_activation_hook( __FILE__, 'rest_api_plugin_activate' );
-function rest_api_plugin_activate(){
+include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+register_activation_hook( __FILE__, 'angularize_rest_api_plugin_activate' );
+function angularize_rest_api_plugin_activate(){
     // Require parent plugin
     if ( ! is_plugin_active( 'rest-api/plugin.php' ) and current_user_can( 'activate_plugins' ) ) {
         // Stop activation redirect and show error
@@ -33,33 +34,39 @@ function rest_api_plugin_activate(){
 }
 
 // Add ng-app directive to html tag
-add_filter('language_attributes', 'add_ng_attribute');
-function add_ng_attribute($attr) {
+add_filter('language_attributes', 'angularize_add_ng_attribute');
+function angularize_add_ng_attribute($attr) {
     return $attr . ' ng-app="angularize"';
 }
 
-// (Optional) Add the router holder for webpack
-add_action('wp_head', 'add_meta_tags');
-function add_meta_tags() {
-    echo '<base href="/">';
-}
-
 // Enque scripts and styles with localization
-add_action('wp_enqueue_scripts', 'enque_scripts'); 
-function enque_scripts() {
-    wp_register_script('ng-script', plugin_dir_url(__FILE__) . '/app.bundle.js', array(), '1.0.0', true);
+add_action('wp_enqueue_scripts', 'angularize_enque_scripts'); 
+function angularize_enque_scripts() {
+    wp_register_script('ng-script', plugin_dir_url(__FILE__) . '/app.bundle.js', array('wp-api'), '1.0.0', true);
     $translation_array = array(
         'nonce' => wp_create_nonce( 'wp_rest' ),
         'currentUser' => wp_get_current_user(),
         'serverTime' => current_time( 'timestamp', $gmt = 1),
+        'WpRestApiEnabled' => is_plugin_active('rest-api/plugin.php'),
+        'FrontEndEditorEnabled' => is_plugin_active('wp-front-end-editor/plugin.php'),
+        'meta' => get_post_meta( get_the_ID() ),
+        'is_single' => is_single(),
+        'is_archive' => is_archive(),
+        'is_logged_in' => is_user_logged_in(),
         'postObject' => get_post()
     );
-    $translation_array = apply_filters( 'wp_rest_object', $translation_array );
-    wp_localize_script('ng-script', 'wp_rest_object', $translation_array);
+    $translation_array = apply_filters( 'angularize_server', $translation_array );
+    wp_localize_script('ng-script', 'angularize_server', $translation_array);
     wp_enqueue_script('ng-script');
 }
 
-add_action('wp_footer', 'add_app_tag');
-function add_app_tag() {
-    echo '<app></app>';
+add_action('wp_footer', 'angularize_add_toolbar_tag');
+function angularize_add_toolbar_tag() {
+    //echo '<toolbar></toolbar>';
 }
+
+// Disables the WYSIWYG editor of tinyMce
+/** It automatically removes empty elements (which strips off component tags)
+ *  and can apply undesirable formatting and cleanup of newlines, br tags etc
+ */
+add_filter('user_can_richedit', '__return_false', 50);

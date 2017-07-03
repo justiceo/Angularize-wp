@@ -1,0 +1,57 @@
+<div ngf-drop="$ctrl.upload($file)" ng-model="$ctrl.file" class="angularize-drop-box" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'">
+  <img ng-if="$ctrl.showPreview" class="preview" ngf-thumbnail="$ctrl.file">
+  <div class="angularize-select-file fa fa-picture-o fa-5x" ngf-select="$ctrl.upload($file)" ng-model="$ctrl.file" name="file"
+    ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100">
+  </div>
+  <div class="transcluded" ng-transclude></div>
+  <simple-editor name="angularize-caption-editor" class="angularize-caption" placeholder="photo caption"
+    text="$ctrl.caption"></simple-editor>
+</div>
+<style scoped>
+  .angularize-drop-box {
+    /*border: 2px dashed #ccc;*/
+    position: relative;
+  }
+
+  img.preview {
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }
+
+  .angularize-select-file {
+    padding: 100px 50px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .angularize-caption {
+    position: relative;
+    bottom: 10px;
+    left: 20px;
+    outline: none;
+    border: none;
+    max-width: 300px;
+    font-style: italic;
+    font-size: 90%;
+    text-align: left;
+  }
+
+  .simple-medium-editor.angularize-caption-editor {
+    outline: none;
+    max-width: 270px;
+    padding: 5px 7px;
+    border-bottom: 2px solid #222;
+  }
+
+  .simple-medium-editor.angularize-caption-editor::after {
+    font-style: normal;
+    color: #222;
+  }
+
+  .transcluded {
+    position: relative;
+    padding-bottom: 120px;
+  }
+</style>
