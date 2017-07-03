@@ -114,14 +114,20 @@ export class NewPostCtrl {
             extensions: {
                 'auotlist':  new AutoList()
             },
+            autoLink: true,
+            targetBlank: true, 
+            imageDragging: true,         
             toolbar: {
-                buttons: ['h1', 'h2', 'bold', 'italic', 'quote', 'pre', 'unorderedlist', 'orderedlist', 'justifyLeft', 'justifyCenter', 'anchor']
+                buttons: ['h2', 'h3', 'bold', 'italic', 'quote', 'anchor', 'image', 'outdent', 'indent'],
+                sticky: true,
+                static: true,
+                align: 'center',
+                updateOnEmptySelection: false
             }
 
         };
 
-        let elem = document.getElementsByClassName('.post-body')[0];
-        this.contentEditor = new MediumEditor(elem, contentEditorOptions);
+        this.contentEditor = new MediumEditor('.post-body', contentEditorOptions);
         this.contentEditor.subscribe('editableInput', () => this.state.content = this.contentEditor.getContent())          
 
     }
