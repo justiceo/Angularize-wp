@@ -1,5 +1,5 @@
 #!/bin/bash
-tsc rest-api.ts --outDir ./src/app/providers/
+tsc rest-api.ts --outDir ./src/app/core/
 webpack -p
 cp -r angularize_wp /var/www/html/wp-content/plugins/
 # echo "copying to dev3"
