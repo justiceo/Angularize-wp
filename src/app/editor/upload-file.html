@@ -1,6 +1,5 @@
 <div ngf-drop="$ctrl.upload($file)" ng-model="$ctrl.file" class="angularize-drop-box" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'">
-
-  <img class="preview" ngf-thumbnail="$ctrl.file">
+  <img ng-if="$ctrl.showPreview" class="preview" ngf-thumbnail="$ctrl.file">
   <div class="angularize-select-file fa fa-picture-o fa-5x" ngf-select="$ctrl.upload($file)" ng-model="$ctrl.file" name="file"
     ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100">
   </div>

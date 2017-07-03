@@ -44,7 +44,8 @@ let UploadFile = {
         progress: '&',
         onUploaded: '&',
         uploadId: '=',
-        uploadUrl: '='
+        uploadUrl: '=',
+        showPreview: '='
     }
 }
 
