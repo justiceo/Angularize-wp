@@ -24,13 +24,13 @@ export class UploadFileCtrl {
             .then((resp) => {
                 this.uploadUrl = resp.data.source_url;
                 this.uploadId = resp.data.id;
-                if(this.onUploaded)
+                if (this.onUploaded)
                     this.onUploaded({ $uploadLink: this.uploadUrl, $fileId: this.uploadId });
             }, function (resp) {
                 console.log('Error uploading file: ' + resp);
             }, (evt) => {
                 this.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                if(this.progress)
+                if (this.progress)
                     this.progress({ $uploadPercent: this.progressPercentage });
             });
     }

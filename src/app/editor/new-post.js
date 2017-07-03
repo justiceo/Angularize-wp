@@ -30,7 +30,7 @@ export class NewPostCtrl {
 
         this.$log.log("NewPost: Initializing...");
         this.PostService.ready().then(
-            () => {   
+            () => {
                 this.initState();
                 this.initBody();
                 this.addToolbarButtons();
@@ -84,8 +84,8 @@ export class NewPostCtrl {
             allCategories: [],
             allTags: []
         }; // holds data for md-chips
-        if(this.postId) {
-            this.PostService.$restApi.posts().id(postId).get({embed: true}).then(
+        if (this.postId) {
+            this.PostService.$restApi.posts().id(postId).get({ embed: true }).then(
                 post => {
                     angular.extend(this.state, post.rawVal());
                     this.featuredImage = this.state._embedded['wp:featuredmedia'][0].link;
@@ -97,7 +97,7 @@ export class NewPostCtrl {
 
         this.PostService.$restApi.categories().get().then((c) => {
             this.chips.allCategories = c.rawVal().map(c => {
-                return {id: c.id, name: c.name}
+                return { id: c.id, name: c.name }
             });
             this.list = c.rawVal().map(c => c.slug);
         });
@@ -116,14 +116,13 @@ export class NewPostCtrl {
                 hideOnClick: false
             },
             extensions: {
-                'auotlist':  new AutoList()
+                'auotlist': new AutoList()
             },
             autoLink: true,
-            targetBlank: true, 
-            imageDragging: true,         
+            imageDragging: true,
             toolbar: {
-                buttons: ['h2', 'h3', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image', 'justifyLeft', 'justifyCenter', 'justifyRight', 
-'justifyFull', 'orderedlist', 'unorderedlist', 'outdent', 'indent', ],
+                buttons: ['h2', 'h3', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image', 'justifyLeft', 'justifyCenter', 'justifyRight',
+                    'justifyFull', 'orderedlist', 'unorderedlist', 'outdent', 'indent',],
                 sticky: true,
                 static: true,
                 align: 'center',
@@ -133,7 +132,7 @@ export class NewPostCtrl {
         };
 
         this.contentEditor = new MediumEditor('.post-body', contentEditorOptions);
-        this.contentEditor.subscribe('editableInput', () => this.state.content = this.contentEditor.getContent())          
+        this.contentEditor.subscribe('editableInput', () => this.state.content = this.contentEditor.getContent())
 
     }
 
@@ -200,7 +199,7 @@ export class NewPostCtrl {
     }
 
     save() {
-        if(this.state.id !== null && this.state.id !== undefined) {            
+        if (this.state.id !== null && this.state.id !== undefined) {
             // todo: bind categories and tags 
             // todo: extract and upload all embed resources           
             this.state.categories = this.chips.categories.map(c => c.id);
@@ -211,7 +210,7 @@ export class NewPostCtrl {
             this.PostService.$restApi.posts().add(this.state).post().then(
                 (post) => {
                     angular.extend(this.state, post.rawVal());
-                    angular.extend(this.state, {title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered})
+                    angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
                     console.log("after save state: ", this.state)
                     this.postId = this.state.id;
                 }
