@@ -33,7 +33,7 @@ let Chips = {
             </ul>
             <input ng-model="$ctrl.uibSelected" 
                 placeholder="{{ $ctrl.placeholderText }}"
-                uib-typeahead="t.name for t in $ctrl.available | filter:$viewValue | limitTo:5" 
+                uib-typeahead="t.name for t in $ctrl.available | filter:$viewValue" 
                 typeahead-on-select="$ctrl.add($item, $model, $label, $event)"
                 typeahead-select-on-exact="true"
                 typeahead-input-formatter="transform($item)"

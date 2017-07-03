@@ -19,6 +19,8 @@ let Toolbar = {
                     ng-click="button.handler()"
                     data-id="{{ button.id }}"
                     aria-label="{{ button.title }}"
+                    uib-tooltip="{{ button.title }}"
+                    tooltip-placement="top"
                     ng-disabled="button.disabled"></button>
             </li>
         </ul>

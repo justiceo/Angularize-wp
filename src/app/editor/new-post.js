@@ -140,21 +140,21 @@ export class NewPostCtrl {
 
         let deleteButton = {
             id: 'angularize_editor_delete',
-            title: 'Discard',
+            title: 'Delete Post',
             icon: 'fa fa-2x fa-trash-o',
             position: 1,
             handler: () => this.discard()
         };
         let cancelButton = {
             id: 'angularize_editor_cancel',
-            title: 'Discard',
+            title: 'Discard Changes',
             icon: 'fa fa-2x fa-times',
             position: 1,
             handler: () => this.discard()
         };
         let saveButton = {
             id: 'angularize_editor_save',
-            title: 'Save Changes',
+            title: 'Save',
             icon: 'fa fa-2x fa-floppy-o',
             position: 2,
             handler: () => this.save()
