@@ -1,7 +1,7 @@
 <div class="post-header">
     <upload-file progress="$ctrl.progress($uploadPercent)" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage">
-        <simple-editor name="post-title-editor" placeholder="Name Your Story" text="$ctrl.state.title"></simple-editor>
-        <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
+        <simple-editor class="angularize-container lg" name="post-title-editor" placeholder="Name Your Story" text="$ctrl.state.title"></simple-editor>        
+        <simple-editor class="angularize-container" name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>        
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
             <input placeholder="Where are you writing from?" 
@@ -31,14 +31,21 @@
         right: 0;
     }
 
+    .angularize-container {
+        display: block;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .angularize-container.lg {
+        max-width: 1200px;
+    }
+
     .post-header {
         min-height: 80vh;
         text-align: center;
         background: orange;
-        color: black;
-    }
-    .simple-medium-editor {
-        background: #222;
+        color: #222;
     }
 
     .featured-image {
@@ -51,7 +58,8 @@
         margin: 0px auto;
         padding-top: 20px;
         padding-bottom: 20px;
-        font-size: 60px;
+        font-size: 70px;
+        font-weight: bold;
     }
 
     .post-excerpt-editor {
@@ -89,11 +97,6 @@
     }
     .cities input:focus {
         border-bottom: 2px solid #aaa;
-    }
-
-    .angularize-container {
-        max-width: 800px;
-        margin: 0 auto;
     }
 
     .post-body {
@@ -140,20 +143,11 @@
         font-size: 40px;
         line-height: 2;
     }
-    /* medium editor */
 
     .medium-editor-placeholder:after {
-        color: #999;
+        color: #444;
         font-style: normal;
         width: 100%;
         margin: 0 auto;
-    }
-
-    .md-errors-spacer {
-        display: none
-    }
-
-    .hidden {
-        display: none;
     }
 </style>
