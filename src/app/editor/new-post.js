@@ -122,11 +122,12 @@ export class NewPostCtrl {
             targetBlank: true, 
             imageDragging: true,         
             toolbar: {
-                buttons: ['h2', 'h3', 'bold', 'italic', 'quote', 'anchor', 'image', 'outdent', 'indent'],
+                buttons: ['h2', 'h3', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image', 'justifyLeft', 'justifyCenter', 'justifyRight', 
+'justifyFull', 'orderedlist', 'unorderedlist', 'outdent', 'indent', ],
                 sticky: true,
                 static: true,
                 align: 'center',
-                updateOnEmptySelection: false
+                updateOnEmptySelection: true
             }
 
         };

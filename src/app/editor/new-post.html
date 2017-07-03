@@ -1,10 +1,10 @@
-<div class="post-header">
+<div class="post-header" style="background-image: url({{ $ctrl.featuredImage }})">
     <upload-file progress="$ctrl.progress($uploadPercent)" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage">
-        <simple-editor class="angularize-container lg" name="post-title-editor" placeholder="Name Your Story" text="$ctrl.state.title"></simple-editor>        
+        <simple-editor class="angularize-container lg" name="post-title-editor" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></simple-editor>        
         <simple-editor class="angularize-container" name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>        
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
-            <input placeholder="Where are you writing from?" 
+            <input placeholder="post location" 
             type="text" ng-model="$ctrl.postLocation" 
             uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue | limitTo:5"
                 class="form-control">
@@ -46,6 +46,7 @@
         text-align: center;
         background: orange;
         color: #222;
+        background-size: cover;
     }
 
     .featured-image {
@@ -87,13 +88,16 @@
     }
 
     .cities input, .cities input:focus {
-        border: 2px solid transparent; 
-        padding: 5px 7px;       
+        border: none; 
+        outline: none;
+        padding: 5px 7px;     
+        background: transparent;
+        border-bottom: 2px solid #222;
+        font-size: 90%;
     }
     .cities input::placeholder {
-        color: #aaa;
-        font-style: italic;
-        font-size: 90%;
+        color: #222;
+        font-style: normal;
     }
     .cities input:focus {
         border-bottom: 2px solid #aaa;
@@ -102,7 +106,7 @@
     .post-body {
         min-height: 400px;
         margin: 0 auto 100px;
-        padding: 30px;
+        padding: 50px 30px;
     }
 
     .post-settings {
