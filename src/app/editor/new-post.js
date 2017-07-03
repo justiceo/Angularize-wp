@@ -104,6 +104,8 @@ export class NewPostCtrl {
 
     initBody() {
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
+
+        // todo: inline AutoList please
         let contentEditorOptions = {
             buttonLabels: 'fontawesome',
             targetBlank: true,
@@ -112,7 +114,6 @@ export class NewPostCtrl {
                 hideOnClick: false
             },
             extensions: {
-                // todo: inline AutoList please
                 'auotlist':  new AutoList()
             },
             autoLink: true,
