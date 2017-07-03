@@ -5,7 +5,7 @@ export class EditPostCtrl {
     constructor(ToolbarService) {
         // todo: only display this on single posts
         // use window
-        if(PostService.$wp.isSingle && PostService.$wp.postObject.post_type == 'post'){
+        if(true){
             console.log("adding edit post")
             ToolbarService.add({
                 id: 'angularize_editor_post',

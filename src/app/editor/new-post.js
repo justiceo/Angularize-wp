@@ -1,7 +1,5 @@
 import MediumEditor from 'medium-editor';
 import AutoList from 'medium-editor-autolist';
-var $ = require('jquery');
-require('medium-editor-insert-plugin')($);
 
 export class NewPostCtrl {
     constructor($scope, $log, Upload, Cache, ToolbarService, PostService, ALL_CITIES) {
@@ -122,19 +120,10 @@ export class NewPostCtrl {
 
         };
 
-        let elem = $('.post-body');
+        let elem = document.getElementsByClassName('.post-body')[0];
         this.contentEditor = new MediumEditor(elem, contentEditorOptions);
-        this.contentEditor.subscribe('editableInput', () => this.state.content = this.contentEditor.getContent())
-            
+        this.contentEditor.subscribe('editableInput', () => this.state.content = this.contentEditor.getContent())          
 
-        //this.contentEditor.destroy(); // fix this later
-        $(function () {
-            elem.mediumInsert({
-                editor: this.contentEditor
-            });
-        });
-
-        // todo: add save and cancel handlers
     }
 
     addToolbarButtons() {

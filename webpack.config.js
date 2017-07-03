@@ -138,15 +138,7 @@ module.exports = function makeWebpackConfig() {
       // Allow loading html through js
       test: /\.html$/,
       loader: 'raw-loader'
-    },
-    {
-      test: require.resolve("blueimp-file-upload"),
-      loader: "imports-loader?define=>false"
-    },
-    {
-      test: require.resolve("medium-editor-insert-plugin"),
-      loader: "imports-loader?define=>false"
-    }    
+    }
     ]
   };
 
