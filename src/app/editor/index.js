@@ -5,6 +5,7 @@ import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
 import UploadFile from './upload-file';
 import EditPost from './edit-post';
+import Chips from './chips';
 
 let cities = [];
 
@@ -19,6 +20,7 @@ editorModule
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
-    .component('simpleEditor', SimpleEditor);
+    .component('simpleEditor', SimpleEditor)
+    .component('chips', Chips)
 
 export default editorModule;

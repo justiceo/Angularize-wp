@@ -12,11 +12,10 @@
 <div class="post-body"></div>
 <div class="post-settings">
     <label>Categories</label>
-    <input placeholder="Search for Categories" type="text" ng-model="$ctrl.chips.categories" uib-typeahead="c.slug for c in $ctrl.chips.allCategories | filter:$viewValue | limitTo:5"
-        class="categories form-control">
+    <chips empty-text="Search for Categories" some-text="Add more categories" available="$ctrl.ALL_CITIES" selected="$ctrl.selectedC"></chips>
     <label>Tags</label>
-    <input placeholder="Search for tags" type="text" ng-model="$ctrl.chips.tags" uib-typeahead="t.slug for t in $ctrl.chips.allTags | filter:$viewValue | limitTo:5"
-        class="tags form-control">
+    <chips empty-text="Search for Tags" some-text="Add more tags" available="$ctrl.ALL_CITIES" selected="$ctrl.selectedC"></chips>
+    
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
 <style scoped>
@@ -112,22 +111,6 @@
         font-family: sans-serif;
         font-size: 70%;
         font-weight: 600;
-    }
-
-    .post-settings input {
-        margin: 15px auto;
-        border: none;
-        box-shadow: 0 0 20px #d1d1d1;
-        border: 1px solid #ccc;
-        padding: 16px;
-        margin-top: 3px;
-        transition: box-shadow 0.3s;
-    }
-    .post-settings input:hover {
-        box-shadow: 0 0 35px #bbb;
-    }
-    .post-settings input.categories {
-        margin-bottom: 40px;
     }
 
     .post-settings ul.dropdown-menu,
