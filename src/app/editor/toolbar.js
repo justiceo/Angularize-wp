@@ -25,7 +25,6 @@ let Toolbar = {
     </div>
     <style scoped>
         .angularize-toolbar { 
-            margin-left: 30%;
             position: fixed;
             bottom: 40px;
             width: 100%;

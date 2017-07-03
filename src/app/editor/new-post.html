@@ -14,7 +14,7 @@
 <div class="post-body"></div>
 <div class="post-settings">
     <label>Categories</label>
-    <chips empty-text="Search for Categories" some-text="Add more categories" available="$ctrl.chips.allCategories" selected="$ctrl.chips.categories"></chips>
+    <chips class="categories" empty-text="Search for Categories" some-text="Add more categories" available="$ctrl.chips.allCategories" selected="$ctrl.chips.categories"></chips>
     <label>Tags</label>
     <chips empty-text="Search for Tags" some-text="Add more tags" available="$ctrl.chips.allTags" selected="$ctrl.chips.tags"></chips>
     
@@ -125,6 +125,11 @@
         list-style: none;
         border: 1px solid #ccc;
         border-top: none;
+    }
+
+    .post-settings chips.categories {
+        margin-bottom: 40px;
+        display: block;
     }
 
     i.icons {
