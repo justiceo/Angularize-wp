@@ -58,6 +58,8 @@ function angularize_enque_scripts() {
     $translation_array = apply_filters( 'angularize_server', $translation_array );
     wp_localize_script('ng-script', 'angularize_server', $translation_array);
     wp_enqueue_script('ng-script');
+
+    // todo: Optionally enque font-awesome css [ for now not needed ]
 }
 
 add_action('wp_footer', 'angularize_add_toolbar_tag');
