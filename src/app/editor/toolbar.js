@@ -40,7 +40,7 @@ let Toolbar = {
             background: white;
             border-radius: 50%;
             border: 1px solid #bbb;
-            box-shadow: 1px 0 8px #ccc;
+            box-shadow: 1px 0 8px rgba(0,0,0,0.2);
             padding: 30px 32px;
             outline: none;
             transition: background 0.8s, color 0.8s;

@@ -1,34 +1,17 @@
-<div 
-  ngf-drop="$ctrl.upload($file)" 
-  ng-model="$ctrl.file" 
-  class="angularize-drop-box" 
-  ngf-drag-over-class="'dragover'" 
-  ngf-pattern="'image/*,application/pdf'">
+<div ngf-drop="$ctrl.upload($file)" ng-model="$ctrl.file" class="angularize-drop-box" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'">
 
   <img class="preview" ngf-thumbnail="$ctrl.file">
-  <div 
-    class="angularize-select-file fa fa-picture-o fa-5x" 
-    ngf-select="$ctrl.upload($file)" 
-    ng-model="$ctrl.file" 
-    name="file"
-    ngf-pattern="'image/*'" 
-    ngf-accept="'image/*'" 
-    ngf-max-size="20MB" 
-    ngf-min-height="100">
+  <div class="angularize-select-file fa fa-picture-o fa-5x" ngf-select="$ctrl.upload($file)" ng-model="$ctrl.file" name="file"
+    ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100">
   </div>
   <div class="transcluded" ng-transclude></div>
-  <simple-editor 
-    name="angularize-caption-editor" 
-    class="angularize-caption" 
-    placeholder="What is happening in this photo?" 
-    text="$ctrl.caption"></simple-editor>    
+  <simple-editor name="angularize-caption-editor" class="angularize-caption" placeholder="What is happening in this photo?"
+    text="$ctrl.caption"></simple-editor>
 </div>
 <style scoped>
   .angularize-drop-box {
-    background: #222;
-    color: #fff;
     /*border: 2px dashed #ccc;*/
-    position: relative; 
+    position: relative;
   }
 
   img.preview {
@@ -50,20 +33,21 @@
     bottom: 10px;
     left: 20px;
     outline: none;
-    border:none;
+    border: none;
     max-width: 300px;
     font-style: italic;
     font-size: 80%;
-    color: #aaa;
     text-align: left;
   }
+
   .simple-medium-editor.angularize-caption-editor {
-      outline:none; 
+    outline: none;
     background: #555;
     max-width: 270px;
     padding: 5px 7px;
     font-family: sans-serif;
   }
+
   .simple-medium-editor.angularize-caption-editor::after {
     font-style: italic;
     color: #aaa;
