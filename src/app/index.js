@@ -1,6 +1,6 @@
 import angular from 'angular';
-import './editor';
-import './widgets';
+import angularizeEditor from './editor';
+import angularizeWidgets from './widgets';
 import Cache from './providers/cache';
 import PostService from './providers/post';
 import Ajax from './providers/ajax';
@@ -9,8 +9,8 @@ import ToolbarService from './providers/toolbar.service';
 import '../style/app.scss';
 
 let requires = [
-  'angularize.widgets',
-  'angularize.editor',
+  angularizeEditor,
+  angularizeWidgets,
 ];
 let MODULE_NAME = 'angularize';
 let angularize = angular.module(MODULE_NAME, requires);

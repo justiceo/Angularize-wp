@@ -8,14 +8,14 @@ import UploadFile from './upload-file';
 import EditPost from './edit-post';
 import Chips from './chips';
 
-let cities = [];
+const cities = [];
 
 let requires = [typeahead, tooltip, ngFileUpload];
-let editorModule = angular.module('angularize.editor', requires);
+let angularizeEditor = angular.module('angularizeEditor', requires);
 
 // only load if we have wp front end editor enabled
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
-editorModule    
+angularizeEditor    
   .component('editPost', EditPost)
     .constant('ALL_CITIES', cities)
     .component('toolbar', Toolbar)
@@ -24,4 +24,4 @@ editorModule
     .component('simpleEditor', SimpleEditor)
     .component('chips', Chips)
 
-export default editorModule;
+export default angularizeEditor.name;
