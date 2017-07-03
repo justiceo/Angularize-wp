@@ -112,6 +112,7 @@ export class NewPostCtrl {
                 hideOnClick: false
             },
             extensions: {
+                // todo: inline AutoList please
                 'auotlist':  new AutoList()
             },
             autoLink: true,
