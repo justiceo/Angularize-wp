@@ -1,3 +1,4 @@
+// todo: test again as schema is being rebuilt each time indicating nothing is being stored successfully
 export default class Cache {
     constructor($window) {
         this.storage = $window.localStorage;

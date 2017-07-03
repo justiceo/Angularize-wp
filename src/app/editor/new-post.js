@@ -1,5 +1,4 @@
 import MediumEditor from 'medium-editor';
-import AutoList from 'medium-editor-autolist';
 
 export class NewPostCtrl {
     constructor($scope, $log, Upload, Cache, ToolbarService, PostService, ALL_CITIES) {
@@ -107,7 +106,25 @@ export class NewPostCtrl {
     initBody() {
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
 
-        // todo: inline AutoList please
+        var AutoList = MediumEditor.Extension.extend({
+            name: 'autolist',
+            init: function () {
+                this.subscribe('editableKeypress', this.onKeypress.bind(this));
+            },
+            onKeypress: function (keyPressEvent) {
+                if (MediumEditor.util.isKey(keyPressEvent, [MediumEditor.util.keyCode.SPACE])) {
+                    var list_start = this.base.getSelectedParentElement().textContent;
+                    if (list_start == "1." && this.base.getExtensionByName('orderedlist')) {
+                        this.base.execAction('insertorderedlist');
+                        this.base.getSelectedParentElement().textContent = this.base.getSelectedParentElement().textContent.slice(2).trim();
+                    }
+                    else if (list_start == "*" && this.base.getExtensionByName('unorderedlist')) {
+                        this.base.execAction('insertunorderedlist');
+                        this.base.getSelectedParentElement().textContent = this.base.getSelectedParentElement().textContent.slice(1).trim();
+                    }
+                }
+            }
+        });
         let contentEditorOptions = {
             buttonLabels: 'fontawesome',
             targetBlank: true,
