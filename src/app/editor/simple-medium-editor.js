@@ -24,6 +24,8 @@ export class SimpleEditorCtrl {
             this.editor = new MediumEditor(editorElem, editorOptions);
             this.editor.subscribe('editableInput', () => {
                 // get content and strip any html tags
+                // todo: change this binding to a function as angular is not listening to this event 
+                // and might not detect the variable change early
                 this.text = this.editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
             })
         })

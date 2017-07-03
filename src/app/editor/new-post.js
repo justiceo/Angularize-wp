@@ -187,7 +187,8 @@ export class NewPostCtrl {
 
     save() {
         if(this.state.id !== null && this.state.id !== undefined) {            
-            // todo: bind categories and tags            
+            // todo: bind categories and tags 
+            // todo: extract and upload all embed resources           
             this.state.categories = this.chips.categories.map(c => c.id);
             this.state.tags = this.chips.tags.map(t => t.id);
             this.PostService.$restApi.posts().id(this.state.id).post(this.state);
@@ -197,6 +198,7 @@ export class NewPostCtrl {
                 (post) => {
                     angular.extend(this.state, post.rawVal());
                     angular.extend(this.state, {title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered})
+                    console.log("after save state: ", this.state)
                     this.postId = this.state.id;
                 }
             )
