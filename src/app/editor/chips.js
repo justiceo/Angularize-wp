@@ -1,20 +1,27 @@
 // combines an input box with uib-typeahead
 export class ChipsCtrl {
-    constructor($scope) {
-        this.$scope = $scope;
-    }
     $onInit() {
-        this.selected = this.selected || [];
+        //this.selected = this.selected || [];
         this.placeholderText = this.emptyText;
     }
         
-    push(item, model, label, event) {
-        console.log("selected fired");
+    add(item, model, label, event) {
         this.selected.push(item);
+        this.available = this.available.filter(e => e.id != item.id)
         this.placeholderText = this.someText;
         this.model = null;
     }
 
+    transform(item) {
+        console.log("transform called");
+    }
+
+    removeChip(chip) {
+        console.log("remove chip called");
+        this.selected = this.selected.filter(s => s.id !== chip.id);
+        this.available.push(chip);
+    }
+    // todo: use 'text-stroke' to lighten fontawesome icons
 }
 
 let Chips = {
@@ -22,12 +29,12 @@ let Chips = {
     template: `
         <span class="chips">
             <ul class="selected-chips">
-                <li ng-repeat="s in $ctrl.selected">{{ s }}</li>
+                <li ng-repeat="s in $ctrl.selected track by s.id">{{ s.name }}<i ng-click="$ctrl.removeChip(s)" class="chip-remove fa fa-times"></i></li>
             </ul>
             <input ng-model="$ctrl.uibSelected" 
                 placeholder="{{ $ctrl.placeholderText }}"
-                uib-typeahead="t for t in $ctrl.available | filter:$viewValue" 
-                typeahead-on-select="$ctrl.push($item, $model, $label, $event)"
+                uib-typeahead="t.name for t in $ctrl.available | filter:$viewValue | limitTo:5" 
+                typeahead-on-select="$ctrl.add($item, $model, $label, $event)"
                 typeahead-select-on-exact="true"
                 typeahead-input-formatter="transform($item)"
                 class="form-control">
@@ -56,13 +63,17 @@ let Chips = {
                 margin-left: 0;
             }
             .chips > .selected-chips > li {
-                display: inline;
+                display: inline-block;
                 background: #f1f1f1;
                 padding: 7px 10px;
                 border-radius: 3px;
                 margin-left: 6px;
+                margin-bottom: 16px;
                 border: 1px solid #ccc;
                 box-shadow: 1px 1px 3px #ccc;
+            }
+            .chips > .selected-chips > li > i {
+                    padding: 5px 0px 5px 7px;
             }
             .chips > input {
                 border: none;

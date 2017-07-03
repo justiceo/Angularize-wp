@@ -96,7 +96,9 @@ export class NewPostCtrl {
         }
 
         this.PostService.$restApi.categories().get().then((c) => {
-            this.chips.allCategories = c.rawVal();
+            this.chips.allCategories = c.rawVal().map(c => {
+                return {id: c.id, name: c.name}
+            });
             this.list = c.rawVal().map(c => c.slug);
         });
         this.PostService.$restApi.tags().get().then(t => this.chips.allTags = t.rawVal());

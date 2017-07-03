@@ -4,7 +4,9 @@
         <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
-            <input placeholder="Where are you writing from?" type="text" ng-model="$ctrl.postLocation" uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue | limitTo:5"
+            <input placeholder="Where are you writing from?" 
+            type="text" ng-model="$ctrl.postLocation" 
+            uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue | limitTo:5"
                 class="form-control">
         </div>
     </upload-file>
@@ -12,9 +14,9 @@
 <div class="post-body"></div>
 <div class="post-settings">
     <label>Categories</label>
-    <chips empty-text="Search for Categories" some-text="Add more categories" available="$ctrl.ALL_CITIES" selected="$ctrl.selectedC"></chips>
+    <chips empty-text="Search for Categories" some-text="Add more categories" available="$ctrl.chips.allCategories" selected="$ctrl.chips.categories"></chips>
     <label>Tags</label>
-    <chips empty-text="Search for Tags" some-text="Add more tags" available="$ctrl.ALL_CITIES" selected="$ctrl.selectedC"></chips>
+    <chips empty-text="Search for Tags" some-text="Add more tags" available="$ctrl.chips.allTags" selected="$ctrl.chips.tags"></chips>
     
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
@@ -99,6 +101,7 @@
     .post-settings {
         background: #eee;
         padding: 30px;
+        position: relative;
     }
 
     .post-settings label {
