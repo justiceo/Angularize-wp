@@ -1,19 +1,11 @@
 
 export default class ToolbarService {
 
-    constructor($log) {
-        $log.info("TbService: Initializing...");
-        this.$log = $log;
+    constructor() {
         this.buttons = [];
     }
 
-    noop() {
-        return "no op";
-    }
-
-    getButtons() {
-        return this.buttons;
-    }
+    getButtons() { return this.buttons; }
 
     add(button) {
 
