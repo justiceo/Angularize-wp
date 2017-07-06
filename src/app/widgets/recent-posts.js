@@ -1,6 +1,5 @@
 export class RecentPostsCtrl {
-    constructor($log, $scope, PostService) {
-        $log.info("RecentPost: Initializing...");
+    constructor(PostService) {
         PostService.ready().then(
             () => {
                 this.posts = PostService.$restApi.posts({'per_page': 5})
