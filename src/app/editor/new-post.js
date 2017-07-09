@@ -185,10 +185,20 @@ export class NewPostCtrl {
         };
         // todo: add a ToolbarService.create("id", "title", "icon", 1) function
         this.ToolbarService.add(cancelButton);
-        this.ToolbarService.add(deleteButton);
         this.ToolbarService.add(saveButton);
-        // todo: only add if post is not published
-        this.ToolbarService.add(publishButton);
+
+        // we can only delete a post that has been created
+        this.$scope.$watch(() => this.postId, (newValue) => {
+            if(newValue != null && newValue != undefined )
+                this.ToolbarService.add(deleteButton);
+        });
+
+        // only add publish button when post is not published
+        this.$scope.$watch(() => this.state.status, (newValue) => {
+            if(newValue !== 'publish')
+                this.ToolbarService.add(publishButton);
+            else this.ToolbarService.remove(publishButton);
+        });
     }
 
     /**

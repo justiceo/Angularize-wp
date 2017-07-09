@@ -24,7 +24,6 @@ class RestCollection extends Array<RestObject> {
         if(res == null) {            
             res = new RestObject(postId, this._route, this._schema);
             this.push(res);
-            // todo: update internal model
         }
         return res; 
     }
@@ -89,7 +88,6 @@ class RestObject {
 
     _serialize(obj): string {
         if(obj == null || Object.keys(obj).length == 0) return "";
-        // todo: check validity of keys too
         return "?" + Object.keys(obj).map(function (key) {
             return key + '=' + encodeURIComponent(obj[key]);
         }).join('&')
@@ -192,17 +190,14 @@ class Schema {
         return routes.filter(r => this.isImmediate(endpoint, r) && this.isCollection(r)).map(r => r.replace(endpoint + "/", ""));
     }
 
+    // future: improve targeting
     isCollection(endpoint) {
-        return !endpoint.endsWith("[\\d]+)"); // todo: improve targetting
+        return !endpoint.endsWith("[\\d]+)"); 
     }
 
     isImmediate(endpoint, newEndpoint) {
         let diff = newEndpoint.replace(endpoint, "");
         return (newEndpoint.startsWith(endpoint)) && (diff.match(/\//g) || []).length == 1
-    }
-
-    onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
     }
 }
 
