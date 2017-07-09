@@ -10,6 +10,7 @@ export class ChipsCtrl {
         this.available = this.available.filter(e => e.id != item.id)
         this.placeholderText = this.someText;
         this.model = null;
+        if(this.onChange) this.onChange({$selected: this.selected});
     }
 
     transform(item) {
@@ -20,6 +21,7 @@ export class ChipsCtrl {
         console.log("remove chip called");
         this.selected = this.selected.filter(s => s.id !== chip.id);
         this.available.push(chip);
+        if(this.onChange) this.onChange({$selected: this.selected});
     }
     // todo: use 'text-stroke' to lighten fontawesome icons
 }
@@ -85,6 +87,7 @@ let Chips = {
     bindings: {
         available: '=',
         selected: '=',
+        onChange: '&',
         emptyText: '@',
         someText: '@'
     }

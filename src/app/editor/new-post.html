@@ -17,9 +17,15 @@
 <div class="angularize-container">
     <div class="post-settings">
         <label>Categories</label>
-        <chips class="categories" empty-text="Search for Categories" some-text="Add more categories" available="$ctrl.chips.allCategories" selected="$ctrl.chips.categories"></chips>
+        <chips class="categories" empty-text="Search for Categories" some-text="Add more categories" 
+            available="$ctrl.chips.allCategories" 
+            selected="$ctrl.chips.categories"
+            on-change="$ctrl.updateCategories($selected)"></chips>
         <label>Tags</label>
-        <chips empty-text="Search for Tags" some-text="Add more tags" available="$ctrl.chips.allTags" selected="$ctrl.chips.tags"></chips>    
+        <chips empty-text="Search for Tags" some-text="Add more tags" 
+        available="$ctrl.chips.allTags"        
+        on-change="$ctrl.updateTags($selected)"
+        selected="$ctrl.chips.tags"></chips>    
     </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">

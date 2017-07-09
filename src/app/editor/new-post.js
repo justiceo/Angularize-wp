@@ -214,13 +214,12 @@ export class NewPostCtrl {
             });
         // todo: later: if there are no changes to discard, replace with delete button
     }
+    updateCategories(selected) { console.log("update cats: ", selected); this.state.categories = selected.map(c => c.id); }
+    updateTags(selected) { this.state.tags = selected.map(t => t.id); }
 
-    save() {
+    save() {  
+        // todo: extract and upload all embed resources 
         if (this.state.id !== null && this.state.id !== undefined) {
-            // todo: bind categories and tags 
-            // todo: extract and upload all embed resources           
-            this.state.categories = this.chips.categories.map(c => c.id);
-            this.state.tags = this.chips.tags.map(t => t.id);
             this.PostService.$restApi.posts().id(this.state.id).post(this.state);
         }
         else {
