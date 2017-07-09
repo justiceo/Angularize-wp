@@ -3,6 +3,7 @@ export default class ToolbarService {
 
     constructor() {
         this.buttons = [];
+        this.$wp = window.angularize_server;
     }
 
     getButtons() { return this.buttons; }
@@ -14,6 +15,10 @@ export default class ToolbarService {
         // if user didn't specify an index, then it's last
         if (!button.position)
             button.position = 1000;
+
+        if(button.is_logged_in && !this.$wp.is_logged_in
+            || button.is_single && !this.$wp.is_single)
+            return;
 
         // if button already exist, don't add it.
         for (let b of this.buttons) {

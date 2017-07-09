@@ -51,6 +51,8 @@ function angularize_enque_scripts() {
         'FrontEndEditorEnabled' => is_plugin_active('wp-front-end-editor/plugin.php'),
         'meta' => get_post_meta( get_the_ID() ),
         'is_single' => is_single(),
+        'is_page' => is_page(),
+        'is_home' => is_home(),
         'is_archive' => is_archive(),
         'is_logged_in' => is_user_logged_in(),
         'postObject' => get_post()
