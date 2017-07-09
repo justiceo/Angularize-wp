@@ -2,10 +2,12 @@ import Cache from './cache';
 import PostService from './post';
 import Ajax from './ajax';
 import ToolbarService from './toolbar.service';
+import Toolbar from './toolbar';
 
 let angularizeCore = angular.module('angularizeCore', [])
 
 angularizeCore
+  .component('toolbar', Toolbar)
   .service('Cache', Cache)
   .service('PostService', PostService)
   .service('Ajax', Ajax)

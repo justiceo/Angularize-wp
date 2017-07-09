@@ -1,7 +1,6 @@
 import typeahead from 'angular-ui-bootstrap/src/typeahead';
 import tooltip from 'angular-ui-bootstrap/src/tooltip';
 import ngFileUpload from 'ng-file-upload';
-import Toolbar from './toolbar';
 import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
 import UploadFile from './upload-file';
@@ -18,7 +17,6 @@ let angularizeEditor = angular.module('angularizeEditor', requires);
 angularizeEditor    
   .component('editPost', EditPost)
     .constant('ALL_CITIES', cities)
-    .component('toolbar', Toolbar)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
     .component('simpleEditor', SimpleEditor)

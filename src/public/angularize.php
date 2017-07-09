@@ -61,7 +61,9 @@ function angularize_enque_scripts() {
     wp_localize_script('ng-script', 'angularize_server', $translation_array);
     wp_enqueue_script('ng-script');
 
-    // todo: Optionally enque font-awesome css [ for now not needed ]
+    // Optionally enque font-awesome css [ for now not needed ]
+    if(true)
+    wp_enqueue_style('font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 }
 
 add_action('wp_footer', 'angularize_add_toolbar_tag');
