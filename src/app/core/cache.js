@@ -5,7 +5,7 @@ export default class Cache {
     }
 
     get(key, anytime = false) {
-        let val = this.storage.getItem(key);
+        let val = JSON.parse(this.storage.getItem(key));
         if(val && (anytime || val.expiresIn > Date.now)) 
             return val.value;
         return null;
@@ -16,7 +16,7 @@ export default class Cache {
             "value": value,
             "expiresIn": Date.now + this.toMilliseconds(timeInDays)
         }
-        this.storage.setItem(key, val);
+        this.storage.setItem(key, JSON.stringify(val));
     }
 
     remove(key) {

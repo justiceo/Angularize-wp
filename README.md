@@ -146,15 +146,8 @@ todo
 - for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
 - use real icons for toolbar buttons
-- [DONE] add chips plugin for categories and tags
-- [DONE] make post categories actually work
-- [DONE] make post tags actually work
 - make post cities actually work
-- [DONE] create a wrapper component for these select?
-- [DONE] completely remove angular material dependency
-- fix font-awesome once and for all man
 - fix webpack build and separate css. use gulp?
-- [DONE] drop angular-local-storage dependency
 - move out widgets and editor from core
 - move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
     also, post service would be freed from functions it neither uses nor needs.
