@@ -7,7 +7,10 @@ export default class Ajax {
     constructor($window, $http, $q, $log) {
         angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log});
         this.root = window.location.protocol + "//" + window.location.hostname + "/wp-json/wp/v2";
+        $log.error("root: ", this.root)
         this.storage = $window.localStorage;
+        this.isDev = window.location.hostname === 'localhost:8080';
+        if(this.isDev) initMocks();
     }
 
     request(type, url, payload) {
@@ -19,12 +22,16 @@ export default class Ajax {
                 return this.$q.resolve(success.data);
             },
             error => {
+                if(this.isDev) {
+                    return this.mock(type, url);
+                }
                 this.$log.error("Error requesting " + url, error);
-                // todo: if the request is from localhost (we're running isolated), return a mock response
                 return this.$q.reject(error);
             }
         )
     }
+
+    mock(type, url) { return this.cache(type + url) }
 
     get(url, no_cache = false) {
         let cached = this.cache(url);
@@ -47,5 +54,16 @@ export default class Ajax {
     cache(key, value) {
         if(!value) return JSON.parse(this.storage.getItem(key));
         this.storage.setItem(key, JSON.stringify(value));
+    }
+
+    initMocks() {
+        let toMock = [
+            {
+                'type': 'get',
+                'url': '/posts/',
+                'response': 'success!'
+            }
+        ]
+        toMock.forEach(e => this.cache(e.type + e.url, e.response))
     }
 }
