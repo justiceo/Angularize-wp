@@ -6,7 +6,6 @@ import RestApi from './rest-api';
 import MockService from './mock';
 
 let angularizeCore = angular.module('angularizeCore', [])
-let devServer = 'http://localhost:8080';
 
 angularizeCore
   .component('toolbar', Toolbar)
@@ -24,7 +23,7 @@ angularizeCore
       },
       responseError: function(rejection) {
         // if it's 404 due to running on webpack instead of as WordPress plugin, mock the response.
-        if(rejection.status == 404 && window.location.origin == devServer){
+        if(rejection.status == 404 && MockService.isDev){
           return MockService.resolve(rejection)        
         }
 
@@ -32,10 +31,8 @@ angularizeCore
       }
     };
   })
-  .config(function ($httpProvider, $logProvider) {
+  .config(function ($httpProvider) {
     $httpProvider.interceptors.push('$q', 'MockService', 'httpRequestInterceptor');
-    if(window.location.origin !== devServer)
-      $logProvider.debugEnabled(false); // sadly debug is only printed in firefox
   });
 
   export default angularizeCore.name;

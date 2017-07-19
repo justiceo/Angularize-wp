@@ -2,17 +2,40 @@
 export default class MockService {
     constructor($q){
         this.$q = $q;
+    }
 
-        this.angularize_server = {
-            nonce: 'aw23jdfr60',
-            currentUser: {},
-            postObject: {},
+    resolve(rejection) {
+        let method = rejection.config.method, url = rejection.config.url;
+        let res = this.endPoints.filter(e => e.method == method && e.url == url)
+        if(res){            
+            console.warn('MOCK: resolved [' + method + '] ' + url);
+            return this.$q.resolve(res.response);
         }
+
+        return this.$q.reject(rejection);
+    }
+
+    mock(method, url, response) {
+        let dup = this.endPoints.filter(e => e.method == method && e.url == url);
+        if(dup) console.warn('MOCK: adding duplicate mocks for [' + method + '] ' + url);
+        this.endPoints.push({method: method, url:url, response: response});
+    }
+
+    $onInit() {
+        
+        this.isDev = window.location.origin === 'http://localhost:8080'
+        
+        if(this.isDev)
+            window.angularize_server = {
+                nonce: 'aw23jdfr60',
+                currentUser: {},
+                postObject: {},
+            }
 
         this.endPoints = [
             {
                 'method': 'get',
-                'url': '', // schema root
+                'url': 'http://localhost:8080/wp-json/wp/v2',
                 'response': {
                     routes: {
                         '/wp/v2': '',
@@ -29,16 +52,5 @@ export default class MockService {
                 }
             }
         ]
-    }
-
-    resolve(rejection) {
-        let method = rejection.config.method, url = rejection.config.url;
-        let res = this.endPoints.filter(e => e.method == method && e.url == url)
-        if(res){            
-            console.warn('MOCK: resolved [' + method + '] ' + url)
-            return this.$q.resolve(res.response);
-        }
-
-        return this.$q.reject(rejection);
     }
 }
