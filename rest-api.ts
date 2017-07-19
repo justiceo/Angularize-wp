@@ -161,7 +161,7 @@ class Schema {
     schema: any;
     routes: Array<string>;
     constructor(public ajax, public index="/wp-json", public namespace="/wp/v2") {        
-        ajax.root = index + namespace;   // todo: this affects all requests even those made outside rest api!!!!!!        
+        //ajax.root = index + namespace;   // todo: this affects all requests even those made outside rest api!!!!!!        
     }
 
     load() {

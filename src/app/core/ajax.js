@@ -4,74 +4,42 @@
  * with caching to reduce hits
  */
 export default class Ajax {
-    constructor($window, $http, $q, $log, Cache) {
-        'ngInject';
-        $log.info("Ajax: Initializing...");
-        angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log, 'Cache': Cache});
-        this.$wp = $window.angularize_server;
+    constructor($http, $q, $log, Cache) {
+        angular.extend(this, {'$http': $http, '$q': $q, '$log': $log, 'Cache': Cache});
+        this.root = window.location.protocol + "//" + window.location.hostname + "/wp-json/wp/v2";
+    }
 
-        this.origin = $window.location.protocol + "//" + $window.location.hostname;
-        this.restRoute = this.origin + "/wp-json/wp/v2";
-        this.root = "";
+    request(type, url, payload) {
+        url = this.root + url;
+        let req = payload ? this.$http[type](url, payload) : this.$http[type](url)
+        return req.then(
+            success => {
+                this.$log.debug('AJAX: successfully processed [' + type + '] ' + url);
+                return this.$q.resolve(success.data);
+            },
+            error => {
+                this.$log.error("Error requesting " + url, error);
+                // todo: if the request is from localhost (we're running isolated), return a mock response
+                return this.$q.reject(error);
+            }
+        )
     }
 
     get(url, no_cache = false) {
-        url = this.root + url;
-        if(no_cache) this.Cache.remove(url);
-
-        // Try the cache first
-        var cached = this.Cache.get(url);
-        if(cached) return this.$q.resolve(cached);        
-
-        console.log("$.get: ", url);
-        return this.$http.get(url).then(
-            success => {
-                this.Cache.set(url, success.data);
-                return this.$q.resolve(success.data);
-            },
-            error => {
-                this.$log.error("Error requesting " + url, error);
-                return this.$q.reject(error);
+        let cached = this.Cache.get(url);
+        if(!no_cache && cached) return this.$q.resolve(cached);     
+        
+        return this.request('get', url).then(
+            data => {
+                this.Cache.set(url, data);
+                return this.$q.resolve(data);
             }
         )
     }
 
-    post(url, payload) {
-        url = this.root + url;
-        return this.$http.post(url, payload).then(
-            success => {
-                return this.$q.resolve(success.data);
-            },
-            error => {
-                this.$log.error("Error requesting " + url, error);
-                return this.$q.reject(error);
-            }
-        )
-    }    
+    post(url, payload) { return this.request('post', url, payload) }    
 
-    put(url, payload) {
-        url = this.root + url;
-        return this.$http.put(url, payload).then(
-            success => {
-                return this.$q.resolve(success.data);
-            },
-            error => {
-                this.$log.error("Error requesting " + url, error);
-                return this.$q.reject(error);
-            }
-        )
-    }
+    put(url, payload) { return this.request('put', url, payload) }
 
-    delete(url) {
-        url = this.root + url;
-        return this.$http.delete(url).then(
-            success => {
-                return this.$q.resolve(success.data);
-            },
-            error => {
-                this.$log.error("Error requesting " + url, error);
-                return this.$q.reject(error);
-            }
-        )
-    }
+    delete(url) { return this.request('delete', url) }
 }
