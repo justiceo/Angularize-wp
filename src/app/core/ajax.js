@@ -6,15 +6,13 @@
 export default class Ajax {
     constructor($window, $http, $q, $log) {
         angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log});
-        this.root = window.location.protocol + "//" + window.location.hostname + "/wp-json/wp/v2";
-        $log.error("root: ", this.root)
         this.storage = $window.localStorage;
-        this.isDev = window.location.hostname === 'localhost:8080';
-        if(this.isDev) initMocks();
+        this.isDev = window.location.origin === 'http://localhost:8080';
+        if(this.isDev) this.initMocks();
     }
 
     request(type, url, payload) {
-        url = this.root + url;
+        url = window.location.origin + "/wp-json/wp/v2" + url;
         let req = payload ? this.$http[type](url, payload) : this.$http[type](url)
         return req.then(
             success => {
@@ -57,6 +55,7 @@ export default class Ajax {
     }
 
     initMocks() {
+        this.$log.debug("Ajax: Initializing mock endpoints")
         let toMock = [
             {
                 'type': 'get',

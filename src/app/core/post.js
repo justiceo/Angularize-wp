@@ -9,8 +9,6 @@ export default class PostService {
         $log.info("PostService: Initializing...");
         angular.extend(this, {'$window': $window, '$q': $q, '$log': $log, 'Ajax': Ajax});
         this.$wp = $window.angularize_server || {};
-        this.post = this.$wp.postObject || {};
-        this.postRoute = Ajax.restRoute + "/posts";        
     }
 
     ready() {
