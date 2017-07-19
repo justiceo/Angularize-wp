@@ -4,9 +4,10 @@
  * with caching to reduce hits
  */
 export default class Ajax {
-    constructor($http, $q, $log, Cache) {
-        angular.extend(this, {'$http': $http, '$q': $q, '$log': $log, 'Cache': Cache});
+    constructor($window, $http, $q, $log) {
+        angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log});
         this.root = window.location.protocol + "//" + window.location.hostname + "/wp-json/wp/v2";
+        this.storage = $window.localStorage;
     }
 
     request(type, url, payload) {
@@ -26,12 +27,12 @@ export default class Ajax {
     }
 
     get(url, no_cache = false) {
-        let cached = this.Cache.get(url);
+        let cached = this.cache(url);
         if(!no_cache && cached) return this.$q.resolve(cached);     
         
         return this.request('get', url).then(
             data => {
-                this.Cache.set(url, data);
+                this.cache(url, data);
                 return this.$q.resolve(data);
             }
         )
@@ -42,4 +43,9 @@ export default class Ajax {
     put(url, payload) { return this.request('put', url, payload) }
 
     delete(url) { return this.request('delete', url) }
+    
+    cache(key, value) {
+        if(!value) return JSON.parse(this.storage.getItem(key));
+        this.storage.setItem(key, JSON.stringify(value));
+    }
 }
