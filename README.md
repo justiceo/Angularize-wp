@@ -145,9 +145,6 @@ todo
 - only display edit-button on single post pages
 - for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
-- use real icons for toolbar buttons
 - make post cities actually work
-- fix webpack build and separate css. use gulp?
-- move out widgets and editor from core
 - move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
     also, post service would be freed from functions it neither uses nor needs.
