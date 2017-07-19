@@ -2,6 +2,7 @@
 export default class MockService {
     constructor($q){
         this.$q = $q;
+        this.init();
     }
 
     resolve(rejection) {
@@ -21,8 +22,7 @@ export default class MockService {
         this.endPoints.push({method: method, url:url, response: response});
     }
 
-    $onInit() {
-        
+    init() {
         this.isDev = window.location.origin === 'http://localhost:8080'
         
         if(this.isDev)
