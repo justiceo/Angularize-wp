@@ -22,7 +22,7 @@ export default class Ajax {
             error => {
                 if(this.isDev) {
                     console.warn('AJAX: mocking [' + type + '] ' + url)
-                    return this.mock(type, url);
+                    return this.$q.resolve(this.mock(type, url));
                 }
                 console.error("Error requesting " + url, error);
                 return this.$q.reject(error);
@@ -68,10 +68,17 @@ export default class Ajax {
                 'type': 'get',
                 'url': '', // schema root
                 'response': {
-                    
+                    routes: {
+                        '/wp/v2': '',
+                        '/wp/v2/posts':'',
+                        '/wp/v2/posts/(?P<id>[\d]+)': '',
+                        '/wp/v2/users':'',
+                        '/wp/v2/users/(?P<id>[\d]+)':'',
+                        '/wp/v2/users/me':'',
+                    }
                 }
             }
         ]
-        toMock.forEach(e => this.cache(e.type + e.url, e.response))
+        toMock.forEach(e => this.cache(e.type + window.location.origin + "/wp-json/wp/v2" + e.url, e.response))
     }
 }
