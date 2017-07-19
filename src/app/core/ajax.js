@@ -4,8 +4,8 @@
  * with caching to reduce hits
  */
 export default class Ajax {
-    constructor($window, $http, $q, $log) {
-        angular.extend(this, {'$window': $window, '$http': $http, '$q': $q, '$log': $log});
+    constructor($window, $http, $q) {
+        angular.extend(this, {'$window': $window, '$http': $http, '$q': $q});
         this.storage = $window.localStorage;
         this.isDev = window.location.origin === 'http://localhost:8080';
         if(this.isDev) this.initMocks();
@@ -16,14 +16,15 @@ export default class Ajax {
         let req = payload ? this.$http[type](url, payload) : this.$http[type](url)
         return req.then(
             success => {
-                this.$log.debug('AJAX: successfully processed [' + type + '] ' + url);
+                console.debug('AJAX: successfully processed [' + type + '] ' + url);
                 return this.$q.resolve(success.data);
             },
             error => {
                 if(this.isDev) {
+                    console.warn('AJAX: mocking [' + type + '] ' + url)
                     return this.mock(type, url);
                 }
-                this.$log.error("Error requesting " + url, error);
+                console.error("Error requesting " + url, error);
                 return this.$q.reject(error);
             }
         )
@@ -55,12 +56,20 @@ export default class Ajax {
     }
 
     initMocks() {
-        this.$log.debug("Ajax: Initializing mock endpoints")
+        console.debug("Ajax: Initializing mock endpoints")
+        this.$window.angularize_server = {
+            nonce: 'aw23jdfr60',
+            currentUser: {},
+            postObject: {},
+            // add other details as deemed fit
+        }
         let toMock = [
             {
                 'type': 'get',
-                'url': '/posts/',
-                'response': 'success!'
+                'url': '', // schema root
+                'response': {
+                    
+                }
             }
         ]
         toMock.forEach(e => this.cache(e.type + e.url, e.response))

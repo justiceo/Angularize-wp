@@ -142,6 +142,8 @@ webpack
 
 todo
 ====
+- make rest api a service of its own and rid us of postService
+- hydrate mocks
 - only display edit-button on single post pages
 - for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
