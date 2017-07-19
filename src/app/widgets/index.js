@@ -8,7 +8,7 @@ import MyPosts from './my-posts';
 let angularizeWidgets = angular.module("angularizeWidgets", []);
 
 angularizeWidgets
-    .component('recentPost', RecentPosts)
+    .component('recentPosts', RecentPosts)
     .component('authorPopover', AuthorPopover)
     .component('bookFlight', BookFlight)
     .component('myPosts', MyPosts)

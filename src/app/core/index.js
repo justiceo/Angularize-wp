@@ -2,6 +2,7 @@ import PostService from './post';
 import Ajax from './ajax';
 import ToolbarService from './toolbar-service';
 import Toolbar from './toolbar';
+import RestApi from './rest-api';
 
 let angularizeCore = angular.module('angularizeCore', [])
 
@@ -10,6 +11,7 @@ angularizeCore
   .service('PostService', PostService)
   .service('Ajax', Ajax)
   .service('ToolbarService', ToolbarService)
+  .service('RestApi', RestApi)
   .factory('httpRequestInterceptor', function () {
     return {
       request: function (config) {
