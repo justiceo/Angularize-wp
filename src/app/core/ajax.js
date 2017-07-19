@@ -16,10 +16,6 @@ export default class Ajax {
             success => {
                 console.debug('AJAX: successfully processed [' + type + '] ' + url);
                 return this.$q.resolve(success.data);
-            },
-            error => {
-                console.error("Error requesting " + url, error);
-                return this.$q.reject(error);
             }
         )
     }

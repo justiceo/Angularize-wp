@@ -8,9 +8,13 @@ export default class MockService {
     resolve(rejection) {
         let method = rejection.config.method, url = rejection.config.url;
         let res = this.endPoints.filter(e => e.method == method && e.url == url)
+        res = res.length > 0 ? res[0] : null
         if(res){            
             console.warn('MOCK: resolved [' + method + '] ' + url);
-            return this.$q.resolve(res.response);
+            let success = {
+                data: res.response
+            }
+            return this.$q.resolve(success);
         }
 
         return this.$q.reject(rejection);
@@ -34,7 +38,7 @@ export default class MockService {
 
         this.endPoints = [
             {
-                'method': 'get',
+                'method': 'GET',
                 'url': 'http://localhost:8080/wp-json/wp/v2',
                 'response': {
                     routes: {
