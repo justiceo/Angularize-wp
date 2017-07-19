@@ -9,9 +9,9 @@ export default class MockService {
             postObject: {},
         }
 
-        this.toMock = [
+        this.endPoints = [
             {
-                'type': 'get',
+                'method': 'get',
                 'url': '', // schema root
                 'response': {
                     routes: {
@@ -31,8 +31,14 @@ export default class MockService {
         ]
     }
 
-    resolve(type, url) {
-        console.warn('MOCK: resolved [' + type + '] ' + url)
-        // returns a promise
+    resolve(rejection) {
+        let method = rejection.config.method, url = rejection.config.url;
+        let res = this.endPoints.filter(e => e.method == method && e.url == url)
+        if(res){            
+            console.warn('MOCK: resolved [' + method + '] ' + url)
+            return this.$q.resolve(res.response);
+        }
+
+        return this.$q.reject(rejection);
     }
 }

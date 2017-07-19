@@ -25,7 +25,7 @@ angularizeCore
       responseError: function(rejection) {
         // if it's 404 due to running on webpack instead of as WordPress plugin, mock the response.
         if(rejection.status == 404 && window.location.origin == devServer){
-          return MockService.resolve(rejection.config.method, rejection.config.url)        
+          return MockService.resolve(rejection)        
         }
 
         return $q.reject(rejection)
