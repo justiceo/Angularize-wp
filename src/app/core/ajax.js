@@ -56,12 +56,11 @@ export default class Ajax {
     }
 
     initMocks() {
-        console.debug("Ajax: Initializing mock endpoints")
+        console.log("Ajax: Initializing mock endpoints")
         this.$window.angularize_server = {
             nonce: 'aw23jdfr60',
             currentUser: {},
             postObject: {},
-            // add other details as deemed fit
         }
         let toMock = [
             {
@@ -75,6 +74,10 @@ export default class Ajax {
                         '/wp/v2/users':'',
                         '/wp/v2/users/(?P<id>[\d]+)':'',
                         '/wp/v2/users/me':'',
+                        '/wp/v2/categories':'',
+                        '/wp/v2/categories/(?P<id>[\d]+)':'',
+                        '/wp/v2/tags':'',
+                        '/wp/v2/tags/(?P<id>[\d]+)':'',
                     }
                 }
             }
