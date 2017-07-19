@@ -19,8 +19,10 @@ angularizeCore
       }
     };
   })
-  .config(function ($httpProvider) {
-    $httpProvider.interceptors.push('httpRequestInterceptor')
+  .config(function ($httpProvider, $logProvider) {
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+    if(window.location.origin !== 'http://localhost:8080')
+      $logProvider.debugEnabled(false); // sadly debug is only printed in firefox
   });
 
   export default angularizeCore.name;
