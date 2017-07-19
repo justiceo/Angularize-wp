@@ -6,12 +6,11 @@
  * where 213 is post id.
  */
 export class LikeDirectiveCtrl {
-    constructor(PostService, CurrentUser) {
+    constructor(PostService) {
         this.restrict = 'A';
         this.transclude = true;
         this.scope = {};
         this.PostService = PostService;
-        this.CurrentUser = CurrentUser;
         this.likeCount = 0;
         this.template = function( element, attrs ) {
             var tag = element[0].nodeName;
@@ -24,12 +23,12 @@ export class LikeDirectiveCtrl {
         element.css('color', 'red');
         element.addClass("like")
         let postId = attr.like;
-        this.CurrentUser.getMeta('likes').then(
+        /*this.CurrentUser.getMeta('likes').then(
             likes => {
                 //if(likes.contain(postId)) 
                     element.addClass('liked')
             }
-        )
+        )*/
         return this.link
     }
 
@@ -57,9 +56,9 @@ export class LikeDirectiveCtrl {
     }
 }
 
-let LikeDirective = function(PostService, CurrentUser) {
+let LikeDirective = function(PostService) {
     'ngInject';
-    return new LikeDirectiveCtrl(PostService, CurrentUser);
+    return new LikeDirectiveCtrl(PostService);
 }
 
 export default LikeDirective;

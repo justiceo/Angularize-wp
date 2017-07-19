@@ -1,5 +1,5 @@
 export class AppCtrl {
-  constructor(Cache, PostService) {
+  constructor(PostService) {
     this.sample = 'angular works!';
   }
 }

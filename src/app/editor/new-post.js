@@ -1,9 +1,9 @@
 import MediumEditor from 'medium-editor';
 
 export class NewPostCtrl {
-    constructor($scope, $log, Upload, Cache, ToolbarService, PostService, ALL_CITIES) {
+    constructor($scope, $log, Upload, ToolbarService, PostService, ALL_CITIES) {
         angular.extend(this, {
-            '$scope': $scope, 'Upload': Upload, 'Cache': Cache, 'ToolbarService': ToolbarService,
+            '$scope': $scope, 'Upload': Upload, 'ToolbarService': ToolbarService,
             'PostService': PostService, '$log': $log, 'ALL_CITIES': ALL_CITIES
         });
     }
