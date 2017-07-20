@@ -144,6 +144,8 @@ todo
 ====
 - make rest api a service of its own and rid us of postService
 - hydrate mocks
+- load dependencies via cdn
+- try move to gulp again - with minify and uglify
 - only display edit-button on single post pages
 - for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
