@@ -1,30 +1,13 @@
-/*
-// rest collection
-- no need for state, modelRef
-- no need for currentId, rawVal
-
-// rest object
-- no setAttr, rename attr to prop 
-- no rawVal
-
-// no need for schema as functions are embedded
-// routes as const
-// RestApi.ready returns the initial request object
-// no need for isCollection or isModel, we're stepping through
-// - the last immediate endpoint is either a "word" or (/pattern)
-
-*/
-
 import Ajax from './ajax';
 
 export default class RestApi2 {
     constructor($window) {
         let namespace = '/wp/v2';
 
-        this.loadSchema = Ajax.get('').then(
+        this.loadSchema = Ajax.get('').then( // this ajax call slows the startup time
             schema => {
-                let routes = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace(namespace, ''));
-                this.rootObject = new WpObject('', '', routes)
+                const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace(namespace, ''));
+                this.rootObject = new WpObject('', '', routesSchema)
                 return this.rootObject;
             }
         )
@@ -38,17 +21,12 @@ class WpObject {
         angular.extend(this,{self:self, parent:parent, schema:schema, state:state})
         this.endpoint = parent ? parent + '/' + self : self;
 
-        // get collections and add append to self
         let collections = schema.filter(e => e.replace(this.endpoint, '').indexOf('/') == -1)
-        collections,forEach(c => {
-            this[c] = (args) => this.init(c, args);
-        })
+        collections.forEach(c => this[c] = (args) => this.init(c, args) )
     }
 
     init(collection, args) {
-        let endpoint = collection + this._serialize(args);
-        let wpCollection = new WpCollection(endpoint, this.endpoint, this.schema);
-        return wpCollection;
+        return new WpCollection(collection + this._serialize(args), this.endpoint, this.schema);
     }
 
     _serialize(obj) {
