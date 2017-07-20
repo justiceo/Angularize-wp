@@ -152,3 +152,19 @@ todo
 - make post cities actually work
 - move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
     also, post service would be freed from functions it neither uses nor needs.
+
+proposed layout
+---------------
+- plugin/: contains plugin files
+- core/: contains the necessary services
+- editor/: contains editor components
+- widgets/: contains widgets components
+- build/: contains installable files
+- index.html: main demo page / github page
+- package.json: dependency management for all submodules
+- gulp.js: all submodules tasks combined in one
+- readme: readme file
+
+* each submodule has it's own demo page and index file
+* build to contain angularize.min.js and angularize-core.min.js
+* :- the first contains all the modules while later is only core
