@@ -7,6 +7,10 @@ export default class Ajax {
     constructor($window, $http, $q) {
         angular.extend(this, {'$window': $window, '$http': $http, '$q': $q});
         this.storage = $window.localStorage;
+
+        this.never_cache = [
+            '/users/me'
+        ]
     }
 
     request(type, url, payload) {
@@ -24,7 +28,7 @@ export default class Ajax {
 
     get(url, no_cache = false) {
         let cached = this.cache(url);
-        if(!no_cache && cached) return this.$q.resolve(cached);     
+        if(!no_cache && cached && this.never_cache.indexOf(url) == -1) return this.$q.resolve(cached);     
         
         return this.request('get', url).then(
             data => {
