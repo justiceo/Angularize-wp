@@ -1,9 +1,11 @@
 import Ajax from './ajax';
 
+var _ajax = null; // make ajax available for WpObject & WpCollection
+
 export default class RestApi2 {
     constructor($window, Ajax) {
         let namespace = '/wp/v2/';
-
+        _ajax = Ajax;
         this.loadSchema = Ajax.get('').then( // this ajax call slows the startup time
             schema => {
                 const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace(namespace, ''));
@@ -43,7 +45,7 @@ class WpObject {
      * @return Promise<WpObject>
      */
     get(args) {
-        return Ajax.get(this.endpoint + this._serialize(args)).then(
+        return _ajax.get(this.endpoint + this._serialize(args)).then(
             success => {
                 angular.extend(this.state, success);
                 if(args) {
@@ -77,7 +79,7 @@ class WpObject {
      */
     post(model) {
         let payload = model ? model : this._state;
-        return Ajax.post(this.endpoint, payload).then(
+        return _ajax.post(this.endpoint, payload).then(
             newState => {
                 this._state = newState;
                 return this;
@@ -99,7 +101,7 @@ class WpCollection extends Array {
         this.id = (postId) => {
             let res = this.find(o => o.id == postId);
             if(res == null) {            
-                res = new WpObject(postId, this._route, this._schema);
+                res = new WpObject(postId, this._route, _schema);
                 this.push(res);
             }
             return res; 
@@ -108,11 +110,11 @@ class WpCollection extends Array {
         // wp.posts().get()       // returns a promise to get the posts, using default params
         this.get = () => {
             // process args and append to route        
-            return Ajax.get(this._route).then(
+            return _ajax.get(this._route).then(
                 posts => {
                     this._state = posts;
                     this._state.forEach(o => {
-                        this.push(new WpObjectt(o.id, this._route, this._schema, o))
+                        this.push(new WpObject(o.id, this._route, _schema, o))
                     });
                     return this;
                 }
@@ -125,7 +127,7 @@ class WpCollection extends Array {
             if (args.id) //buggy
                 obj = this.id(args.id);
             else
-                obj = new WpObjectt("", this._route, this._schema);
+                obj = new WpObject("", this._route, _schema);
             for (let key in args) {
                 obj.attr(key, args[key])
             }
