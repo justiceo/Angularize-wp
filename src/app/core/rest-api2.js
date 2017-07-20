@@ -1,8 +1,8 @@
 import Ajax from './ajax';
 
 export default class RestApi2 {
-    constructor($window) {
-        let namespace = '/wp/v2';
+    constructor($window, Ajax) {
+        let namespace = '/wp/v2/';
 
         this.loadSchema = Ajax.get('').then( // this ajax call slows the startup time
             schema => {
@@ -26,6 +26,7 @@ class WpObject {
     }
 
     init(collection, args) {
+        console.log("initing: ", collection)
         return new WpCollection(collection + this._serialize(args), this.endpoint, this.schema);
     }
 
@@ -93,44 +94,44 @@ class WpCollection extends Array {
     constructor(_endpoint, _parent, _schema) {
         super();
         this._route = _parent + '/' + _endpoint;
-        
-    }
 
-    //* wp.posts().id(2)       // returns a rest object with this id.
-    id = (postId) => {
-        let res = this.find(o => o.id == postId);
-        if(res == null) {            
-            res = new RestObject(postId, this._route, this._schema);
-            this.push(res);
-        }
-        return res; 
-    }
-
-    // wp.posts().get()       // returns a promise to get the posts, using default params
-    get = () => {
-        // process args and append to route        
-        return Ajax.get(this._route).then(
-            posts => {
-                this._state = posts;
-                this._state.forEach(o => {
-                    this.push(new RestObject(o.id, this._route, this._schema, o))
-                });
-                return this;
+        //* wp.posts().id(2)       // returns a rest object with this id.
+        this.id = (postId) => {
+            let res = this.find(o => o.id == postId);
+            if(res == null) {            
+                res = new WpObject(postId, this._route, this._schema);
+                this.push(res);
             }
-        )
-    }
-
-    //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
-    add = (args) => { // what if object with id already exists in collection
-        let obj;
-        if (args.id) //buggy
-            obj = this.id(args.id);
-        else
-            obj = new RestObject("", this._route, this._schema);
-        for (let key in args) {
-            obj.attr(key, args[key])
+            return res; 
         }
-        this.push(obj);
-        return obj;
+
+        // wp.posts().get()       // returns a promise to get the posts, using default params
+        this.get = () => {
+            // process args and append to route        
+            return Ajax.get(this._route).then(
+                posts => {
+                    this._state = posts;
+                    this._state.forEach(o => {
+                        this.push(new WpObjectt(o.id, this._route, this._schema, o))
+                    });
+                    return this;
+                }
+            )
+        }
+
+        //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
+        this.add = (args) => { // what if object with id already exists in collection
+            let obj;
+            if (args.id) //buggy
+                obj = this.id(args.id);
+            else
+                obj = new WpObjectt("", this._route, this._schema);
+            for (let key in args) {
+                obj.attr(key, args[key])
+            }
+            this.push(obj);
+            return obj;
+        }
+        
     }
 }

@@ -1,9 +1,15 @@
 export class RecentPostsCtrl {
-    constructor(PostService) {
+    constructor(PostService, RestApi2) {
         PostService.ready().then(
             () => {
                 this.posts = PostService.$restApi.posts({'per_page': 5})
                 this.posts.get();
+            }
+        );
+
+        RestApi2.ready().then(
+            $restApi => {
+                console.log("rest api 2: ", $restApi)
             }
         )
     }
