@@ -18,7 +18,7 @@
 import Ajax from './ajax';
 
 export default class RestApi2 {
-    constructor($window, Ajax) {
+    constructor($window) {
         let namespace = '/wp/v2';
 
         this.loadSchema = Ajax.get('').then(
@@ -34,11 +34,12 @@ export default class RestApi2 {
 }
 
 class WpObject {
-    constructor(_endpoint, _parent, _schema, _state={}) {
-        this._route = _parent ? _parent + '/' + _endpoint : _endpoint;
+    constructor(self, parent, schema, state={}) {
+        angular.extend(this,{self:self, parent:parent, schema:schema, state:state})
+        this.endpoint = parent ? parent + '/' + self : self;
 
         // get collections and add append to self
-        let collections = _schema.filter(e => e.replace(this._route, '').indexOf('/') == -1)
+        let collections = schema.filter(e => e.replace(this.endpoint, '').indexOf('/') == -1)
         collections,forEach(c => {
             this[c] = (args) => this.init(c, args);
         })
@@ -46,7 +47,7 @@ class WpObject {
 
     init(collection, args) {
         let endpoint = collection + this._serialize(args);
-        let wpCollection = new WpCollection(endpoint, this._route, this._schema);
+        let wpCollection = new WpCollection(endpoint, this.endpoint, this.schema);
         return wpCollection;
     }
 
@@ -63,15 +64,9 @@ class WpObject {
      * @return Promise<WpObject>
      */
     get(args) {
-        let _extend = (a, b) => {
-            for (var key in b)
-                if (b.hasOwnProperty(key))
-                    a[key] = b[key];
-            return a;
-        }
-        return this._schema.ajax.get(this._route + this._serialize(args)).then(
+        return Ajax.get(this.endpoint + this._serialize(args)).then(
             success => {
-                _extend(this._state, success);
+                angular.extend(this.state, success);
                 if(args) {
                     console.log("get args: ", success);
                 }
@@ -86,10 +81,10 @@ class WpObject {
      * @param {string} prop 
      */
     attr(prop) {
-        if(!(prop in this._state))
-            throw 'The property "' + prop + '" does not exist on the model ' + this._parent
+        if(!(prop in this.state))
+            throw 'The property "' + prop + '" does not exist on the model ' + this.parent
         
-        let val = this._state[prop];
+        let val = this.state[prop];
         if(val !== null && typeof val === 'object' && 'rendered' in val)
             return val.rendered
 
@@ -103,7 +98,7 @@ class WpObject {
      */
     post(model) {
         let payload = model ? model : this._state;
-        return this._schema.ajax.post(this._route, payload).then(
+        return Ajax.post(this.endpoint, payload).then(
             newState => {
                 this._state = newState;
                 return this;
@@ -136,7 +131,7 @@ class WpCollection extends Array {
     // wp.posts().get()       // returns a promise to get the posts, using default params
     get = () => {
         // process args and append to route        
-        return this._schema.ajax.get(this._route).then(
+        return Ajax.get(this._route).then(
             posts => {
                 this._state = posts;
                 this._state.forEach(o => {
