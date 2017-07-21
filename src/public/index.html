@@ -14,21 +14,21 @@
     <div class="header">
       <h1>Angularize WordPress</h1>
       <p>Super-charge your WordPress site with AngularJs components</p>
-      <a href="#" class="button">Download</a>
-      <a href="#" class="button light">View on Github</a>
+      <a href="https://github.com/justiceo/Angularize-wp/releases" class="button">Download</a>
+      <a href="https://github.com/justiceo/Angularize-wp" class="button light">View on Github</a>
     </div>
 
-    <p class="notice"><strong>Note:</strong> This plugin is under <a href="#">active development</a></p>
+    <p class="notice"><strong>Note:</strong> This plugin is under <a href="https://github.com/justiceo/Angularize-wp/commits/dev">active development</a></p>
 
     <h2>Install on WordPress</h2>
-    <p><strong>1.</strong> Download the latest angular_wp.zip file from <a href="https://github.com/justiceo/Angularize-wp/releases">Github</a></p>
+    <p><strong>1.</strong> Install and activate <a href="https://wordpress.org/plugins/rest-api/">WP-Rest-API v2</a></p>
 
-    <p><strong>2.</strong> Install and activate WP-Rest-API v2</p>
+    <p><strong>2.</strong> Download the latest angular_wp.zip file from <a href="https://github.com/justiceo/Angularize-wp/releases">Github</a></p>
 
     <p><strong>3.</strong> Finally, install and activate Angularize-WP</p>
 
     <h2>For Development (customize & install)</h2>
-    <p><strong>1.</strong> Clone the repo <a href="https://github.com/justiceo/Angularize-wp/releases">Github</a></p>
+    <p><strong>1.</strong> Clone the repo <a href="https://github.com/justiceo/Angularize-wp/">Github</a></p>
     <pre><code class="language-bash">git clone https://github.com/justiceo/Angularize-wp</code></pre>
 
     <p><strong>2.</strong> Install npm dependencies</p>
@@ -54,13 +54,13 @@
       </code></pre>
 
     <h2>A step beyond Hello World!</h2>
-    <p>Below is the <a href="#">actual source</a> for the all too famous <a href="https://en.support.wordpress.com/widgets/recent-posts-widget/">Recent posts</a>      widget.</p>
+    <p>Below is the <a href="https://github.com/justiceo/Angularize-wp/blob/dev/src/app/widgets/recent-posts.js">actual source</a> for the all too famous <a href="https://en.support.wordpress.com/widgets/recent-posts-widget/">Recent posts</a>      widget.</p>
     <pre><code class="language-javascript">
 export class RecentPostsCtrl {
-    constructor(PostService) {
-        PostService.ready().then(
-            () => {
-                this.posts = PostService.$restApi.posts({'per_page': 5})
+    constructor(RestApi) {
+        RestApi.ready().then(
+            $wp_v2 => {
+                this.posts = $wp_v2.posts({'per_page': 5})
                 this.posts.get();
             }
         )
@@ -74,7 +74,7 @@ let RecentPosts = {
     &lt;ul>
         &lt;li ng-repeat="post in $ctrl.posts">
             &lt;a href="{{ post.attr('link') }}">
-                {{ post.attr('title').rendered }}
+                {{ post.attr('title') }}
             &lt;/a>
         &lt;/li>
     &lt;/ul>
@@ -82,100 +82,33 @@ let RecentPosts = {
 }
 export default RecentPosts;
       </code></pre>
-    <p>How simple is that? And on the bright side, you can now display recent posts anywhere on the page, not just the sidebar</span>
 
-      <h2>Included Components</h2>
-      <h3>Toolbar</h3>
-      <p>
-        <toolbar>toolbar component</toolbar>
-      </p>
-
-      <h3>Recent Posts</h3>
       <p>
         <recent-posts></recent-posts>
       </p>
-
-      <h2>Included Directives</h2>
-      <h3>Author Popover</h3>
-      <p>
-        <author-popover></author-popover>
-      </p>
-
-      <div layout="column">
-        <md-toolbar class="md-accent _md _md-toolbar-transitions">
-          <div class="md-toolbar-tools">
-            <h2>Like Button</h2>
-          </div>
-        </md-toolbar>
-        <md-content>
-          <p>Users can like the current post or page they're on.</p>
-          <p>Attribute on text example: Click <a like="12">Like</a> to like and unlike</p>
-          <p>Multiple like buttons for the same post is synced easily</p>
-          <button class="button" like="13" like-count="count_13">Like Post A {{ count_13 }}</button>
-          <button class="button" like="13" like-count="count_13">Like Post A {{ count_13 }}</button>
-          <p>Refreshing the browser wouldn't refresh like status. More on this later</p>
-        </md-content>
-      </div>
-
-      <h3>Echo component (just for test)</h3>
-      <p>
-        <echo></echo>
-      </p>
-
-      <h3>Book Flight Component</h3>
-      <book-flight></book-flight>
-
-      <h3>Author Popover</h3>
-      <author-popover></author-popover>
-
-      <h3>Post Settings</h3>
-      <post-settings></post-settings>
-
-      <h3>New Post</h3>
-      <new-post></new-post>
-
-      <h3>Edit Post</h3>
-      <a edit-post>edit post here</a>
-      <edit-post></edit-post>
-
-      <h3>Editor Component</h3>
-      <div editable>
-        <p>The standard Lorem Ipsum <strong>passage</strong>, used since the 1500s "Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit, </p>
-        sed do eiusmod tempor incididunt ut
-        <p class="test">
-          labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
-        quis nostrud exercitatioLorem ipsum dolor of editable text
-      </div>
+    <p>How simple is that? And on the bright side, you can now display recent posts anywhere on the page, not just the sidebar</span>
+         
 
       <div class="footer">
         <h2>Use responsibly</h2>
 
-        <p><a href="#">Using AngularJs for primary content can affect your WordPress site SEO</a></p>
+        <p><a href="https://www.searchenginejournal.com/warning-youre-killing-seo-efforts-using-angular-js/142031/">Using AngularJs for primary content can affect your WordPress site SEO</a></p>
 
-        <a href="#" class="button">Download</a>
-        <a href="#" class="button light">View on GitHub</a>
+        <a href="https://github.com/justiceo/Angularize-wp/releases" class="button">Download</a>
+        <a href="https://github.com/justiceo/Angularize-wp" class="button light">View on Github</a>
 
         <div class="credit">
-          Made by <a href="#">Justice Ogbonna</a>
+          Made with  <i class="fa fa-heart" style="color:red"></i>  by <a href="https://github.com/justiceo">Justice Ogbonna</a>
         </div>
       </div>
   </div>
 
   <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-coy.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
 
-
-  <script type="text/javascript" defer>
-    document.addEventListener("DOMContentLoaded", function (event) {
-      angular.module("angularize").component("echo", {
-        template: 'Hello World!',
-        controller: function () { }
-      });
-    });
-  </script>  
 </body>
 
 </html>
