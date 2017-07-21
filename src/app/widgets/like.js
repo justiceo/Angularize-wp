@@ -6,11 +6,11 @@
  * where 213 is post id.
  */
 export class LikeDirectiveCtrl {
-    constructor(PostService) {
+    constructor(RestApi) {
         this.restrict = 'A';
         this.transclude = true;
         this.scope = {};
-        this.PostService = PostService;
+        this.RestApi = RestApi;
         this.likeCount = 0;
         this.template = function( element, attrs ) {
             var tag = element[0].nodeName;
@@ -56,9 +56,9 @@ export class LikeDirectiveCtrl {
     }
 }
 
-let LikeDirective = function(PostService) {
+let LikeDirective = function(RestApi) {
     'ngInject';
-    return new LikeDirectiveCtrl(PostService);
+    return new LikeDirectiveCtrl(RestApi);
 }
 
 export default LikeDirective;

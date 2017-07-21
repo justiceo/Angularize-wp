@@ -1,13 +1,13 @@
 
 export class MyPostsCtrl {
-    constructor(PostService) {
+    constructor(RestApi) {
         angular.extend(this, {
-            'PostService': PostService
+            'RestApi': RestApi
         });
 
         // register toolbar button
-        PostService.ready().then(() => {
-                this.posts = PostService.$restApi.posts({ author: PostService.$wp.currentUser.ID })
+        RestApi.ready().then(() => {
+                this.posts = RestApi.$restApi.posts({ author: RestApi.$wp.currentUser.ID })
                 this.posts.get();
             }
         )
@@ -22,8 +22,8 @@ let MyPosts = {
     <h3>My posts</h3>
     <ul>
         <li ng-repeat="post in $ctrl.posts">
-            <h3>{{ post.title.rendered }}</h3>
-            <span>{{ post.date }}</h3>
+            <h3>{{ post.attr('title') }}</h3>
+            <span>{{ post.attr('date') }}</h3>
         </li>
     </ul>
     `

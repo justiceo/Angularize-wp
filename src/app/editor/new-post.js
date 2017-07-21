@@ -1,10 +1,10 @@
 import MediumEditor from 'medium-editor';
 
 export class NewPostCtrl {
-    constructor($scope, $log, Upload, ToolbarService, PostService, ALL_CITIES) {
+    constructor($scope, $log, Upload, ToolbarService, RestApi, ALL_CITIES) {
         angular.extend(this, {
             '$scope': $scope, 'Upload': Upload, 'ToolbarService': ToolbarService,
-            'PostService': PostService, '$log': $log, 'ALL_CITIES': ALL_CITIES
+            'RestApi': RestApi, '$log': $log, 'ALL_CITIES': ALL_CITIES
         });
     }
 
@@ -28,7 +28,7 @@ export class NewPostCtrl {
         this.ALL_CITIES = ["Lagos", "Abuja", "london", "austy"];
 
         this.$log.log("NewPost: Initializing...");
-        this.PostService.ready().then(
+        this.RestApi.ready().then(
             () => {
                 this.initState();
                 this.initBody();
@@ -84,7 +84,7 @@ export class NewPostCtrl {
             allTags: []
         }; // holds data for md-chips
         if (this.postId) {
-            this.PostService.$restApi.posts().id(postId).get({ embed: true }).then(
+            this.RestApi.$restApi.posts().id(postId).get({ embed: true }).then(
                 post => {
                     angular.extend(this.state, post.rawVal());
                     this.featuredImage = this.state._embedded['wp:featuredmedia'][0].link;
@@ -94,13 +94,13 @@ export class NewPostCtrl {
                 });
         }
 
-        this.PostService.$restApi.categories().get().then((c) => {
+        this.RestApi.$restApi.categories().get().then((c) => {
             this.chips.allCategories = c.rawVal().map(c => {
                 return { id: c.id, name: c.name }
             });
             this.list = c.rawVal().map(c => c.slug);
         });
-        this.PostService.$restApi.tags().get().then(t => this.chips.allTags = t.rawVal());
+        this.RestApi.$restApi.tags().get().then(t => this.chips.allTags = t.rawVal());
     }
 
     initBody() {
@@ -230,10 +230,10 @@ export class NewPostCtrl {
     save() {  
         // todo: extract and upload all embed resources 
         if (this.state.id !== null && this.state.id !== undefined) {
-            this.PostService.$restApi.posts().id(this.state.id).post(this.state);
+            this.RestApi.$restApi.posts().id(this.state.id).post(this.state);
         }
         else {
-            this.PostService.$restApi.posts().add(this.state).post().then(
+            this.RestApi.$restApi.posts().add(this.state).post().then(
                 (post) => {
                     angular.extend(this.state, post.rawVal());
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
