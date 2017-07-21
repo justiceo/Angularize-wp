@@ -3,7 +3,7 @@
  * provides wrapper for ajax calls to service,
  * with caching to reduce hits
  */
-export default class Ajax {
+export default class AjaxService {
     constructor($window, $http, $q) {
         angular.extend(this, {'$window': $window, '$http': $http, '$q': $q});
         this.storage = $window.localStorage;

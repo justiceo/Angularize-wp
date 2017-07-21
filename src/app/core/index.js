@@ -1,16 +1,16 @@
-import Ajax from './ajax-service';
+import AjaxService from './ajax-service';
 import ToolbarService from './toolbar-service';
-import Toolbar from './toolbar-component';
 import MockService from './mock-service';
-import RestApi from './rest-api-service';
+import RestApiService from './rest-api-service';
+import Toolbar from './toolbar-component';
 
 let angularizeCore = angular.module('angularizeCore', [])
 
 angularizeCore
   .component('toolbar', Toolbar)
-  .service('Ajax', Ajax)
+  .service('AjaxService', AjaxService)
   .service('ToolbarService', ToolbarService)
-  .service('RestApi', RestApi)
+  .service('RestApi', RestApiService)
   .service('MockService', MockService)
   .factory('httpRequestInterceptor', function ($q, MockService) {
     return {

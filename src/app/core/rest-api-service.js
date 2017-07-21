@@ -1,10 +1,10 @@
 
 var _ajax = null; // make ajax available for WpObject & WpCollection
 
-export default class RestApi {
-    constructor(Ajax) {
-        _ajax = Ajax;
-        let loadSchema = Ajax.get('').then( // this ajax call slows the startup time
+export default class RestApiService {
+    constructor(AjaxService) {
+        _ajax = AjaxService;
+        let loadSchema = AjaxService.get('').then( // this ajax call slows the startup time
             schema => {
                 const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace('/wp/v2/', ''));
                 this.$restApi = new WpObject('', '', routesSchema)
