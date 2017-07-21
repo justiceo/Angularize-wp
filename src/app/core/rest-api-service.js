@@ -1,4 +1,3 @@
-import Ajax from './ajax';
 
 var _ajax = null; // make ajax available for WpObject & WpCollection
 

@@ -1,8 +1,8 @@
-import Ajax from './ajax';
+import Ajax from './ajax-service';
 import ToolbarService from './toolbar-service';
-import Toolbar from './toolbar';
-import MockService from './mock';
-import RestApi from './rest-api';
+import Toolbar from './toolbar-component';
+import MockService from './mock-service';
+import RestApi from './rest-api-service';
 
 let angularizeCore = angular.module('angularizeCore', [])
 
