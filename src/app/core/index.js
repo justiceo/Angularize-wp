@@ -3,11 +3,13 @@ import ToolbarService from './toolbar-service';
 import MockService from './mock-service';
 import RestApiService from './rest-api-service';
 import Toolbar from './toolbar-component';
+import App from '../app';
 
 let angularizeCore = angular.module('angularizeCore', [])
 
 angularizeCore
   .component('toolbar', Toolbar)
+  .component('app', App)
   .service('AjaxService', AjaxService)
   .service('ToolbarService', ToolbarService)
   .service('RestApi', RestApiService)

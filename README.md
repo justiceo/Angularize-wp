@@ -155,10 +155,10 @@ todo
 
 proposed layout
 ---------------
-- plugin/: contains plugin files
-- core/: contains the necessary services
-- editor/: contains editor components
-- widgets/: contains widgets components
+- src/plugin/: contains plugin files
+- src/core/: contains the necessary services
+- src/editor/: contains editor components
+- src/widgets/: contains widgets components
 - build/: contains installable files
 - index.html: main demo page / github page
 - package.json: dependency management for all submodules

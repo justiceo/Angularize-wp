@@ -1,13 +1,12 @@
 export class AppCtrl {
-  constructor(PostService) {
+  constructor() {
     this.sample = 'angular works!';
   }
 }
 
 let AppComponent = {
   template: require('./app.html'),
-  controller: AppCtrl,
-  controllerAs: 'app'
+  controller: AppCtrl
 }
 
 export default AppComponent;
