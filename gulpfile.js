@@ -14,11 +14,11 @@ var gutil         = require('gulp-util');
 var karmaServer   = require('karma').Server;
 
 // Where our files are located
-var sassFiles = "src/style/*.scss";
-var jsFiles   = "src/**/*.js";
-var viewFiles = "src/**/*.html";
-var pluginFiles  = "src/plugin/*";
-var buildDir = "./build/";
+var sassFiles   = "src/style/*.scss";
+var jsFiles     = "src/**/*.js";
+var viewFiles   = "src/**/*.html";
+var pluginFiles = "src/plugin/*";
+var buildDir    = "./build/";
 
 var interceptErrors = function(error) {
   var args = Array.prototype.slice.call(arguments);

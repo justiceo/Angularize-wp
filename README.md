@@ -1,7 +1,6 @@
 # Angularize WordPress
 
-Super-charge your WordPress site with AngularJs components. Even though this can be used to load the entire WordPress site, it more useful for loading non-critical parts of a site (for SEO reasons). 
-
+Super-charge your WordPress site with AngularJs components. 
 For example, loading all sidebar widgets, banners and sliders, ads, forms etc. 
 
 ### Hello World component
@@ -9,7 +8,7 @@ Below is a complete (with script tag) example of an angular component in a WordP
 ```
 <script type="text/javascript">
   document.addEventListener("DOMContentLoaded", function(event) {
-    angular.module("app").component("echo", {
+    angularize.component("echo", {
       template: 'Hello World!',
       controller: function() {}
     })
@@ -18,22 +17,10 @@ Below is a complete (with script tag) example of an angular component in a WordP
 ```
 Now, anywhere you enter the tag `<echo></echo>` in your WordPress site (posts, pages, widgets etc), you will get the text *Hello World!*
 
-
-### Angular Workflow
-* Heavily commented webpack configuration with reasonable defaults.
-* ES6, and ES7 support with babel.
-* Source maps included in all builds.
-* Development server with live reload.
-* Production builds with cache busting.
-* Testing environment using karma to run tests and jasmine as the framework.
-* Code coverage when tests are run.
-* No gulp and no grunt, just npm scripts.
-
->Warning: Make sure you're using the latest version of Node.js and NPM
+##### Stack
+AngularJs, ES6, Babel + Browserfiy, Gulp, Karma + Jasmine
 
 ### Quick start
-
-> Clone/Download the repo then edit `app.js` inside [`/src/app/app.js`](/src/app/app.js)
 
 ```bash
 # clone the repo
@@ -49,56 +36,15 @@ $ npm install
 $ npm start
 ```
 
-go to [http://localhost:8080](http://localhost:8080) in your browser.
+go to [http://localhost:3000](http://localhost:3000) in your browser.
 
-# Table of Contents
 
-* [Getting Started](#getting-started)
-    * [Dependencies](#dependencies)
-    * [Installing](#installing)
-    * [Running the app](#running-the-app)
-    * [Developing](#developing)
-    * [Testing](#testing)
-* [License](#license)
-
-# Getting Started
-
-## Dependencies
-
-What you need to run this app:
-* `node` and `npm` (Use [NVM](https://github.com/creationix/nvm))
-* Ensure you're running Node (`v4.1.x`+) and NPM (`2.14.x`+)
-* Ensure webpack is installed globally or install by running `npm i -g webpack`
-
-## Installing
-
-* `fork` this repo
-* `clone` your fork
-* `npm install` to install all dependencies
-
-## Running the app
-
-After you have installed all dependencies you can now run the app with:
-```bash
-npm start
-```
-It will start a local server using `webpack-dev-server` which will watch, build (in-memory), and reload for you. The port will be displayed to you as `http://localhost:8080`.
-
-Alternatively, you can generate the plugin files with:
-```bash
-webpack
-```
-
-## Developing
-
-### Build files
+### Developing
 
 * single run: `npm run build`
 * build files and watch: `npm start`
 
-## Testing
-
-#### 1. Unit Tests
+### Testing
 
 * single run: `npm test`
 * live mode (TDD style): `npm run test-watch`
@@ -115,56 +61,11 @@ webpack
 - optional inclusion of extra modules
 - working tests
 
-##### Release 1.0.0-beta.3
-- move extra components to a common module
-- complete book-flight component
-- complete author-popover component
-- remove <app> component and tests
-- add test for <recent-post> component
-- thin down demo.css to the basics
-- make prismjs work smoothly on live reload
-- ensure demo.css isn't overriding import angluar-material styles
-
-##### Why not use Angular Material
-- Js needs to be parsed before any html can render
-- It is very heavy and bloated, 10X bootstrap
-- We'll still need bootstrap for some other tasks
-- The CSS benefits can be derived from a customized boostrap css like Bootswatch paper
-- It breaks CSS of other components - like editor, and can alter style of website it's used on.
-
-
-##### Things we stand to loose
-- Easy components like chips, modals and buttons
-- Cool animations and ripples
-- Too much leg work at the start.
-- Pre-mature optimization  means we'll never get there
-
-
 todo
 ====
-- make rest api a service of its own and rid us of postService
-- hydrate mocks
-- load dependencies via cdn
-- try move to gulp again - with minify and uglify
 - only display edit-button on single post pages
 - for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
 - make post cities actually work
 - move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
     also, post service would be freed from functions it neither uses nor needs.
-
-proposed layout
----------------
-- src/plugin/: contains plugin files
-- src/core/: contains the necessary services
-- src/editor/: contains editor components
-- src/widgets/: contains widgets components
-- build/: contains installable files
-- index.html: main demo page / github page
-- package.json: dependency management for all submodules
-- gulp.js: all submodules tasks combined in one
-- readme: readme file
-
-* each submodule has it's own demo page and index file
-* build to contain angularize.min.js and angularize-core.min.js
-* :- the first contains all the modules while later is only core
