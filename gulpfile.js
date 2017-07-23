@@ -11,6 +11,7 @@ var minifyCSS     = require("gulp-minify-css");
 var templateCache = require("gulp-angular-templatecache");
 var del           = require("del");
 var gutil         = require('gulp-util');
+var karmaServer   = require('karma').Server;
 
 // Where our files are located
 var sassFiles = "src/style/*.scss";
@@ -82,14 +83,32 @@ gulp.task("copyDirectories", function() {
       .pipe(gulp.dest(assetsDir));
 });
 
-
-
 // clean build folder
 gulp.task("clean", function(){
   del.sync([assetsDir], {force: true});
-})
+});
 
-gulp.task("build", ["clean", "sass", "copyData", "copyDirectories", "html", "views"])
+/**
+ * Run test once and exit
+ */
+gulp.task('test', ["build"], function (done) {
+  new karmaServer({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+/**
+ * Watch for file changes and re-run tests on each change
+ */
+gulp.task('tdd', function (done) {
+  new karmaServer({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
+});
+
+
+gulp.task("build", ["clean", "sass", "copyData", "copyDirectories", "html", "views", "browserify"])
 
 gulp.task("default", ["build"], function() {
 
