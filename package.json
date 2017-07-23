@@ -1,6 +1,6 @@
 {
   "name": "angularize-wp",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0",
   "description": "Super-charge your WordPress site with AngularJs components",
   "scripts": {
     "build": "gulp build",
