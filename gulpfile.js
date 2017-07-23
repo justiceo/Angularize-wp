@@ -17,7 +17,7 @@ var karmaServer   = require('karma').Server;
 var sassFiles = "src/style/*.scss";
 var jsFiles   = "src/**/*.js";
 var viewFiles = "src/**/*.html";
-var dataFiles  = "src/public/*";
+var pluginFiles  = "src/plugin/*";
 var buildDir = "./build/";
 var assetsDir = buildDir + "assets/";
 
@@ -74,7 +74,7 @@ gulp.task("views", function() {
 
 // Copy mock data to dist directly
 gulp.task("copyData", function() {
-  gulp.src(dataFiles)
+  gulp.src(pluginFiles)
       .pipe(gulp.dest(assetsDir));
 });
 
@@ -126,5 +126,5 @@ gulp.task("default", ["build"], function() {
   gulp.watch("src/index.html", ["html"]);
   gulp.watch(viewFiles, ["views"]);
   gulp.watch(jsFiles, ["browserify"]);
-  gulp.watch(dataFiles, ["copyData"]);
+  gulp.watch(pluginFiles, ["copyData"]);
 });
