@@ -42,7 +42,7 @@ function angularize_add_ng_attribute($attr) {
 // Enque scripts and styles with localization
 add_action('wp_enqueue_scripts', 'angularize_enque_scripts'); 
 function angularize_enque_scripts() {
-    wp_register_script('ng-script', plugin_dir_url(__FILE__) . '/app.bundle.js', array('wp-api'), '1.0.0', true);
+    wp_register_script('angularize-script', plugin_dir_url(__FILE__) . '/main.js', array('wp-api'), '1.0.0', true);
     $translation_array = array(
         'nonce' => wp_create_nonce( 'wp_rest' ),
         'currentUser' => wp_get_current_user(),
@@ -58,9 +58,11 @@ function angularize_enque_scripts() {
         'postObject' => get_post()
     );
     $translation_array = apply_filters( 'angularize_server', $translation_array );
-    wp_localize_script('ng-script', 'angularize_server', $translation_array);
-    wp_enqueue_script('ng-script');
+    wp_localize_script('angularize-script', 'angularize_server', $translation_array);
+    wp_enqueue_script('angularize-script');
 
+    // enqueue app css
+    wp_enqueue_style('angularize-css', plugin_dir_url(__FILE__) . '/app.css');
     // Optionally enque font-awesome css [ for now not needed ]
     if(true)
     wp_enqueue_style('font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
