@@ -89,16 +89,17 @@ gulp.task("clean", function(){
   del.sync([assetsDir], {force: true});
 })
 
+gulp.task("build", ["clean", "sass", "copyData", "copyDirectories", "html", "views"])
 
-gulp.task("default", ["clean", "sass", "copyData", "copyDirectories", "html", "views"], function() {
+gulp.task("default", ["build"], function() {
 
   gulp.start(["browserify"]);
 
   browserSync.init([buildDir + "**/**.**"], {
     server: buildDir,
-    port: 4000,
+    port: 3000,
     ui: {
-      port: 4001
+      port: 3001
     }
   });
 

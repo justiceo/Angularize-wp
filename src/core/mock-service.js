@@ -27,7 +27,7 @@ export default class MockService {
     }
 
     init() {
-        this.isDev = window.location.origin === 'http://localhost:8080'
+        this.isDev = window.location.origin === 'http://localhost:3000'
         
         if(this.isDev)
             window.angularize_server = {
@@ -39,7 +39,7 @@ export default class MockService {
         this.endPoints = [
             {
                 'method': 'GET',
-                'url': 'http://localhost:8080/wp-json/wp/v2',
+                'url': 'http://localhost:3000/wp-json/wp/v2',
                 'response': {
                     routes: {
                         '/wp/v2': '',
