@@ -12,11 +12,12 @@ var templateCache = require("gulp-angular-templatecache");
 var del           = require("del");
 
 // Where our files are located
-var sassFiles = "src/sass/*.scss";
-var jsFiles   = "src/js/**/*.js";
-var viewFiles = "src/js/**/*.html";
-var dataFiles  = "src/data/**/*.json";
+var sassFiles = "src/style/*.scss";
+var jsFiles   = "src/**/*.js";
+var viewFiles = "src/**/*.html";
+var dataFiles  = "src/public/*";
 var buildDir = "./build/";
+var assetsDir = buildDir + "assets/";
 
 var interceptErrors = function(error) {
   var args = Array.prototype.slice.call(arguments);
@@ -33,7 +34,7 @@ var interceptErrors = function(error) {
 
 
 gulp.task("browserify", function() {
-  return browserify("./src/js/app.js")
+  return browserify("./src/index.js")
       .transform(babelify, {presets: ["es2015"]})
       .transform(ngAnnotate)
       .bundle()
@@ -41,7 +42,7 @@ gulp.task("browserify", function() {
       //Pass desired output filename to vinyl-source-stream
       .pipe(source("main.js"))
       // Start piping stream to tasks!
-      .pipe(gulp.dest(buildDir + "NgFiles/"));
+      .pipe(gulp.dest(assetsDir));
 });
 
 gulp.task("sass", function() {
@@ -49,7 +50,7 @@ gulp.task("sass", function() {
       .pipe(sass())
       .on("error", interceptErrors)
       .pipe(minifyCSS())
-      .pipe(gulp.dest(buildDir + "NgFiles/"));
+      .pipe(gulp.dest(assetsDir));
 });
 
 gulp.task("html", function() {
@@ -71,19 +72,19 @@ gulp.task("views", function() {
 // Copy mock data to dist directly
 gulp.task("copyData", function() {
   gulp.src(dataFiles)
-      .pipe(gulp.dest(buildDir + "NgFiles/data/"));
+      .pipe(gulp.dest(assetsDir));
 });
 
 gulp.task("copyDirectories", function() {
   gulp.src(["./src/images/*", "./src/fonts/*"], {base: "src"})
-      .pipe(gulp.dest(buildDir + "NgFiles/"));
+      .pipe(gulp.dest(assetsDir));
 });
 
 
 
 // clean build folder
 gulp.task("clean", function(){
-  del.sync([buildDir + "/NgFiles/*"], {force: true});
+  del.sync([assetsDir], {force: true});
 })
 
 
