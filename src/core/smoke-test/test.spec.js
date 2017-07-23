@@ -1,13 +1,13 @@
-import angularize from './index';
+import angularize from '../../index';
 
-describe('AppComponent', () => {
+describe('TestComponent', () => {
   let element;
 
   beforeEach(() => {
     angular.mock.module(angularize);
 
     angular.mock.inject(($rootScope, $compile) => {
-      element = $compile("<app></app>")($rootScope)
+      element = $compile("<test></test>")($rootScope)
       $rootScope.$digest();
     })      
   });
