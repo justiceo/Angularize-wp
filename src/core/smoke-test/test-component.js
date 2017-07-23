@@ -5,7 +5,7 @@ export class TestCtrl {
 }
 
 let TestComponent = {
-  template: require('./test-view.html'),
+  templateUrl: './test-view.html',
   controller: TestCtrl
 }
 

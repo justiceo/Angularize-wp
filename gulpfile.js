@@ -10,6 +10,7 @@ var rename        = require("gulp-rename");
 var minifyCSS     = require("gulp-minify-css");
 var templateCache = require("gulp-angular-templatecache");
 var del           = require("del");
+var gutil         = require('gulp-util');
 
 // Where our files are located
 var sassFiles = "src/style/*.scss";
@@ -27,7 +28,7 @@ var interceptErrors = function(error) {
     title: "Compile Error",
     message: "<%= error.message %>"
   }).apply(this, args);
-
+  gutil.log(error.toString())
   // Keep gulp from hanging on this task
   this.emit("end");
 };
@@ -66,7 +67,8 @@ gulp.task("views", function() {
       }))
       .on("error", interceptErrors)
       .pipe(rename("app.templates.js"))
-      .pipe(gulp.dest("./src/js/config/"));
+      .pipe(gulp.dest("./src/core/"));
+      // todo: core doesn't need to know about all the templates from other modules - refactor!
 });
 
 // Copy mock data to dist directly

@@ -3,7 +3,7 @@ import angularizeCore from './core';
 import angularizeEditor from './editor';
 import angularizeWidgets from './widgets';
 
-import './style/app.scss';
+//import './style/app.scss';
 
 let requires = [
   angularizeCore,

@@ -14,7 +14,7 @@ export class BookFlightCtrl {
 
 let BookFlight = {
     controller: BookFlightCtrl,
-    template: require('./book-flight.html'),
+    templateUrl: './book-flight.html',
     bindings: {
         from: '<',
         to: '<'
