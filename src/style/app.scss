@@ -1,9 +1,3 @@
-/* styles in src/style directory are applied to the whole page */
-
-// editor module imports
 @import '../../node_modules/medium-editor/dist/css/medium-editor.min.css';
 @import '../../node_modules/medium-editor/dist/css/themes/tim.min.css';
-
-//$fa-font-path: "~font-awesome/fonts"; 
-//@import '~font-awesome/scss/font-awesome'; 
-//@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import '../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css';

@@ -142,19 +142,29 @@ webpack
 
 todo
 ====
+- make rest api a service of its own and rid us of postService
+- hydrate mocks
+- load dependencies via cdn
+- try move to gulp again - with minify and uglify
 - only display edit-button on single post pages
 - for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
-- use real icons for toolbar buttons
-- add chips plugin for categories and tags
-- make post categories actually work
-- make post tags actually work
 - make post cities actually work
-- create a wrapper component for these select?
-- [DONE] completely remove angular material dependency
-- fix font-awesome once and for all man
-- fix webpack build and separate css. use gulp?
-- drop angular-local-storage dependency
-- move out widgets and editor from core
 - move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
     also, post service would be freed from functions it neither uses nor needs.
+
+proposed layout
+---------------
+- src/plugin/: contains plugin files
+- src/core/: contains the necessary services
+- src/editor/: contains editor components
+- src/widgets/: contains widgets components
+- build/: contains installable files
+- index.html: main demo page / github page
+- package.json: dependency management for all submodules
+- gulp.js: all submodules tasks combined in one
+- readme: readme file
+
+* each submodule has it's own demo page and index file
+* build to contain angularize.min.js and angularize-core.min.js
+* :- the first contains all the modules while later is only core
