@@ -19,7 +19,6 @@ var jsFiles   = "src/**/*.js";
 var viewFiles = "src/**/*.html";
 var pluginFiles  = "src/plugin/*";
 var buildDir = "./build/";
-var assetsDir = buildDir + "assets/";
 
 var interceptErrors = function(error) {
   var args = Array.prototype.slice.call(arguments);
@@ -44,7 +43,7 @@ gulp.task("browserify", function() {
       //Pass desired output filename to vinyl-source-stream
       .pipe(source("main.js"))
       // Start piping stream to tasks!
-      .pipe(gulp.dest(assetsDir));
+      .pipe(gulp.dest(buildDir));
 });
 
 gulp.task("sass", function() {
@@ -52,7 +51,7 @@ gulp.task("sass", function() {
       .pipe(sass())
       .on("error", interceptErrors)
       .pipe(minifyCSS())
-      .pipe(gulp.dest(assetsDir));
+      .pipe(gulp.dest(buildDir));
 });
 
 gulp.task("html", function() {
@@ -75,17 +74,17 @@ gulp.task("views", function() {
 // Copy mock data to dist directly
 gulp.task("copyData", function() {
   gulp.src(pluginFiles)
-      .pipe(gulp.dest(assetsDir));
+      .pipe(gulp.dest(buildDir));
 });
 
 gulp.task("copyDirectories", function() {
   gulp.src(["./src/images/*", "./src/fonts/*"], {base: "src"})
-      .pipe(gulp.dest(assetsDir));
+      .pipe(gulp.dest(buildDir));
 });
 
 // clean build folder
 gulp.task("clean", function(){
-  del.sync([assetsDir], {force: true});
+  del.sync([buildDir], {force: true});
 });
 
 /**
