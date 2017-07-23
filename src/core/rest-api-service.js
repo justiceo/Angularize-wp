@@ -7,8 +7,8 @@ export default class RestApiService {
         let loadSchema = $ajax.get('').then( // this ajax call slows the startup time
             schema => {
                 const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace('/wp/v2/', ''));
-                this.$restApi = new WpObject('', '', routesSchema)
-                return this.$restApi;
+                this.$wp_v2 = new WpObject('', '', routesSchema)
+                return this.$wp_v2;
             }
         )
         this.ready = () => { return loadSchema }

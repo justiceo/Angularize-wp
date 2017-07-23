@@ -1,13 +1,10 @@
 
 export class MyPostsCtrl {
     constructor(RestApi) {
-        angular.extend(this, {
-            'RestApi': RestApi
-        });
 
         // register toolbar button
         RestApi.ready().then(() => {
-                this.posts = RestApi.$restApi.posts({ author: RestApi.$wp.currentUser.ID })
+                this.posts = RestApi.$wp_v2.posts({ author: RestApi.$wp.currentUser.ID })
                 this.posts.get();
             }
         )
