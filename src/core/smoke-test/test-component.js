@@ -5,7 +5,7 @@ export class TestCtrl {
 }
 
 let TestComponent = {
-  templateUrl: './test-view.html',
+  templateUrl: 'core/smoke-test/test-view.html',
   controller: TestCtrl
 }
 

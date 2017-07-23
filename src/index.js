@@ -2,6 +2,7 @@ import angular from 'angular';
 import angularizeCore from './core';
 import angularizeEditor from './editor';
 import angularizeWidgets from './widgets';
+import "./core/app.templates";
 
 //import './style/app.scss';
 
@@ -9,6 +10,7 @@ let requires = [
   angularizeCore,
   angularizeEditor,
   angularizeWidgets,
+  'templates',
 ];
 let MODULE_NAME = 'angularize';
 let angularize = angular.module(MODULE_NAME, requires);
