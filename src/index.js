@@ -4,8 +4,6 @@ import angularizeEditor from './editor';
 import angularizeWidgets from './widgets';
 import "./core/app.templates";
 
-//import './style/app.scss';
-
 let requires = [
   angularizeCore,
   angularizeEditor,
