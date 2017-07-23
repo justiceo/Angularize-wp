@@ -1,5 +1,4 @@
-import typeahead from 'angular-ui-bootstrap/src/typeahead';
-import tooltip from 'angular-ui-bootstrap/src/tooltip';
+import 'angular-ui-bootstrap';
 import ngFileUpload from 'ng-file-upload';
 import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
@@ -9,7 +8,7 @@ import Chips from './chips';
 
 const cities = [];
 
-let requires = [typeahead, tooltip, ngFileUpload];
+let requires = ['ui.bootstrap', ngFileUpload];
 let angularizeEditor = angular.module('angularizeEditor', requires);
 
 // only load if we have wp front end editor enabled
