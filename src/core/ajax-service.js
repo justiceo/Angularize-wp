@@ -4,9 +4,10 @@
  * with caching to reduce hits
  */
 export default class AjaxService {
-    constructor($window, $http, $q) {
-        angular.extend(this, {'$window': $window, '$http': $http, '$q': $q});
-        this.storage = $window.localStorage;
+    constructor($http, $q) {
+        this.$http = $http;
+        this.$q = $q;
+        this.storage = window.localStorage;
 
         this.never_cache = [
             '/users/me'

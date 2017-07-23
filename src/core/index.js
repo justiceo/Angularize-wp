@@ -1,4 +1,3 @@
-import AjaxService from './ajax-service';
 import ToolbarService from './toolbar-service';
 import MockService from './mock-service';
 import RestApiService from './rest-api-service';
@@ -10,7 +9,6 @@ let angularizeCore = angular.module('angularizeCore', [])
 angularizeCore
   .component('toolbar', Toolbar)
   .component('test', TestComponent)
-  .service('AjaxService', AjaxService)
   .service('ToolbarService', ToolbarService)
   .service('RestApi', RestApiService)
   .service('MockService', MockService)

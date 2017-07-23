@@ -1,10 +1,10 @@
-
-var _ajax = null; // make ajax available for WpObject & WpCollection
+import AjaxService from './ajax-service';
+var $ajax = null; // make ajax available for WpObject & WpCollection
 
 export default class RestApiService {
-    constructor(AjaxService) {
-        _ajax = AjaxService;
-        let loadSchema = AjaxService.get('').then( // this ajax call slows the startup time
+    constructor($http, $q) {
+        $ajax = new AjaxService($http, $q);
+        let loadSchema = $ajax.get('').then( // this ajax call slows the startup time
             schema => {
                 const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace('/wp/v2/', ''));
                 this.$restApi = new WpObject('', '', routesSchema)
@@ -37,7 +37,7 @@ class WpObject {
      * @return Promise<WpObject>
      */
     get(args) {
-        return _ajax.get(this.endpoint + this._serialize(args)).then(
+        return $ajax.get(this.endpoint + this._serialize(args)).then(
             success => {
                 angular.extend(this.state, success);
                 if(args) {
@@ -71,7 +71,7 @@ class WpObject {
      */
     post(model) {
         let payload = model ? model : this.state;
-        return _ajax.post(this.endpoint, payload).then(
+        return $ajax.post(this.endpoint, payload).then(
             newState => {
                 this.state = newState;
                 return this;
@@ -102,7 +102,7 @@ class WpCollection extends Array {
         // wp.posts().get()       // returns a promise to get the posts, using default params
         this.get = () => {
             // process args and append to route        
-            return _ajax.get(this._route).then(
+            return $ajax.get(this._route).then(
                 posts => {
                     posts.forEach(o => {
                         this.push(new WpObject(o.id, this._route, _schema, o))
