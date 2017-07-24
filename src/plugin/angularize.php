@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
 
-require_once( './angularize-endpoints.php' );
+require_once( 'angularize-endpoints.php' );
 
 register_activation_hook( __FILE__, 'angularize_rest_api_plugin_activate' );
 function angularize_rest_api_plugin_activate(){
@@ -84,7 +84,7 @@ function angularize_add_toolbar_tag() {
 add_filter('user_can_richedit', '__return_false', 50);
 
 function init_angularize_endpoints() {
-    $instance = AngularizeEndpoints::instance( __FILE__, '1.0.0' );
+    $instance = new AngularizeEndpoints( __FILE__, '1.0.0' );
 	return $instance;
 }
 init_angularize_endpoints();
