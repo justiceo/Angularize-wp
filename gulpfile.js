@@ -90,6 +90,13 @@ gulp.task("clean", function(){
 /**
  * Run test once and exit
  */
+gulp.task('test-no-build', function (done) {
+  new karmaServer({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
 gulp.task('test', ["build"], function (done) {
   new karmaServer({
     configFile: __dirname + '/karma.conf.js',

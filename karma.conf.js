@@ -4,7 +4,7 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
     frameworks: ['jasmine'],
     files: [
-      'build/assets/main.js',
+      'build/main.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'test/**/*.spec.js'
     ]
