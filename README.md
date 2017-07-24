@@ -69,3 +69,5 @@ todo
 - make post cities actually work
 - move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
     also, post service would be freed from functions it neither uses nor needs.
+
+- fix settings is a WpObject not collection error. A WpObject can contain both WpObject and WpCollection
