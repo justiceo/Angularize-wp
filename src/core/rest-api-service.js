@@ -115,6 +115,10 @@ class WpCollection extends Array {
         //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
         this.add = (args) => { // what if object with id already exists in collection
             return args.id ? this.id(args.id): new WpObject("", this.endpoint, schema, args);
-        }        
+        } 
+        
+        this.state = () => {
+            return this.map(o => o.state);
+        }
     }
 }

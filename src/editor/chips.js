@@ -38,7 +38,7 @@ let Chips = {
                 uib-typeahead="t.name for t in $ctrl.available | filter:$viewValue" 
                 typeahead-on-select="$ctrl.add($item, $model, $label, $event)"
                 typeahead-select-on-exact="true"
-                typeahead-input-formatter="transform($item)"
+                typeahead-input-formatter="$ctrl.transform($item)"
                 class="form-control">
         </span>
         <style scoped>

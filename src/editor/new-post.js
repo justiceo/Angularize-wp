@@ -97,13 +97,8 @@ export class NewPostCtrl {
                 });
         }
 
-        this.RestApi.$wp_v2.categories().get().then((c) => {
-            this.chips.allCategories = c.state.map(c => {
-                return { id: c.id, name: c.name }
-            });
-            this.list = c.state.map(c => c.slug);
-        });
-        this.RestApi.$wp_v2.tags().get().then(t => this.chips.allTags = t.state);
+        this.RestApi.$wp_v2.categories().get().then((c) => this.chips.allCategories = c.state());
+        this.RestApi.$wp_v2.tags().get().then(t => this.chips.allTags = t.state());
     }
 
     initBody() {
