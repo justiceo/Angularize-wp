@@ -116,6 +116,19 @@ gulp.task('tdd', function (done) {
 
 gulp.task("build", ["clean", "sass", "copyData", "copyDirectories", "html", "views", "browserify"])
 
+gulp.task("repipe", function() {
+  buildDir = "/var/www/html/wp-content/plugins/angularize_wp/"
+});
+
+gulp.task("reload-on-server", ["repipe", "build"], function() {
+  gulp.start(["browserify"]);
+  gulp.watch(sassFiles, ["sass"]);
+  gulp.watch("src/index.html", ["html"]);
+  gulp.watch(viewFiles, ["views"]);
+  gulp.watch(jsFiles, ["browserify"]);
+  gulp.watch(pluginFiles, ["copyData"]);
+})
+
 gulp.task("default", ["build"], function() {
 
   gulp.start(["browserify"]);

@@ -38,7 +38,7 @@ export class UploadFileCtrl {
 
 let UploadFile = {
     controller: UploadFileCtrl,
-    templateUrl: './upload-file.html',
+    templateUrl: 'editor/upload-file.html',
     transclude: true,
     bindings: {
         progress: '&',
