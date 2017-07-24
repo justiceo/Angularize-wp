@@ -92,3 +92,21 @@ In RestApi would be:
 var wpPost = RestApi.$wp_v2.posts().add({title: 'hello': content:'text'}) # create WpObject for posts
 wpPost.post() # issue a POST request to save the new model
 ```
+
+The endpoint of a WpObject or WpCollection is exposed via an `endpoint` property
+```
+var post = RestApi.$wp_v2.posts().id(3)
+console.log(post.endpoint) # prints http://example.com/wp-json/wp/v2/posts/3\
+```
+
+The properties of a model can be accessed via the attr() function exposed by the WpObject
+```
+RestApi.$wp_v2.posts().id(3).get().then(
+  post => console.log(post.attr('title')) # prints the title of the post with ID 3
+)
+```
+
+How would you get the revisions for the post with ID 3?
+`RestApi.$wp_v2.posts().id(3).revisions().get()`
+To get the revision whose ID is 19 on the post with ID 3, would be:
+`RestApi.$wp_v2.posts().id(3).revisions().id(19).get()`
