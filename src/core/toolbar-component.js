@@ -2,6 +2,23 @@
 export class ToolbarCtrl {
     constructor(ToolbarService) {
         this.buttons = ToolbarService.getButtons();
+        // add edit-post button
+        ToolbarService.add({
+            id: 'angularize_editor_post',
+            title: 'Edit Post',
+            icon: 'fa fa-2x fa-sticky-note-o',
+            position: 1,
+            handler: () => {console.log("edit button clicked")}
+        });
+
+        // add my-posts button
+        ToolbarService.add({
+            id: 'angularize_my_post',
+            title: 'My Posts',
+            icon: 'fa fa-2x fa-bars',
+            position: 1,
+            handler: () => {console.log("edit button clicked")}
+        });
     }
 }
 
@@ -47,7 +64,7 @@ let Toolbar = {
             outline: none;
             transition: background 0.8s, color 0.8s;
         }
-        .angularize-toolbar li button:hover, .angularize-toolbar li button:focus {
+        .angularize-toolbar li button:hover {
             background: #222;
             color: white;           
         }

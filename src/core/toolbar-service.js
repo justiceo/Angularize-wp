@@ -17,8 +17,10 @@ export default class ToolbarService {
             button.position = 1000;
 
         if(button.is_logged_in && !this.$wp.is_logged_in
-            || button.is_single && !this.$wp.is_single)
+            || button.is_single && !this.$wp.is_single) {
+            console.log("not adding: ", button.title)
             return;
+        }
 
         // if button already exist, don't add it.
         for (let b of this.buttons) {

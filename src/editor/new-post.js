@@ -9,6 +9,9 @@ export class NewPostCtrl {
     }
 
     $onInit() {
+        if(!window.angularize_server.isEditPage)
+            window.angularize_server.isEditPage = true;
+
         //todo: show a progressbar or loading icon while we setup and fetch data
 
         this.ALL_CITIES = [
@@ -138,8 +141,8 @@ export class NewPostCtrl {
             autoLink: true,
             imageDragging: true,
             toolbar: {
-                buttons: ['h2', 'h3', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image', 'justifyLeft', 'justifyCenter', 'justifyRight',
-                    'justifyFull', 'orderedlist', 'unorderedlist', 'outdent', 'indent',],
+                buttons: ['h3', 'h4', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image',
+                    'orderedlist', 'unorderedlist'],
                 sticky: true,
                 static: true,
                 align: 'center',
