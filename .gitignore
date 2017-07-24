@@ -43,3 +43,4 @@ src/js/config/app.templates.js
 
 angularize_wp
 angularize_wp.zip
+src/core/app.templates.js
