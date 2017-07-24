@@ -17,11 +17,11 @@ export default class RestApiService {
 
 class WpObject {
     constructor(self, parent, schema, state={}) {
-        angular.extend(this,{self:self, parent:parent, schema:schema, state:state})
+        this.state = state;
         this.endpoint = parent ? parent + '/' + self : self;
 
         let collections = schema.filter(e => e.replace(this.endpoint, '').indexOf('/') == -1)
-        collections.forEach(c => this[c] = (args) => new WpCollection(c + this._serialize(args), this.endpoint, this.schema) )
+        collections.forEach(c => this[c] = (args) => new WpCollection(c + this._serialize(args), this.endpoint, schema) )
     }
 
     _serialize(obj) {
@@ -55,7 +55,7 @@ class WpObject {
      */
     attr(prop) {
         if(!(prop in this.state))
-            throw 'The property "' + prop + '" does not exist on the model ' + this.parent
+            throw 'The property "' + prop + '" does not exist on the endpoint: ' + this.endpoint
         
         let val = this.state[prop];
         if(val !== null && typeof val === 'object' && 'rendered' in val)
@@ -85,15 +85,15 @@ class WpObject {
  * An array of WpObjects
  */
 class WpCollection extends Array {
-    constructor(_endpoint, _parent, _schema) {
+    constructor(self, parent, schema) {
         super();
-        this._route = _parent + '/' + _endpoint;
+        this.endpoint = parent + '/' + self;
 
         //* wp.posts().id(2)       // returns a rest object with this id.
         this.id = (postId) => {
             let res = this.find(o => o.id == postId);
             if(res == null) {            
-                res = new WpObject(postId, this._route, _schema);
+                res = new WpObject(postId, this.endpoint, schema);
                 this.push(res);
             }
             return res; 
@@ -102,10 +102,10 @@ class WpCollection extends Array {
         // wp.posts().get()       // returns a promise to get the posts, using default params
         this.get = () => {
             // process args and append to route        
-            return $ajax.get(this._route).then(
+            return $ajax.get(this.endpoint).then(
                 posts => {
                     posts.forEach(o => {
-                        this.push(new WpObject(o.id, this._route, _schema, o))
+                        this.push(new WpObject(o.id, this.endpoint, schema, o))
                     });
                     return this;
                 }
@@ -114,7 +114,7 @@ class WpCollection extends Array {
 
         //* wp.posts().add({title: 'hello world'}) // creates local model of post and returns it
         this.add = (args) => { // what if object with id already exists in collection
-            return args.id ? this.id(args.id): new WpObject("", this._route, _schema, args);
+            return args.id ? this.id(args.id): new WpObject("", this.endpoint, schema, args);
         }        
     }
 }
