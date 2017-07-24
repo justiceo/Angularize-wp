@@ -84,9 +84,9 @@ export class NewPostCtrl {
             allTags: []
         }; // holds data for md-chips
         if (this.postId) {
-            this.RestApi.$restApi.posts().id(postId).get({ embed: true }).then(
+            this.RestApi.$wp_v2.posts().id(postId).get({ embed: true }).then(
                 post => {
-                    angular.extend(this.state, post.rawVal());
+                    angular.extend(this.state, post.state);
                     this.featuredImage = this.state._embedded['wp:featuredmedia'][0].link;
                     this.authorName = this.state._embedded.author.name;
                     this.chips.categories = this.state._embedded['wp:term'].filter(t => t.taxonomy === 'category');
@@ -94,13 +94,13 @@ export class NewPostCtrl {
                 });
         }
 
-        this.RestApi.$restApi.categories().get().then((c) => {
-            this.chips.allCategories = c.rawVal().map(c => {
+        this.RestApi.$wp_v2.categories().get().then((c) => {
+            this.chips.allCategories = c.state.map(c => {
                 return { id: c.id, name: c.name }
             });
-            this.list = c.rawVal().map(c => c.slug);
+            this.list = c.state.map(c => c.slug);
         });
-        this.RestApi.$restApi.tags().get().then(t => this.chips.allTags = t.rawVal());
+        this.RestApi.$wp_v2.tags().get().then(t => this.chips.allTags = t.state);
     }
 
     initBody() {
@@ -230,12 +230,12 @@ export class NewPostCtrl {
     save() {  
         // todo: extract and upload all embed resources 
         if (this.state.id !== null && this.state.id !== undefined) {
-            this.RestApi.$restApi.posts().id(this.state.id).post(this.state);
+            this.RestApi.$wp_v2.posts().id(this.state.id).post(this.state);
         }
         else {
-            this.RestApi.$restApi.posts().add(this.state).post().then(
+            this.RestApi.$wp_v2.posts().add(this.state).post().then(
                 (post) => {
-                    angular.extend(this.state, post.rawVal());
+                    angular.extend(this.state, post.state);
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
                     console.log("after save state: ", this.state)
                     this.postId = this.state.id;
