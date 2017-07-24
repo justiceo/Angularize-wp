@@ -10,7 +10,7 @@ export default class ToolbarService {
 
     add(button) {
 
-        console.log("TbService: adding button - ", button.title);
+        console.debug("TbService: adding button - ", button.title);
 
         // if user didn't specify an index, then it's last
         if (!button.position)
@@ -25,7 +25,7 @@ export default class ToolbarService {
         // if button already exist, don't add it.
         for (let b of this.buttons) {
             if (b.id == button.id) {
-                console.log(b.id, " already exists")
+                console.debug(b.id, " already exists")
                 return;
             }
         }
@@ -43,13 +43,13 @@ export default class ToolbarService {
     }
 
     remove(button) {
-        console.log("TbService: remove button ", button.title);
+        console.debug("TbService: remove button ", button.title);
         var index = this.buttons.indexOf(button);
         if (index > -1) {
             this.buttons.splice(index, 1);
         }
         else {
-            console.log(button.title, " not found");
+            console.debug(button.title, " not found");
         }
     }
 

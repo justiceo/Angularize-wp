@@ -13,17 +13,12 @@ export class ChipsCtrl {
         if(this.onChange) this.onChange({$selected: this.selected});
     }
 
-    transform(item) {
-        console.log("transform called");
-    }
-
     removeChip(chip) {
         console.log("remove chip called");
         this.selected = this.selected.filter(s => s.id !== chip.id);
         this.available.push(chip);
         if(this.onChange) this.onChange({$selected: this.selected});
     }
-    // todo: use 'text-stroke' to lighten fontawesome icons
 }
 
 let Chips = {
@@ -38,7 +33,6 @@ let Chips = {
                 uib-typeahead="t.name for t in $ctrl.available | filter:$viewValue" 
                 typeahead-on-select="$ctrl.add($item, $model, $label, $event)"
                 typeahead-select-on-exact="true"
-                typeahead-input-formatter="$ctrl.transform($item)"
                 class="form-control">
         </span>
         <style scoped>

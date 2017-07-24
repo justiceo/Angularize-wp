@@ -222,7 +222,7 @@ export class NewPostCtrl {
             });
         // todo: later: if there are no changes to discard, replace with delete button
     }
-    updateCategories(selected) { console.log("update cats: ", selected); this.state.categories = selected.map(c => c.id); }
+    updateCategories(selected) { this.state.categories = selected.map(c => c.id); }
     updateTags(selected) { this.state.tags = selected.map(t => t.id); }
 
     save() {  
@@ -235,7 +235,6 @@ export class NewPostCtrl {
                 (post) => {
                     angular.extend(this.state, post.state);
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
-                    console.log("after save state: ", this.state)
                     this.postId = this.state.id;
                 }
             )

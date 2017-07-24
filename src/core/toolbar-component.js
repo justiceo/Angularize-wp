@@ -2,6 +2,8 @@
 export class ToolbarCtrl {
     constructor(ToolbarService) {
         this.buttons = ToolbarService.getButtons();
+
+        // todo: use 'text-stroke' to lighten fontawesome icons
         // add edit-post button
         ToolbarService.add({
             id: 'angularize_editor_post',
