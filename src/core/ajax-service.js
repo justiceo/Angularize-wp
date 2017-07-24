@@ -45,8 +45,11 @@ export default class AjaxService {
 
     delete(url) { return this.request('delete', url) }
     
-    cache(key, value) {
+    cache(key, value) { 
+        // todo: add expires
+        // prepend 'angularize' in-front of every key, to avoid key conflicts
         if(!value) return JSON.parse(this.storage.getItem(key));
         this.storage.setItem(key, JSON.stringify(value));
+        return this.cache(key);
     }
 }

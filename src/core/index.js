@@ -6,6 +6,9 @@ import TestComponent from './smoke-test/test-component';
 
 let angularizeCore = angular.module('angularizeCore', [])
 
+// comment-out this line to stop printing debug messages in console
+console.debug = console.log;
+
 angularizeCore
   .component('toolbar', Toolbar)
   .component('test', TestComponent)
