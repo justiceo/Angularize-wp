@@ -1,7 +1,11 @@
 <?php
+
+
+if ( ! defined( 'ABSPATH' ) ) exit;
  
 class AngularizeEndpoints extends WP_REST_Controller {
  
+ public function __construct ( $file = '', $version = '1.0.0' ) {}
   /**
    * Register the routes for the objects of the controller.
    */
@@ -10,7 +14,7 @@ class AngularizeEndpoints extends WP_REST_Controller {
     $namespace = 'angularize/v' . $version;
     $base = 'route';
     $files = 'files';
-    
+
     register_rest_route( $namespace, '/' . $files . '/cities', array(
       array(
         'methods'         => WP_REST_Server::READABLE,

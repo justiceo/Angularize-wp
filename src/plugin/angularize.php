@@ -24,6 +24,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Ensure WP-REST-API is active
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+
+
+require_once( './angularize-endpoints.php' );
+
 register_activation_hook( __FILE__, 'angularize_rest_api_plugin_activate' );
 function angularize_rest_api_plugin_activate(){
     // Require parent plugin
@@ -78,3 +82,9 @@ function angularize_add_toolbar_tag() {
  *  and can apply undesirable formatting and cleanup of newlines, br tags etc
  */
 add_filter('user_can_richedit', '__return_false', 50);
+
+function init_angularize_endpoints() {
+    $instance = AngularizeEndpoints::instance( __FILE__, '1.0.0' );
+	return $instance;
+}
+init_angularize_endpoints();
