@@ -13,8 +13,8 @@ Below is a component using the `RestApi` service to fetch the 5 most recent post
       template: 'Hello World!',
       controller: function(RestApi) {
         RestApi.ready().then(
-            $wp_v2 => {
-                this.posts = $wp_v2.posts({'per_page': 5})
+            () => {
+                this.posts = RestApi.$wp_v2.posts({'per_page': 5})
                 this.posts.get();
             }
         )
@@ -37,11 +37,58 @@ The RestApi starts with a namespace (default: `/wp/v2/`) and builds a tree repre
             |-------> [C] tags/ ---------> #id/ 
             |
             |
-[O] wp/v2/  |-------> [C] users/ --------> #id
+[N/O] wp/v2/|-------> [C] users/ --------> #id
             |                    `-------> me
             |
             |-------> [C] categories/ ---> #id
             |
             |
             `-------> [C] pages/ --------> #id -----> revisions/ -----> #revId/
+```
+[N] - namespace
+[O] - WpOjbect
+[C] - WpCollection
+
+Use cases
+---------
+To get the posts:
+`http://example.com/wp-json/wp/v2/posts`
+In RestApi would be:
+`var posts = RestApi.$wp_v2.posts() # creates the collection model`
+`posts.get() # issue a GET request to fetch data and populate underlying model` 
+
+Or
+
+```
+RestApi.$wp_v2.posts().get().then(
+  posts => { 
+    // use it here
+  }
+)
+```
+
+To get the first 3 results of posts matching a string
+`http://example.com/wp-json/wp/v2/posts/?per_page=3&search="query"`
+In RestApi would be:
+`var posts = RestApi.$wp_v2.posts({per_page:3, search:'query'})`
+`posts.get()`
+
+To get the post whose ID is 3
+`http://example.com/wp-json/wp/v2/posts/3`
+In RestApi would be:
+`var post = RestApi.$wp_v2.posts().id(3)`
+`post.get()`
+
+To get the post whose ID is 3 and embed author and media information
+`http://example.com/wp-json/wp/v2/posts/3?embed=true`
+In RestApi would be:
+`var post = RestApi.$wp_v2.posts().id(3)`
+`post.get({embed:true})`
+
+To create a new post
+`[POST] http://example.com/wp-json/wp/v2/posts/?title=hello&content=text`
+In RestApi would be:
+```
+var wpPost = RestApi.$wp_v2.posts().add({title: 'hello': content:'text'}) # create WpObject for posts
+wpPost.post() # issue a POST request to save the new model
 ```
