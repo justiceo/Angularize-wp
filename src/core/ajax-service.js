@@ -28,6 +28,7 @@ export default class AjaxService {
     mock(type, url) { return this.cache(type + url) }
 
     get(url, no_cache = false) {
+        // todo: handle redirect responses
         let cached = this.cache(url);
         if(!no_cache && cached && this.never_cache.indexOf(url) == -1) return this.$q.resolve(cached);     
         
