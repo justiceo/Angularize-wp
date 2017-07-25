@@ -5,3 +5,6 @@
 @import '../../node_modules/medium-editor/dist/css/themes/tim.min.css';
 @import '../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css';
 
+html {
+    font-size: initial; // bootstrap sets this value forcing all subsequent sizes to be messed up
+}
