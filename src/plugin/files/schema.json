@@ -1,0 +1,15 @@
+{
+    "namespace": "angularize/v1",
+    "routes": {
+        "/angularize/v1": {},
+        "/angularize/v1/files": {},
+        "/angularize/v1/files/(?P<id>[\\w.]+)": {}
+    },
+    "_links": {
+        "up": [
+            {
+                "href": "http://localhost/wp-json/"
+            }
+        ]
+    }
+}

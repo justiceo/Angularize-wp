@@ -24,7 +24,7 @@ class AngularizeEndpoints extends WP_REST_Controller {
       )      
       ));
 
-    register_rest_route( $namespace, '/schema', array(
+    register_rest_route( $namespace, '/', array( // schema
       'methods'         => WP_REST_Server::READABLE,
       'callback'        => array( $this, 'get_angularize_schema' ),
     ));
@@ -39,4 +39,17 @@ class AngularizeEndpoints extends WP_REST_Controller {
     $data = json_decode($data, true);
     return new WP_REST_Response($data, 200);
   }  
+
+  public function get_angularize_schema() {
+    $schema_file = plugin_dir_url(__FILE__) . '/files/schema.json';
+    $data = file_get_contents($schema_file);
+    $data = json_decode($data, true);
+    return new WP_REST_Response($data, 200);
+  }
+
+  // todo: add schema
+  // add files as a collection
+  // add file id as an endpoint whose id is string
+  // update the get_cities_json to get_file()
+
 }
