@@ -6,8 +6,6 @@ import UploadFile from './upload-file';
 import EditPost from './edit-post';
 import Chips from './chips';
 
-const cities = [];
-
 let requires = ['ui.bootstrap', ngFileUpload];
 let angularizeEditor = angular.module('angularizeEditor', requires);
 
@@ -15,7 +13,6 @@ let angularizeEditor = angular.module('angularizeEditor', requires);
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 angularizeEditor    
   .component('editPost', EditPost)
-    .constant('ALL_CITIES', cities)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
     .component('simpleEditor', SimpleEditor)

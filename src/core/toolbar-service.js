@@ -10,8 +10,6 @@ export default class ToolbarService {
 
     add(button) {
 
-        console.debug("TbService: adding button - ", button.title);
-
         // if user didn't specify an index, then it's last
         if (!button.position)
             button.position = 1000;
@@ -43,7 +41,6 @@ export default class ToolbarService {
     }
 
     remove(button) {
-        console.debug("TbService: remove button ", button.title);
         var index = this.buttons.indexOf(button);
         if (index > -1) {
             this.buttons.splice(index, 1);
