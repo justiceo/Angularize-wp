@@ -6,6 +6,7 @@
         <div class="cities">
             <input placeholder="where are you telling this story from?" 
             type="text" ng-model="$ctrl.postLocation" 
+            typeahead-min-length="3"
             uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue"
                 class="form-control">
         </div>
