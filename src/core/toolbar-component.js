@@ -10,7 +10,9 @@ export class ToolbarCtrl {
             title: 'Edit Post',
             icon: 'fa fa-2x fa-sticky-note-o',
             position: 1,
-            handler: () => {console.log("edit button clicked")}
+            handler: () => {
+                window.location.href = window.location.origin + '/new-post';
+            }
         });
 
         // add my-posts button
@@ -19,7 +21,7 @@ export class ToolbarCtrl {
             title: 'My Posts',
             icon: 'fa fa-2x fa-bars',
             position: 1,
-            handler: () => {console.log("edit button clicked")}
+            handler: () => {console.log("my posts button clicked")}
         });
     }
 }
