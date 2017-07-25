@@ -22,7 +22,12 @@ class AngularizeEndpoints extends WP_REST_Controller {
         'methods'         => WP_REST_Server::READABLE,
         'callback'        => array( $this, 'get_files' ),
       )      
-      ));
+    ));
+
+    register_rest_route( $namespace, '/files/(?P<filename>[\\w.-]+)', array(      
+      'methods'         => WP_REST_Server::READABLE,
+      'callback'        => array( $this, 'get_file' ),
+    ));
 
     register_rest_route( $namespace, '/', array( // schema
       'methods'         => WP_REST_Server::READABLE,
@@ -44,6 +49,14 @@ class AngularizeEndpoints extends WP_REST_Controller {
         closedir($dh);
       }
     }
+    return new WP_REST_Response($data, 200);
+  }
+
+  public function get_file($request) {
+    $filename = $request['filename'];
+    $file = plugin_dir_url(__FILE__) . '/files/' . $filename;
+    $data = file_get_contents($file);
+    $data = json_decode($data, true);
     return new WP_REST_Response($data, 200);
   }
 
