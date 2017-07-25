@@ -5,7 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  
 class AngularizeEndpoints extends WP_REST_Controller {
  
- public function __construct ( $file = '', $version = '1.0.0' ) {}
+ public function __construct ( $file = '', $version = '1.0.0' ) {
+   add_action( 'rest_api_init',[$this, 'register_routes'] );
+ }
   /**
    * Register the routes for the objects of the controller.
    */
