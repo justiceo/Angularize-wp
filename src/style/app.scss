@@ -1,4 +1,6 @@
 @import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// todo: use bootstrap sass, so we selectively import components and style them at once - minimizing our own css
+// todo: ui-bootstrap needs angular-animate for some dependencies - add it please
 @import '../../node_modules/medium-editor/dist/css/medium-editor.min.css';
 @import '../../node_modules/medium-editor/dist/css/themes/tim.min.css';
 @import '../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css';
