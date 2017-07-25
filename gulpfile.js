@@ -17,7 +17,7 @@ var karmaServer   = require('karma').Server;
 var sassFiles   = "src/style/*.scss";
 var jsFiles     = "src/**/*.js";
 var viewFiles   = "src/**/*.html";
-var pluginFiles = "src/plugin/*";
+var pluginFiles = "src/plugin/**/*";
 var buildDir    = "./build/";
 
 var interceptErrors = function(error) {

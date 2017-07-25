@@ -17,10 +17,10 @@ class AngularizeEndpoints extends WP_REST_Controller {
     $base = 'route';
     $files = 'files';
 
-    register_rest_route( $namespace, '/' . $files . '/cities', array( // /wp-json/angularize/v1/files/cities
+    register_rest_route( $namespace, '/files', array( // /wp-json/angularize/v1/files/cities
       array(
         'methods'         => WP_REST_Server::READABLE,
-        'callback'        => array( $this, 'get_cities_json' ),
+        'callback'        => array( $this, 'get_files' ),
       )      
       ));
 
@@ -28,6 +28,23 @@ class AngularizeEndpoints extends WP_REST_Controller {
       'methods'         => WP_REST_Server::READABLE,
       'callback'        => array( $this, 'get_angularize_schema' ),
     ));
+  }
+
+  public function get_files() {
+    $dir = plugin_dir_path(__FILE__) . 'files/';
+    // Open a directory, and read its contents
+    $data = array();
+    if (is_dir($dir)){
+      if ($dh = opendir($dir)){
+        while (($file = readdir($dh)) !== false){
+          if ($file != "." && $file != "..") {
+            array_push($data,$file);
+          }          
+        }
+        closedir($dh);
+      }
+    }
+    return new WP_REST_Response($data, 200);
   }
 
   public function get_cities_json() {
