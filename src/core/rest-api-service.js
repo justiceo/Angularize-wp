@@ -7,16 +7,20 @@ export default class RestApiService {
         this.ready = (namespace = '/wp/v2') => { 
             return $ajax.get(namespace).then(
                 schema => {
-                    const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace(namespace + '/', ''));
                     let namespace_label =  '$' + namespace.replace(/\/$/, "").replace(/^\/+/g, '').replace('/','_');
+                    if(this[namespace_label]) return this[namespace_label];
+
+                    const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace(namespace + '/', ''));
                     this[namespace_label] = new WpObject('', namespace, routesSchema)
                     return this[namespace_label];
                 })}
+        this.ready();
+        this.ready('/angularize/v1');
     }
 }
 
 class WpObject {
-    constructor(self, parent, schema, state={}) {
+    constructor(self, parent, schema, state) {
         this.state = state;
         this.endpoint = self ? parent + '/' + self : parent;
 
@@ -40,7 +44,7 @@ class WpObject {
     get(args) {
         return $ajax.get(this.endpoint + this._serialize(args)).then(
             success => {
-                angular.extend(this.state, success);
+                this.state = success;
                 if(args) {
                     console.log("get args: ", success);
                 }

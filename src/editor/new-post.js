@@ -13,22 +13,19 @@ export class NewPostCtrl {
             window.angularize_server.isEditPage = true;
 
         //todo: show a progressbar or loading icon while we setup and fetch data
-
-        this.ALL_CITIES = [
-            {
-                name: "Lagos",
-                country: "NG",
-                lat: 12345,
-                lon: 54332
-            },
-            {
-                name: "Philadelphia",
-                country: "US",
-                lat: 342342,
-                lon: 74534
+        this.RestApi.ready('/angularize/v1').then(
+            $angularize_v1 => {
+                let citiesWpObj = $angularize_v1.files().id('cities.json').get().then(
+                    cities => {
+                        this.ALL_CITIES = cities.state.map(s => {
+                            let seg = s.split(':')
+                            return seg[0] + ', ' + seg[1];
+                        })
+                    }
+                )
             }
-        ];
-        this.ALL_CITIES = ["Lagos", "Abuja", "london", "austy"];
+        )
+        
 
         this.$log.log("NewPost: Initializing...");
         this.RestApi.ready().then(
