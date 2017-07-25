@@ -15,7 +15,7 @@ export default class AjaxService {
     }
 
     request(type, url, payload) {
-        url = window.location.origin + "/wp-json/wp/v2" + url;
+        url = window.location.origin + "/wp-json" + url;
         let req = payload ? this.$http[type](url, payload) : this.$http[type](url)
         return req.then(
             success => {

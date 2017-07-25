@@ -86,6 +86,7 @@ export class NewPostCtrl {
             allCategories: [],
             allTags: []
         }; // holds data for md-chips
+        console.log("v2:", this.RestApi.$wp_v2)
         if (this.postId) {
             this.RestApi.$wp_v2.posts().id(postId).get({ embed: true }).then(
                 post => {

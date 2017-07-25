@@ -2,25 +2,26 @@ import AjaxService from './ajax-service';
 var $ajax = null; // make ajax available for WpObject & WpCollection
 
 export default class RestApiService {
-    constructor($http, $q) {
+    constructor($http, $q) {        
         $ajax = new AjaxService($http, $q);
-        let loadSchema = $ajax.get('').then( // this ajax call slows the startup time
-            schema => {
-                const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace('/wp/v2/', ''));
-                this.$wp_v2 = new WpObject('', '', routesSchema)
-                return this.$wp_v2;
-            }
-        )
-        this.ready = () => { return loadSchema }
+        this.ready = (namespace = '/wp/v2') => { 
+            return $ajax.get(namespace).then(
+                schema => {
+                    const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace(namespace + '/', ''));
+                    let namespace_label =  '$' + namespace.replace(/\/$/, "").replace(/^\/+/g, '').replace('/','_');
+                    this[namespace_label] = new WpObject('', namespace, routesSchema)
+                    return this[namespace_label];
+                })}
     }
 }
 
 class WpObject {
     constructor(self, parent, schema, state={}) {
         this.state = state;
-        this.endpoint = parent ? parent + '/' + self : self;
+        this.endpoint = self ? parent + '/' + self : parent;
 
         let collections = schema.filter(e => e.replace(this.endpoint, '').indexOf('/') == -1)
+        //let last = (str) => str.substring(str.lastIndexOf('/')+1)
         collections.forEach(c => this[c] = (args) => new WpCollection(c + this._serialize(args), this.endpoint, schema) )
     }
 
