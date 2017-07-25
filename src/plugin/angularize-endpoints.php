@@ -31,7 +31,7 @@ class AngularizeEndpoints extends WP_REST_Controller {
   }
 
   public function get_cities_json() {
-    $cities_file = plugin_dir_url(__FILE__) . '/cities.json';
+    $cities_file = plugin_dir_url(__FILE__) . '/files/cities.json';
     /*if(!is_file($cities_file)){
       return new WP_Error( 'file not found', 'cities.json was not found in plugin root directory', array( 'status' => 404 ) );
     } */   
