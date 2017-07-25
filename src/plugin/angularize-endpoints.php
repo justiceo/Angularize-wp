@@ -54,21 +54,14 @@ class AngularizeEndpoints extends WP_REST_Controller {
 
   public function get_file($request) {
     $filename = $request['filename'];
-    $file = plugin_dir_url(__FILE__) . '/files/' . $filename;
+    $file = plugin_dir_path(__FILE__) . '/files/' . $filename;
+    if(!is_file($file)) {
+      return new WP_Error( 'file not found',  $filename . ' was not found in the files directory', array( 'status' => 404 ) );
+    }
     $data = file_get_contents($file);
     $data = json_decode($data, true);
     return new WP_REST_Response($data, 200);
   }
-
-  public function get_cities_json() {
-    $cities_file = plugin_dir_url(__FILE__) . '/files/cities.json';
-    /*if(!is_file($cities_file)){
-      return new WP_Error( 'file not found', 'cities.json was not found in plugin root directory', array( 'status' => 404 ) );
-    } */   
-    $data = file_get_contents($cities_file);
-    $data = json_decode($data, true);
-    return new WP_REST_Response($data, 200);
-  }  
 
   public function get_angularize_schema() {
     $schema_file = plugin_dir_url(__FILE__) . '/files/schema.json';
@@ -76,10 +69,5 @@ class AngularizeEndpoints extends WP_REST_Controller {
     $data = json_decode($data, true);
     return new WP_REST_Response($data, 200);
   }
-
-  // todo: add schema
-  // add files as a collection
-  // add file id as an endpoint whose id is string
-  // update the get_cities_json to get_file()
 
 }
