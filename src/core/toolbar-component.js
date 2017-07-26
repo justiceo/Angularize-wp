@@ -62,6 +62,9 @@ export class ToolbarCtrl {
         return res;
     }
 }
+// todo: there's too much css here. move to bootstrap and use uib position for positioning
+// since we're using both, we might as well use it well
+// lookup bootstrap button-toolbar and button-groups combination - awesomeness!
 
 let Toolbar = {
     controller: ToolbarCtrl,
