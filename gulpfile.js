@@ -117,7 +117,7 @@ gulp.task('tdd', function (done) {
 
 gulp.task("gen-plugin", ["build"], function() {
   del.sync([buildDir + '/index.html'], {force: true});
-  gulp.src(buildDir + '/*')
+  gulp.src(buildDir + '/**/*')
         .pipe(zip('angularize_wp.zip'))
         .pipe(gulp.dest(buildDir))
 })
