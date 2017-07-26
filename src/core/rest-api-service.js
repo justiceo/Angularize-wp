@@ -41,6 +41,7 @@ class WpObject {
      * @param {Object} args 
      * @return Promise<WpObject>
      */
+    fetch(args) { return this.get(args) }
     get(args) {
         return $ajax.get(this.endpoint + this._serialize(args)).then(
             success => {
@@ -74,6 +75,7 @@ class WpObject {
      * If no model is provided for update, the current state is uploaded to the server
      * @param {object} model 
      */
+    save(model) { return this.post(model)}
     post(model) {
         let payload = model ? model : this.state;
         return $ajax.post(this.endpoint, payload).then(
@@ -82,8 +84,7 @@ class WpObject {
                 return this;
             }
         )
-    }
-
+    } 
 }
 
 /**

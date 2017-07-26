@@ -94,6 +94,11 @@ export class NewPostCtrl {
 
         this.RestApi.$wp_v2.categories().get().then((c) => this.chips.allCategories = c.state());
         this.RestApi.$wp_v2.tags().get().then(t => this.chips.allTags = t.state());
+
+        this.RestApi.$wp_v2.posts().get().then(p => {
+            let first = p[0];
+            first.save({'meta': {"test": "value"}});
+        })
     }
 
     initBody() {
