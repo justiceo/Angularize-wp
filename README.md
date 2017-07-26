@@ -63,14 +63,9 @@ go to [http://localhost:3000](http://localhost:3000) in your browser.
 
 todo
 ====
-- only display edit-button on single post pages
 - for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
-- make post cities actually work
-- move Ajax to $restApi since all ajax requests have their root as wp-json no need for changing roots.
-    also, post service would be freed from functions it neither uses nor needs.
 
-- fix settings is a WpObject not collection error. A WpObject can contain both WpObject and WpCollection
-- ToolbarService should have a logged_in filter
 - Angularize should have an auth endpoint for /login register/ and logout/ - depends on WpObject not collection error above
 - Revisions doesn't work
+- Settings object works but have WpCollections
