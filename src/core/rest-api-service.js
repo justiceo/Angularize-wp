@@ -4,6 +4,7 @@ var $ajax = null; // make ajax available for WpObject & WpCollection
 export default class RestApiService {
     constructor($http, $q) {        
         $ajax = new AjaxService($http, $q);
+        this.$server = window.angularize_server;
         this.ready = (namespace = '/wp/v2') => { 
             return $ajax.get(namespace).then(
                 schema => {

@@ -1,15 +1,13 @@
 
 export class MyPostsCtrl {
     constructor(RestApi) {
-
+        console.log("initializing my posts")
         // register toolbar button
         RestApi.ready().then(() => {
-                this.posts = RestApi.$wp_v2.posts({ author: RestApi.$wp.currentUser.ID })
-                this.posts.get();
+                this.posts = RestApi.$wp_v2.posts({ author: RestApi.$server.currentUser.ID })
+                this.posts.get()
             }
         )
-
-        // fetch posts and cache
     }
 }
 

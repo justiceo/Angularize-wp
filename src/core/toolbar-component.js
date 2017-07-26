@@ -1,6 +1,7 @@
 
 export class ToolbarCtrl {
-    constructor($rootScope, $compile, ToolbarService) {
+    constructor($rootScope, $compile, $uibModal, ToolbarService) {
+        this.$uibModal = $uibModal;
         this.buttons = ToolbarService.getButtons();
 
         // todo: use 'text-stroke' to lighten fontawesome icons
@@ -13,13 +14,11 @@ export class ToolbarCtrl {
             is_logged_in: true,
             is_edit_page: false,
             handler: () => {
-                window.location.href = window.location.origin + '/new-post';
+                //window.location.href = window.location.origin + '/new-post';
+                this.open('lg', 'newPost')
             }
         });
 
-        let state = {
-            title: 'hello world title'
-        }
         // add my-posts button
         ToolbarService.add({
             id: 'angularize_my_post',
@@ -28,12 +27,24 @@ export class ToolbarCtrl {
             position: 1,
             is_logged_in: true,
             handler: () => {
-                console.log("my posts button clicked")
+                /*console.log("my posts button clicked")
                 let elem = $compile('<new-post post-id="2" test="3"></new-post>')($rootScope)
-                angular.element('body').prepend(elem);
+                angular.element('body').prepend(elem);*/
+
+                this.open('lg', 'myPosts')
             }
         });
 
+    }
+
+    open (size, component) {
+        let modalInstance = this.$uibModal.open({
+            component:  component
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            console.log('Modal dismissed at: ' + new Date());
+        });
     }
 
     show(b) {
