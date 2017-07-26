@@ -71,3 +71,5 @@ todo
     also, post service would be freed from functions it neither uses nor needs.
 
 - fix settings is a WpObject not collection error. A WpObject can contain both WpObject and WpCollection
+- ToolbarService should have a logged_in filter
+- Angularize should have an auth endpoint for /login register/ and logout/ - depends on WpObject not collection error above
