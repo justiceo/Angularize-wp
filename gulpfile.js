@@ -12,6 +12,7 @@ var templateCache = require("gulp-angular-templatecache");
 var del           = require("del");
 var gutil         = require('gulp-util');
 var karmaServer   = require('karma').Server;
+var zip           = require('gulp-zip');
 
 // Where our files are located
 var sassFiles   = "src/style/*.scss";
@@ -114,6 +115,13 @@ gulp.task('tdd', function (done) {
 });
 
 
+gulp.task("gen-plugin", ["build"], function() {
+  del.sync([buildDir + '/index.html'], {force: true});
+  gulp.src(buildDir + '/*')
+        .pipe(zip('angularize_wp.zip'))
+        .pipe(gulp.dest(buildDir))
+})
+
 gulp.task("build", ["clean", "sass", "copyData", "copyDirectories", "html", "views", "browserify"])
 
 gulp.task("repipe", function() {
@@ -147,7 +155,3 @@ gulp.task("default", ["build"], function() {
   gulp.watch(jsFiles, ["browserify"]);
   gulp.watch(pluginFiles, ["copyData"]);
 });
-
-// copying to remote server
-// scp -r -P1022 build/* justice@dev3.kasomafrica.com:/var/www/dev3.kasomafrica.com/public/wp-content/plugins/angularize_wp/
-// zip -r angularize_wp.zip angularize_wp
