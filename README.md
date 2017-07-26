@@ -63,8 +63,6 @@ go to [http://localhost:3000](http://localhost:3000) in your browser.
 
 todo
 ====
-- edit post using new-post component - compile it into the view
-- for new-post element, we're not using a modal
 - on new-post page, display a loading sign while component loads
 
 - Angularize should have an auth endpoint for /login register/ and logout/ - depends on WpObject not collection error above
