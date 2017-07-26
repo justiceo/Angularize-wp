@@ -1,6 +1,6 @@
 
 export class ToolbarCtrl {
-    constructor(ToolbarService) {
+    constructor($rootScope, $compile, ToolbarService) {
         this.buttons = ToolbarService.getButtons();
 
         // todo: use 'text-stroke' to lighten fontawesome icons
@@ -17,6 +17,9 @@ export class ToolbarCtrl {
             }
         });
 
+        let state = {
+            title: 'hello world title'
+        }
         // add my-posts button
         ToolbarService.add({
             id: 'angularize_my_post',
@@ -24,7 +27,11 @@ export class ToolbarCtrl {
             icon: 'fa fa-2x fa-bars',
             position: 1,
             is_logged_in: true,
-            handler: () => {console.log("my posts button clicked")}
+            handler: () => {
+                console.log("my posts button clicked")
+                let elem = $compile('<new-post post-id="2" test="3"></new-post>')($rootScope)
+                angular.element('body').prepend(elem);
+            }
         });
 
     }

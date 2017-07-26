@@ -6,6 +6,8 @@ export class NewPostCtrl {
             '$scope': $scope, 'Upload': Upload, 'ToolbarService': ToolbarService,
             'RestApi': RestApi
         });
+        console.log("post id & test: ", this.postId, this.test)
+        
     }
 
     $onInit() {
@@ -274,7 +276,9 @@ let NewPost = {
     controller: NewPostCtrl,
     templateUrl: 'editor/new-post.html',
     bindings: {
-        postId: '@'
+        postId: '@',
+        state: '=',
+        test: '='
     }
 }
 
