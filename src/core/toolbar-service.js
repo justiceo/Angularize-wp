@@ -46,6 +46,11 @@ export default class ToolbarService {
         }
     }
 
+    removeById(buttonId) {
+        var button = this.buttons.filter(b => b.id == buttonId)[0]
+        this.remove(button);
+    }
+
     disable(button) {
         var index = this.buttons.indexOf(button);
         this.buttons[index].disabled = true;

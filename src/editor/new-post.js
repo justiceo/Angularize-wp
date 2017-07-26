@@ -39,6 +39,13 @@ export class NewPostCtrl {
         )
     }
 
+    $onDestroy() {
+        // todo: remove the registered buttons and any watchers
+        // important as it might be launched via modal
+        console.log("new post destroy called")
+        this.removeToolbarButtons();
+    }
+
     progress(percent) {
         console.log("progress: ", percent);
     }
@@ -195,6 +202,7 @@ export class NewPostCtrl {
             is_logged_in: true,
             handler: () => this.publish()
         };
+        angular.extend(this, deleteButton, cancelButton, saveButton, publishButton)
         // todo: add a ToolbarService.create("id", "title", "icon", 1) function
         this.ToolbarService.add(cancelButton);
         this.ToolbarService.add(saveButton);
@@ -211,6 +219,13 @@ export class NewPostCtrl {
                 this.ToolbarService.add(publishButton);
             else this.ToolbarService.remove(publishButton);
         });
+    }
+
+    removeToolbarButtons() {
+        this.ToolbarService.removeById('angularize_editor_delete');
+        this.ToolbarService.removeById('angularize_editor_cancel');
+        this.ToolbarService.removeById('angularize_editor_save');
+        this.ToolbarService.removeById('angularize_editor_publish');
     }
 
     /**
