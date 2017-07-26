@@ -11,9 +11,9 @@ export default class RestApiService {
                     if(this[namespace_label]) return this[namespace_label];
 
                     const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id"));//.replace(namespace + '/', ''));
-                    console.group("building ", namespace)
+                    //console.group("building ", namespace)
                     this[namespace_label] = new WpObject('', namespace, routesSchema)
-                    console.groupEnd();
+                    //console.groupEnd();
                     return this[namespace_label];
                 })}
        
@@ -26,7 +26,7 @@ class WpObject {
     constructor(self, parent, schema, state) {
         this.state = state;
         this.endpoint = self ? parent + '/' + self : parent;
-        console.log("constructing WpObject: ", this.endpoint)
+        //console.log("constructing WpObject: ", this.endpoint)
         
         let isModelRegex = (str) => {
             try{
@@ -36,18 +36,18 @@ class WpObject {
                 return true;
             }
         }
-        if(parent == '/wp/v2/posts')
-            console.log("parent: ", parent)
+        //if(parent == '/wp/v2/posts')
+            //console.log("parent: ", parent)
         let collections = schema.filter(e => {
-            let s = e.replace(this.endpoint+'/', '').split('/')
+            let s = e.replace(parent+'/', '').split('/')
             return s.length == 2 && isModelRegex(s[1])
         }).map(s => {
             let e = s.split('/');
             return e[e.length-2];
         });        
 
-        if(parent == '/wp/v2/posts')
-            console.log("parent coll: ", collections)
+        //if(parent == '/wp/v2/posts')
+            //console.log("parent coll: ", collections)
         // collections are not constructed immediately, but when they are called.
         collections.forEach(c => this[c] = (args) => new WpCollection(c + this._serialize(args), this.endpoint, schema) )
         
@@ -79,7 +79,7 @@ class WpObject {
             success => {
                 this.state = success;
                 if(args) {
-                    console.log("get args: ", success);
+                    //console.log("get args: ", success);
                 }
                 return this;
             }
@@ -126,7 +126,7 @@ class WpCollection extends Array {
     constructor(self, parent, schema) {
         super();
         this.endpoint = parent + '/' + self;
-        console.log("constructing WpCollection: ", this.endpoint)
+        //console.log("constructing WpCollection: ", this.endpoint)
 
         //* wp.posts().id(2)       // returns a rest object with this id.
         this.id = (postId) => {

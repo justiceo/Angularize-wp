@@ -6,19 +6,16 @@ export default class ToolbarService {
         this.$wp = window.angularize_server;
     }
 
-    getButtons() { return this.buttons; }
+    getButtons() { 
+        // apply logged_in filters and other here
+        return this.buttons; 
+    }
 
     add(button) {
 
         // if user didn't specify an index, then it's last
         if (!button.position)
             button.position = 1000;
-
-        if(button.is_logged_in && !this.$wp.is_logged_in
-            || button.is_single && !this.$wp.is_single) {
-            console.log("not adding: ", button.title)
-            return;
-        }
 
         // if button already exist, don't add it.
         for (let b of this.buttons) {
