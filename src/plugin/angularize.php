@@ -59,6 +59,7 @@ function angularize_enque_scripts() {
         'is_home' => is_home(),
         'is_archive' => is_archive(),
         'is_logged_in' => is_user_logged_in(),
+        'is_edit_page' => get_post_field( 'post_name', get_post() ) == "new-post", // todo: hardcode alert
         'postObject' => get_post()
     );
     $translation_array = apply_filters( 'angularize_server', $translation_array );

@@ -9,8 +9,6 @@ export class NewPostCtrl {
     }
 
     $onInit() {
-        if(!window.angularize_server.isEditPage)
-            window.angularize_server.isEditPage = true;
 
         //todo: show a progressbar or loading icon while we setup and fetch data
         this.RestApi.ready('/angularize/v1').then(
@@ -163,6 +161,7 @@ export class NewPostCtrl {
             title: 'Delete Post',
             icon: 'fa fa-2x fa-trash-o',
             position: 1,
+            is_logged_in: true,
             handler: () => this.discard()
         };
         let cancelButton = {
@@ -170,6 +169,7 @@ export class NewPostCtrl {
             title: 'Discard Changes',
             icon: 'fa fa-2x fa-times',
             position: 1,
+            is_logged_in: true,
             handler: () => this.discard()
         };
         let saveButton = {
@@ -177,6 +177,7 @@ export class NewPostCtrl {
             title: 'Save',
             icon: 'fa fa-2x fa-floppy-o',
             position: 2,
+            is_logged_in: true,
             handler: () => this.save()
         };
         let publishButton = {
@@ -184,6 +185,7 @@ export class NewPostCtrl {
             title: 'Save & Publish',
             icon: 'fa fa-2x fa-thumbs-o-up',
             position: 3,
+            is_logged_in: true,
             handler: () => this.publish()
         };
         // todo: add a ToolbarService.create("id", "title", "icon", 1) function

@@ -7,8 +7,7 @@ export default class ToolbarService {
     }
 
     getButtons() { 
-        // apply logged_in filters and other here
-        return this.buttons; 
+        return this.buttons
     }
 
     add(button) {

@@ -10,6 +10,8 @@ export class ToolbarCtrl {
             title: 'Edit Post',
             icon: 'fa fa-2x fa-sticky-note-o',
             position: 1,
+            is_logged_in: true,
+            is_edit_page: false,
             handler: () => {
                 window.location.href = window.location.origin + '/new-post';
             }
@@ -21,8 +23,25 @@ export class ToolbarCtrl {
             title: 'My Posts',
             icon: 'fa fa-2x fa-bars',
             position: 1,
+            is_logged_in: true,
             handler: () => {console.log("my posts button clicked")}
         });
+
+    }
+
+    show(b) {
+        // if property is not defined - it don't matter,
+        // if defined as true - should only display when server val is also true
+        // if defined as false - should only not display when server val is true
+
+        // example: when logged_in is not defined - it's good for both logged users and annonymous
+        // when logged_in is defined as true - it's good for only logged in users
+        // when logged_in is false - it's good for only logged_out users
+        let isGood = (prop) => {
+           return (!(prop in b)) || (b[prop] == window.angularize_server[prop]); 
+        }       
+        let res = isGood('is_logged_in') && isGood('is_single') && isGood('is_archive') && isGood('is_edit_page');
+        return res;
     }
 }
 
@@ -34,7 +53,7 @@ let Toolbar = {
     template: `    
     <div class="angularize-toolbar toolbar-wrapper bottom">
         <ul>
-            <li ng-repeat="button in $ctrl.buttons track by $index">
+            <li ng-repeat="button in $ctrl.buttons | filter:$ctrl.show">
                 <button 
                     ng-class="[button.class, button.icon]" 
                     ng-click="button.handler()"
