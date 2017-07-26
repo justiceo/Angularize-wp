@@ -73,3 +73,4 @@ todo
 - fix settings is a WpObject not collection error. A WpObject can contain both WpObject and WpCollection
 - ToolbarService should have a logged_in filter
 - Angularize should have an auth endpoint for /login register/ and logout/ - depends on WpObject not collection error above
+- Revisions doesn't work

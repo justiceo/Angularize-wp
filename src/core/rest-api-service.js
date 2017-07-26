@@ -10,10 +10,13 @@ export default class RestApiService {
                     let namespace_label =  '$' + namespace.replace(/\/$/, "").replace(/^\/+/g, '').replace('/','_');
                     if(this[namespace_label]) return this[namespace_label];
 
-                    const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id").replace(namespace + '/', ''));
+                    const routesSchema = Object.keys(schema.routes).map(r => r.replace("parent", "id"));//.replace(namespace + '/', ''));
+                    console.group("building ", namespace)
                     this[namespace_label] = new WpObject('', namespace, routesSchema)
+                    console.groupEnd();
                     return this[namespace_label];
                 })}
+       
         this.ready();
         this.ready('/angularize/v1');
     }
@@ -23,10 +26,39 @@ class WpObject {
     constructor(self, parent, schema, state) {
         this.state = state;
         this.endpoint = self ? parent + '/' + self : parent;
+        console.log("constructing WpObject: ", this.endpoint)
+        
+        let isModelRegex = (str) => {
+            try{
+                return new RegExp(str).test(99999) || new RegExp(str).test('fws3y3mlpz') 
+            } catch(e) {
+                // sadly all the regexes throw exception :D go and get a good laugh.
+                return true;
+            }
+        }
+        if(parent == '/wp/v2/posts')
+            console.log("parent: ", parent)
+        let collections = schema.filter(e => {
+            let s = e.replace(this.endpoint+'/', '').split('/')
+            return s.length == 2 && isModelRegex(s[1])
+        }).map(s => {
+            let e = s.split('/');
+            return e[e.length-2];
+        });        
 
-        let collections = schema.filter(e => e.replace(this.endpoint, '').indexOf('/') == -1)
-        //let last = (str) => str.substring(str.lastIndexOf('/')+1)
+        if(parent == '/wp/v2/posts')
+            console.log("parent coll: ", collections)
+        // collections are not constructed immediately, but when they are called.
         collections.forEach(c => this[c] = (args) => new WpCollection(c + this._serialize(args), this.endpoint, schema) )
+        
+        let imm = schema.filter(e => e.indexOf(parent) !== -1 && e.replace(parent + '/', '').indexOf('/') == -1)
+                        .map(d => d.replace(parent+'/', ''))
+        let models = imm.filter(e => e.match(/^[0-9a-z]+$/)  && collections.indexOf(e) == -1 && self !== e)
+        
+        // models are constructed immediately
+        models.forEach(m => {
+            this[m] = new WpObject(m, this.endpoint, schema)
+        })
     }
 
     _serialize(obj) {
@@ -94,6 +126,7 @@ class WpCollection extends Array {
     constructor(self, parent, schema) {
         super();
         this.endpoint = parent + '/' + self;
+        console.log("constructing WpCollection: ", this.endpoint)
 
         //* wp.posts().id(2)       // returns a rest object with this id.
         this.id = (postId) => {
