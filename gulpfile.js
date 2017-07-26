@@ -147,3 +147,7 @@ gulp.task("default", ["build"], function() {
   gulp.watch(jsFiles, ["browserify"]);
   gulp.watch(pluginFiles, ["copyData"]);
 });
+
+// copying to remote server
+// scp -r -P1022 build/* justice@dev3.kasomafrica.com:/var/www/dev3.kasomafrica.com/public/wp-content/plugins/angularize_wp/
+// zip -r angularize_wp.zip angularize_wp

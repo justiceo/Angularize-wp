@@ -292,7 +292,6 @@ let NewPost = {
     templateUrl: 'editor/new-post.html',
     bindings: {
         postId: '@',
-        state: '=',
         test: '='
     }
 }

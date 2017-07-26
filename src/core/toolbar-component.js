@@ -14,8 +14,8 @@ export class ToolbarCtrl {
             is_logged_in: true,
             is_edit_page: false,
             handler: () => {
-                //window.location.href = window.location.origin + '/new-post';
-                this.open('lg', 'newPost')
+                window.location.href = window.location.origin + '/new-post';
+                //this.open('lg', 'newPost')
             }
         });
 
