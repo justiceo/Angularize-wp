@@ -49,6 +49,12 @@ go to [http://localhost:3000](http://localhost:3000) in your browser.
 * single run: `npm test`
 * live mode (TDD style): `npm run test-watch`
 
+### Plugins that Interfer with Rest Api
+* Wordfence security: the most popular security plugin on wordpress. 
+  - When enabled, some requests incorrectly return a 404
+  - An example request would be localhost/wp-json/wp/v2/posts/?author=1
+
+
 # License
 
 [MIT](/LICENSE)
@@ -68,3 +74,4 @@ todo
 - Angularize should have an auth endpoint for /login register/ and logout/ - depends on WpObject not collection error above
 - Revisions doesn't work
 - Settings object works but have WpCollections
+- Issue a warning when WordFence is installed
