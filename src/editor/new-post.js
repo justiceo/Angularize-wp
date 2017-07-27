@@ -11,8 +11,6 @@ export class NewPostCtrl {
     }
 
     $onInit() {
-
-        //todo: show a progressbar or loading icon while we setup and fetch data
         this.RestApi.ready('/angularize/v1').then(
             $angularize_v1 => {
                 let citiesWpObj = $angularize_v1.files().id('cities.json').get().then(
