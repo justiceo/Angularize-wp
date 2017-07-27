@@ -17,6 +17,13 @@ class AngularizeEndpoints extends WP_REST_Controller {
     $base = 'route';
     $files = 'files';
 
+    // Angularize Schema
+    register_rest_route( $namespace, '/', array( 
+      'methods'         => WP_REST_Server::READABLE,
+      'callback'        => array( $this, 'get_angularize_schema' ),
+    ));
+
+    // /files endpoints
     register_rest_route( $namespace, '/files', array( // /wp-json/angularize/v1/files/cities
       array(
         'methods'         => WP_REST_Server::READABLE,
@@ -29,9 +36,18 @@ class AngularizeEndpoints extends WP_REST_Controller {
       'callback'        => array( $this, 'get_file' ),
     ));
 
-    register_rest_route( $namespace, '/', array( // schema
+    // /auth endpoints
+    register_rest_route( $namespace, '/auth/login', array(      
       'methods'         => WP_REST_Server::READABLE,
-      'callback'        => array( $this, 'get_angularize_schema' ),
+      'callback'        => array( $this, 'auth_login' ),
+    ));
+    register_rest_route( $namespace, '/auth/logout', array(      
+      'methods'         => WP_REST_Server::READABLE,
+      'callback'        => array( $this, 'auth_logout' ),
+    ));
+    register_rest_route( $namespace, '/auth/forgot_password', array(      
+      'methods'         => WP_REST_Server::READABLE,
+      'callback'        => array( $this, 'auth_forgot_password' ),
     ));
   }
 
@@ -67,6 +83,22 @@ class AngularizeEndpoints extends WP_REST_Controller {
     $schema_file = plugin_dir_url(__FILE__) . '/files/schema.json';
     $data = file_get_contents($schema_file);
     $data = json_decode($data, true);
+    return new WP_REST_Response($data, 200);
+  }
+
+  public function auth_login($request) {
+    // call wp_authenticate($username, $password)
+    $data = "login";
+    return new WP_REST_Response($data, 200);
+  }
+
+  public function auth_logout($request) {
+    $data = "logout";
+    return new WP_REST_Response($data, 200);
+  }
+
+  public function auth_forgot_password($request) {
+    $data = "forgot password";
     return new WP_REST_Response($data, 200);
   }
 
