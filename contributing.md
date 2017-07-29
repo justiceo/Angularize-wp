@@ -88,6 +88,7 @@ Now visit your repo page at https://github.com/YOUR-USERNAME/Angularize-wp to se
 Contributors List
 -----------------
 * Justice Ogbonna (@justiceo)
+* Emil Kitua (@emilkitua)
 
 
 For more information on forking and contributing see:
