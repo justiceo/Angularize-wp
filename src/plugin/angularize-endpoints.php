@@ -38,7 +38,7 @@ class AngularizeEndpoints extends WP_REST_Controller {
 
     // /auth endpoints
     register_rest_route( $namespace, '/auth/login', array(      
-      'methods'         => WP_REST_Server::READABLE,
+      'methods'         => WP_REST_Server::CREATABLE,
       'callback'        => array( $this, 'auth_login' ),
     ));
     register_rest_route( $namespace, '/auth/logout', array(      
@@ -46,7 +46,7 @@ class AngularizeEndpoints extends WP_REST_Controller {
       'callback'        => array( $this, 'auth_logout' ),
     ));
     register_rest_route( $namespace, '/auth/forgot_password', array(      
-      'methods'         => WP_REST_Server::READABLE,
+      'methods'         => WP_REST_Server::CREATABLE,
       'callback'        => array( $this, 'auth_forgot_password' ),
     ));
   }
@@ -87,19 +87,22 @@ class AngularizeEndpoints extends WP_REST_Controller {
   }
 
   public function auth_login($request) {
-    // call wp_authenticate($username, $password)
-    $data = "login";
-    return new WP_REST_Response($data, 200);
+    $user = wp_authenticate($request['username'], $request['password']);
+    if( is_wp_error($user) ) {
+      return new WP_Error('Authentication Error', $user, array('status' => 403) );
+    }
+    return new WP_REST_Response($user, 200);
   }
 
   public function auth_logout($request) {
-    $data = "logout";
-    return new WP_REST_Response($data, 200);
+    wp_logout();
+    return new WP_REST_Response('', 200);
   }
 
   public function auth_forgot_password($request) {
-    $data = "forgot password";
-    return new WP_REST_Response($data, 200);
+    // for now, we'll just return the lost_password_url and the client would redirect user
+    $url =  wp_lostpassword_url( get_permalink() ); // redirects to current page afterwards
+    return new WP_REST_Response($url, 200);
   }
 
 }
