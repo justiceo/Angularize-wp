@@ -5,7 +5,7 @@
         <p class="post-author">{{ $ctrl.authorName }}</p>
         <div class="cities">
             <input placeholder="where are you telling this story from?" 
-            type="text" ng-model="$ctrl.postLocation" 
+            type="text" ng-model="$ctrl.state.meta.angularize_location"
             typeahead-min-length="3"
             uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue"
                 class="form-control">

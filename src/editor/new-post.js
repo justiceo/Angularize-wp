@@ -78,7 +78,8 @@ export class NewPostCtrl {
     initState() {
         this.state = {
             categories: [],
-            tags: []
+            tags: [],
+            meta: {}
         };
         this.chips = {
             categories: [],
@@ -100,7 +101,7 @@ export class NewPostCtrl {
         this.RestApi.$wp_v2.categories().get().then((c) => this.chips.allCategories = c.state());
         this.RestApi.$wp_v2.tags().get().then(t => this.chips.allTags = t.state());
 
-        // testing the RestApi
+        /* testing the RestApi
         let test = this.RestApi.$wp_v2.categories().get();
         this.RestApi.$wp_v2.settings.get().then(
             s => console.log("settings: ", s)
@@ -119,7 +120,7 @@ export class NewPostCtrl {
         console.log("wp_v2: ", this.RestApi.$wp_v2);
         this.RestApi.$angularize_v1.auth.login.get({"username": "justice", "password": "x"}).then(
             res => console.log("user login: ", res)
-        )
+        )*/
     }
 
     initBody() {
@@ -257,6 +258,7 @@ export class NewPostCtrl {
     }
     updateCategories(selected) { this.state.categories = selected.map(c => c.id); }
     updateTags(selected) { this.state.tags = selected.map(t => t.id); }
+    
 
     save() {  
         // todo: extract and upload all embed resources 

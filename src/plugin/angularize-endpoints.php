@@ -123,7 +123,7 @@ class AngularizeEndpoints extends WP_REST_Controller {
         // Show in the WP REST API response. Default: false.
         'show_in_rest' => true,
     );
-    register_meta($object_type, 'angularize_' . $object_type . '_' . $meta, $args1 );
+    register_meta($object_type, 'angularize_' . $meta, $args1 );
   }
 
 }

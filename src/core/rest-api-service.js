@@ -103,6 +103,19 @@ class WpObject {
         return val
     }
 
+    getMeta(prop) {
+        prop = 'angularize_' + prop;
+        if( !(prop in this.state.meta) )
+            throw 'The property "' + prop + '" is not a meta on the endpoint: ' + this.endpoint
+
+        return this.state.meta[prop];
+    }
+
+    setMeta(prop, value) {
+        prop = 'angularize_' + prop;
+        this.state.meta[prop] = value;
+    }
+
     /**
      * Updates the current state with the model provided and sends update to server
      * If no model is provided for update, the current state is uploaded to the server
