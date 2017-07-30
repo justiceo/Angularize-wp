@@ -12,3 +12,5 @@ describe('RestApi', function() {
         expect(service).toBeDefined();
     });
 })
+
+// http://www.bradoncode.com/blog/2015/06/26/unit-testing-http-ngmock-fundamentals/

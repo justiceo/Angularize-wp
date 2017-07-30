@@ -7,6 +7,9 @@ class AngularizeEndpoints extends WP_REST_Controller {
  
  public function __construct ( $file = '', $version = '1.0.0' ) {
    add_action( 'rest_api_init',[$this, 'register_routes'] );
+   $this->expose_post_meta('post', 'like');
+   $this->expose_post_meta('post', 'location');
+   $this->expose_post_meta('user', 'country');
  }
   /**
    * Register the routes for the objects of the controller.
@@ -105,4 +108,40 @@ class AngularizeEndpoints extends WP_REST_Controller {
     return new WP_REST_Response($url, 200);
   }
 
+  public function expose_post_meta($object_type, $meta) {
+    // The object type. For custom post types, this is 'post';
+    // for custom comment types, this is 'comment'. For user meta,
+    // this is 'user'.
+    $args1 = array( // Validate and sanitize the meta value.
+        // Note: currently (4.7) one of 'string', 'boolean', 'integer',
+        // 'number' must be used as 'type'. The default is 'string'.
+        'type'         => 'string',
+        // Shown in the schema for the meta key.
+        'description'  => 'A meta key associated with a string meta value.',
+        // Return a single value of the type.
+        'single'       => true,
+        // Show in the WP REST API response. Default: false.
+        'show_in_rest' => true,
+    );
+    register_meta($object_type, 'angularize_' . $object_type . '_' . $meta, $args1 );
+  }
+
 }
+
+/*
+meta fields needed
+------------------
+reactions - visible to all
+post-location - visible to all
+extra-author-info like countries - visible to all, on User type
+editorial-tags - visible to all
+suggested-edits - visible to editor and author
+review-card - visible to editor and author
+
+meta fields are added on demand, so no need to register it for all types
+if saved separately, some can be exposed with restricted permissions for updates and fetch
+all of them can be exposed programmatically - with a permissoins callback
+they will also be visible in the meta fields and no need for special method access
+and by the way - a meta is meant to store a value
+
+*/
