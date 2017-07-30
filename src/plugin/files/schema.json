@@ -3,6 +3,9 @@
     "routes": {
         "/angularize/v1": {},
         "/angularize/v1/files": {},
-        "/angularize/v1/files/(?P<filename>[\\w.@+-]+)": {}
+        "/angularize/v1/files/(?P<filename>[\\w.@+-]+)": {},
+        "/angularize/v1/auth/login": {},
+        "/angularize/v1/auth/logout": {},
+        "/angularize/v1/auth/forgot_password": {}
     }
 }

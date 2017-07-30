@@ -162,3 +162,22 @@ class WpCollection extends Array {
         }
     }
 }
+
+/**
+ * v2 goals
+ * --------
+ * There is the issue of nested collections
+ * Irregular location of objects and collections etc
+ * Imagine we only have a tree of WpObjects
+ * and WpCollection are basically objects whose state in an array.
+ * In this case, the api doesn't know or try to predict what type the data is, until it has fetched it.
+ * Then we can have $wp_v2.posts.fetch({per_page:5}) // to get posts * 
+ * and $wp_v2.posts.save({title: test}) // to save new post
+ * and $wp_v2.posts.id(2).fetch({embed:2})
+ * and $wp_v2.posts.id(2).save({title: test}) // to update current post
+ * and $wp_v2.posts.id(2).revisions.fetch() // to get post revisions
+ * 
+ * fix the problem of non-conformant collections
+ * fix the problem of strange models like files and login/logout
+ * add events
+ */
