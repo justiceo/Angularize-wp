@@ -114,6 +114,12 @@ export class NewPostCtrl {
             )
             first.save({'meta': {"test": "value"}});
         })
+
+        console.log("angularize: ", this.RestApi.$angularize_v1);
+        console.log("wp_v2: ", this.RestApi.$wp_v2);
+        this.RestApi.$angularize_v1.auth.login.get({"username": "justice", "password": "x"}).then(
+            res => console.log("user login: ", res)
+        )
     }
 
     initBody() {
