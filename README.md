@@ -70,7 +70,7 @@ go to [http://localhost:3000](http://localhost:3000) in your browser.
 todo
 ====
 - on new-post page, display a loading sign while component loads
-
+- create a build-from-dashboard solution for this project
 - Angularize should have an auth endpoint for /login register/ and logout/ - depends on WpObject not collection error above
 - Revisions doesn't work
 - Settings object works but have WpCollections

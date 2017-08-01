@@ -1,5 +1,4 @@
 import MediumEditor from 'medium-editor';
-import AutoList from './autolist';
 
 export class NewPostCtrl {
     constructor($scope, Upload, ToolbarService, RestApi) {
@@ -28,7 +27,6 @@ export class NewPostCtrl {
         this.RestApi.ready().then(
             () => {
                 this.initState();
-                this.initBody();
                 this.addToolbarButtons();
             },
             (err) => {
@@ -122,57 +120,6 @@ export class NewPostCtrl {
         this.RestApi.$angularize_v1.auth.login.get({"username": "justice", "password": "x"}).then(
             res => console.log("user login: ", res)
         )*/
-    }
-
-    initBody() {
-        // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
-
-        /*var AutoList = MediumEditor.Extension.extend({
-            name: 'autolist',
-            init: function () {
-                this.subscribe('editableKeypress', this.onKeypress.bind(this));
-            },
-            onKeypress: function (keyPressEvent) {
-                if (MediumEditor.util.isKey(keyPressEvent, [MediumEditor.util.keyCode.SPACE])) {
-                    var list_start = this.base.getSelectedParentElement().textContent;
-                    if (list_start == "1." && this.base.getExtensionByName('orderedlist')) {
-                        this.base.execAction('insertorderedlist');
-                        this.base.getSelectedParentElement().textContent = this.base.getSelectedParentElement().textContent.slice(2).trim();
-                    }
-                    else if (list_start == "*" && this.base.getExtensionByName('unorderedlist')) {
-                        this.base.execAction('insertunorderedlist');
-                        this.base.getSelectedParentElement().textContent = this.base.getSelectedParentElement().textContent.slice(1).trim();
-                    }
-                }
-            }
-        });*/
-        
-        let contentEditorOptions = {
-            buttonLabels: 'fontawesome',
-            targetBlank: true,
-            placeholder: {
-                text: 'Write your story here',
-                hideOnClick: false
-            },
-            extensions: {
-                'auotlist': new AutoList()
-            },
-            autoLink: true,
-            imageDragging: true,
-            toolbar: {
-                buttons: ['h3', 'h4', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image',
-                    'orderedlist', 'unorderedlist'],
-                sticky: true,
-                static: true,
-                align: 'center',
-                updateOnEmptySelection: true
-            }
-
-        };
-
-        this.contentEditor = new MediumEditor('.post-body', contentEditorOptions);
-        this.contentEditor.subscribe('editableInput', () => this.state.content = this.contentEditor.getContent())
-
     }
 
     addToolbarButtons() {

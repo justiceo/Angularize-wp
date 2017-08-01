@@ -7,12 +7,12 @@ export class AuthorPopoverCtrl {
     // - create the author popover template
     // - add the hover trigger
     constructor(RestApi){
-        RestApi.ready().then(
+        /*RestApi.ready().then(
             user => {
                 this.user = $wp_v2.users(RestApi.$server.users().ID)
                 this.user.get()    
             }
-        )
+        )*/
     }
 
 }

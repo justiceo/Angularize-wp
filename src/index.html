@@ -8,14 +8,17 @@
         <script src="./main.js"></script>
     </head>
 
-    <body>
-        <div class="container">
-            <h1>Angularize Components Test page</h1>
-        </div>
+    <body class="container">
+        <h1>Angularize Components Test page</h1>
         <test></test>
         <recent-posts></recent-posts>
         
         <h2>Author popover goes here</h2>
         <author-popover></author-popover>
+
+        <h2 style="margin-top:50px; border-top: 2px solid">Editor</h2>
+        <full-editor name="post-body-editor" placeholder="Write your story" text="$ctrl.content"></full-editor>
     </body>
+    <style>
+        </style>
 </html>
