@@ -1,4 +1,5 @@
 import MediumEditor from 'medium-editor';
+import AutoList from './autolist';
 
 export class NewPostCtrl {
     constructor($scope, Upload, ToolbarService, RestApi) {
@@ -126,7 +127,7 @@ export class NewPostCtrl {
     initBody() {
         // for full editor options see https://github.com/yabwe/medium-editor/blob/master/OPTIONS.md
 
-        var AutoList = MediumEditor.Extension.extend({
+        /*var AutoList = MediumEditor.Extension.extend({
             name: 'autolist',
             init: function () {
                 this.subscribe('editableKeypress', this.onKeypress.bind(this));
@@ -144,7 +145,8 @@ export class NewPostCtrl {
                     }
                 }
             }
-        });
+        });*/
+        
         let contentEditorOptions = {
             buttonLabels: 'fontawesome',
             targetBlank: true,
