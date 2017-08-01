@@ -1,13 +1,11 @@
 import angular from 'angular';
 import angularizeCore from './core';
-import angularizeEditor from './editor';
-import angularizeWidgets from './widgets';
+import angularizeComponents from './components';
 import "./core/app.templates";
 
 let requires = [
   angularizeCore,
-  angularizeEditor,
-  angularizeWidgets,
+  angularizeComponents,
   'templates',
 ];
 let MODULE_NAME = 'angularize';

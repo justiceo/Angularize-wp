@@ -1,20 +1,32 @@
-import angular from 'angular';
+import 'angular-ui-bootstrap';
+import ngFileUpload from 'ng-file-upload';
+import NewPost from './new-post';
+import SimpleEditor from './simple-medium-editor';
+import FullEditor from './full-medium-editor';
+import UploadFile from './upload-file';
+import Chips from './chips';
 import RecentPosts from './recent-posts';
 import AuthorPopover from './author-popover';
 import BookFlight from './book-flight';
 import LikeDirective from './like';
 import MyPosts from './my-posts';
 
-let angularizeWidgets = angular.module("angularizeWidgets", []);
+let requires = ['ui.bootstrap', ngFileUpload];
+let angularizeComponents = angular.module('angularizeComponents', requires);
 
-angularizeWidgets
+// only load if we have wp front end editor enabled
+//if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
+angularizeComponents
+    .component('newPost', NewPost)
+    .component('uploadFile', UploadFile)
+    .component('simpleEditor', SimpleEditor)
+    .component('fullEditor', FullEditor)
+    .component('chips', Chips)
     .component('recentPosts', RecentPosts)
     .component('authorPopover', AuthorPopover)
     .component('bookFlight', BookFlight)
     .component('myPosts', MyPosts)
-    .directive('like', LikeDirective);
-
-angularizeWidgets
+    .directive('like', LikeDirective)
     .filter('timesince', function() {       
         function transform(date) { // date as number
             console.log(date);
@@ -49,4 +61,4 @@ angularizeWidgets
         return transform;
     });
 
-export default angularizeWidgets.name;
+export default angularizeComponents.name;
