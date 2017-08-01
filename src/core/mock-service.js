@@ -77,5 +77,23 @@ var mockResponses =
                 '/wp/v2/tags/(?P<id>[\d]+)':'',
             }
         }
-    }
+    },
+
+    {
+        'method': 'GET',
+        'url': 'http://localhost:3000/wp-json/wp/v2/users/me',
+        'response': {
+            'id': '1',
+            'name': 'John Doe',
+            'description': 'Short bio here but its cool either way because ya know me cool like that ya know',
+            'link': 'http://www.google.com',
+            'avatar_urls': {
+                '24': 'http://0.gravatar.com/avatar/6361b1d133471ac61158fa8063234278?s=24&d=mm&r=g'
+
+            }
+
+        }
+    },
+
+    
 ]
