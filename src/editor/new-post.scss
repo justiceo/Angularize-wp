@@ -1,0 +1,133 @@
+new-post.cover-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.angularize-container {
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.angularize-container.lg {
+  max-width: 1200px;
+}
+
+.post-header {
+  background: orange;
+  background-size: cover;
+  color: #222;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.featured-image {
+  margin-bottom: 40px;
+  margin-top: 200px;
+}
+
+.post-title-editor {
+  font-size: 70px;
+  font-weight: bold;
+  margin: 0px auto;
+  max-width: 90%;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.post-excerpt-editor {
+  margin: 0 auto;
+  max-width: 70%;
+}
+
+.post-title-editor,
+.post-excerpt-editor,
+.post-body {
+  outline: none;
+}
+
+.post-author {
+  margin-bottom: 50px;
+  margin-top: 100px;
+}
+
+.cities {
+  bottom: -24px;
+  font-size: 90%;
+  position: absolute;
+  right: 10px;
+  z-index: 1;
+}
+
+.cities input, .cities input:focus {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #222;
+  color: #222;
+  font-size: 90%;
+  outline: none;
+  padding: 5px 7px;
+}
+
+.cities input::placeholder {
+  color: #222;
+  font-style: normal;
+}
+
+.cities input:focus {
+  border-bottom: 2px solid #aaa;
+}
+
+.post-body {
+  margin: 0 auto 100px;
+  min-height: 400px;
+  padding: 50px 30px;
+}
+
+.post-settings {
+  background: #eee;
+  padding: 30px;
+  position: relative;
+}
+
+.post-settings label {
+  background: white;
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  font-family: sans-serif;
+  font-size: 70%;
+  font-weight: 600;
+  padding: 10px 18px;
+  text-transform: uppercase;
+}
+
+.post-settings ul.dropdown-menu,
+.cities ul.dropdown-menu {
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  list-style: none;
+  padding: 10px 15px;
+  position: absolute;
+  z-index: 999;
+}
+
+.post-settings chips.categories {
+  display: block;
+  margin-bottom: 40px;
+}
+
+i.icons {
+  font-size: 40px;
+  line-height: 2;
+}
+
+.medium-editor-placeholder:after {
+  color: #444;
+  font-style: normal;
+  margin: 0 auto;
+  width: 100%;
+}

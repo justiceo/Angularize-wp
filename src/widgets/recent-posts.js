@@ -11,16 +11,7 @@ export class RecentPostsCtrl {
 
 let RecentPosts = {
     controller: RecentPostsCtrl,
-    template: `
-    <h2>Recent Posts</h2>
-    <ul>
-        <li ng-repeat="post in $ctrl.posts">
-            <a href="{{ post.attr('link') }}">
-                {{ post.attr('title') }}
-            </a>
-        </li>
-    </ul>
-    `
+    templateURl : 'widgets/recent-posts.html'
 }
 
 export default RecentPosts;

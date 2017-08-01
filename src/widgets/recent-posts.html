@@ -1,0 +1,8 @@
+<h2>Recent Posts</h2>
+<ul>
+  <li ng-repeat="post in $ctrl.posts">
+    <a href="{{ post.attr('link') }}">
+      {{ post.attr('title') }}
+    </a>
+  </li>
+</ul>

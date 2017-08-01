@@ -1,0 +1,46 @@
+.angularize-drop-box {
+  /*border: 2px dashed #ccc;*/
+  position: relative;
+}
+
+img.preview {
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.angularize-select-file {
+  padding: 100px 50px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.angularize-caption {
+  border: none;
+  bottom: 10px;
+  font-size: 90%;
+  font-style: italic;
+  left: 20px;
+  max-width: 300px;
+  outline: none;
+  position: relative;
+  text-align: left;
+}
+
+.simple-medium-editor.angularize-caption-editor {
+  border-bottom: 2px solid #222;
+  max-width: 270px;
+  outline: none;
+  padding: 5px 7px;
+}
+
+.simple-medium-editor.angularize-caption-editor::after {
+  color: #222;
+  font-style: normal;
+}
+
+.transcluded {
+  padding-bottom: 120px;
+  position: relative;
+}

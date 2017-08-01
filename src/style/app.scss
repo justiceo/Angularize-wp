@@ -4,6 +4,10 @@
 @import '../../node_modules/medium-editor/dist/css/medium-editor.min.css';
 @import '../../node_modules/medium-editor/dist/css/themes/tim.min.css';
 @import '../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css';
+@import "../editor/chips.scss";
+@import "../editor/new-post.scss";
+@import "../editor/upload-file.scss";
+
 
 html {
     font-size: initial; // bootstrap sets this value forcing all subsequent sizes to be messed up
