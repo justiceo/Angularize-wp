@@ -1,35 +1,12 @@
-/**
- * Directive that takes a user id and displays a popover of the user's info on hover
- */
-export class AuthorPopoverCtrl {
-    // ui-bootstrap already has a popover that works well,
-    // - install ui-bootstrap
-    // - create the author popover template
-    // - add the hover trigger
-    constructor(RestApi){
-        RestApi.ready().then(
-            user => {
-                this.user = $wp_v2.users(RestApi.$server.users().ID)
-                this.user.get()    
-            }
-        )
-    }
-
-}
-
-let AuthorPopover = {
-    //restrict: 'A',
-    controller: AuthorPopoverCtrl,
-    template: `
-    
-    <div class="a-popover">
+<widget>
+  <div class="a-popover">
   <div class="author-avatar">
     <a href="#"><img src="https://dev.kasomafrica.com/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"></a>
   </div>
-  <span class="a-name"><h3><a href="#">John Doe</a></h3></span>
-    <span class="bio"><p>All round cool guy</p></span>
+  <span class="a-name"><h3><a href="#">{{users.name}}</a></h3></span>
+    <span class="bio"><p>{{users.description}}</p></span>
     
-     <div class="a-stories">
+   <div class="a-stories">
     <h5>MY STORIES</h5>
       <ul>
         <li><a href="#">Jollof Wars: Why Ghana Keeps Winning</a></li>
@@ -125,8 +102,4 @@ h5{
   font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
 }
 </style>
-
-    `
-}
-
-export default AuthorPopover;
+</widget>

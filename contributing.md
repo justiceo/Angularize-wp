@@ -63,7 +63,7 @@ Creating the *Dev* branch
 Branches allow you to build new features or test out ideas without putting your main project at risk. The main work in done on the dev branch and merged into the master branch. 
 With the terminal open, navigate to the local Angularize project directory and type:
 ```
-git checkout dev
+git branch --track dev origin/dev
 Switched to new branch 'dev'
 Your branch is setup to track 'origin/dev'
 ```
@@ -89,7 +89,7 @@ Contributors List
 -----------------
 * Justice Ogbonna (@justiceo)
 * Dumezweni Ndlovu (@dumendlovu)
-
+* Derek Baah (@derekbaah)
 
 For more information on forking and contributing see:
 ---------------
