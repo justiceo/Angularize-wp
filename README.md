@@ -41,6 +41,11 @@ $ git update-index --assume-unchanged src/core/app.templates.js
 $ npm start
 ```
 
+Alternatively, use the install script
+```
+$ ./install.sh
+```
+
 go to [http://localhost:3000](http://localhost:3000) in your browser.
 
 
