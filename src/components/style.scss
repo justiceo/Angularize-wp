@@ -4,10 +4,18 @@ upload-file {
         display: block;
         background: #f1f1f1;
         min-height: 300px;
+        position:relative;
     }
     img {
         width: 100%;
-    }    
+    } 
+    ng-transclude {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        color: #aaa;
+        transform: translateX(-50%) translateY(-50%);
+    }
 }
 
 full-editor {

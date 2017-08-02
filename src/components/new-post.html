@@ -1,5 +1,5 @@
 <div>
-    <img-upload name="featured-image" img-url="$ctrl.featuredImage" img-id="$ctrl.state.featured_media" class="wide"></img-upload>
+    <upload-file class="wide" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage"><i class="fa fa-camera fa-5x"></i></upload-file>
     <simple-editor name="post-title-editor" class="h2" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></simple-editor>
     <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
     <p class="post-author">John Wiskey</p>
