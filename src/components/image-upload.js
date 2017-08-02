@@ -4,7 +4,8 @@ export class ImgUploadCtrl {
     constructor($timeout) {
         this.$timeout = $timeout;
     }
-    
+    // todo: add dragOver class
+    // implement defer and multiple
     $onInit() {
         let editorOptions = {
             disableReturn: true,
@@ -26,7 +27,9 @@ export class ImgUploadCtrl {
             this.editor = new MediumEditor(editorElem, editorOptions);
             
             this.editor.subscribe('editableDrag', (event, editable) => {
-                editable.setAttribute('contentEditable', true)
+                // enable editing 
+                editable.setAttribute('contentEditable', true);
+
             });
 
             this.editor.subscribe('editableDrop', (event,editable) => {
@@ -51,11 +54,13 @@ export class ImgUploadCtrl {
 
 let ImgUpload = {
     controller: ImgUploadCtrl,
-    template: '<div class="img-upload-editor" ng-class="$ctrl.name" style="outline:none; min-height: 250px; background: #eee; text-align: center"></div>',
+    template: `<div ng-class="$ctrl.name + ' img-upload-editor'"><ng-transclude></ng-transclude></div>`,
+    transclude: true,
     bindings: {
-        name: '@',
-        imgSrc: '=',
-        multiple: '='
+        name:       '@',    // useful for differentiating between multiple img-upload medium instances
+        imgSrc:     '=',    // the url or encoded-binary of the image
+        defer:      '=',    // when set to true, the image is not uploaded to the server and imgSrc is the encoded image
+        multiple:   '=',    // when set to true, multiple images can be dropped, and imgSrc returns an array instead of a string
     }
 }
 
