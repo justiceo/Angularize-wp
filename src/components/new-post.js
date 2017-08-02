@@ -15,12 +15,42 @@ export class NewPostCtrl {
             $angularize_v1 => {
                 let citiesWpObj = $angularize_v1.files().id('cities.json').get().then(
                     cities => {
-                        this.ALL_CITIES = cities.state.map(s => {
-                            let seg = s.split(':')
-                            return seg[0] + ', ' + seg[1];
-                        })
+                        
+                        this.cities = cities.state.map(s => {
+                            s = s.split(':');
+                            return { name: s[0], country: s[1], lat: s[2], lon: s[3] }
+                        });
+                        this.city_names = this.cities.map(s => s.name + ', ' + s.country);
+                        if(navigator.geolocation) {
+                            // guess user location
+                            navigator.geolocation.getCurrentPosition((position) => {
+
+                                // Get the coordinates of the current position.
+                                let lat = position.coords.latitude;
+                                let lon = position.coords.longitude;
+                                
+                                let closest = 10000; 
+                                let guessedCity = "";                              
+                                for(let i=0; i < this.cities.length; i++) {
+                                    let c = this.cities[i];
+                                    let distance = Math.abs(c.lat-lat) + Math.abs(c.lon-lon);
+                                    if(distance < closest) {
+                                        closest = distance;
+                                        guessedCity = c.name + ', ' + c.country;
+                                    }                                        
+                                }
+                                if(!this.state.meta.angularize_location) {
+                                    this.state.meta.angularize_location = guessedCity;
+                                    this.$scope.$apply();
+                                    console.log("loc: ", this.state.meta.angularize_location)
+                                }
+                            });
+                        }
                     }
-                )
+                );
+
+                
+
             }
         )
         
@@ -56,7 +86,7 @@ export class NewPostCtrl {
     }
 
     citySearch(query) {
-        return query ? this.ALL_CITIES.filter(city => {
+        return query ? this.city_names.filter(city => {
             return city.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
         }) : [];
     }

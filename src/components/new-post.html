@@ -5,7 +5,7 @@
     <p class="post-author">John Wiskey</p>
     <div class="cities">
         <input placeholder="where are you telling this story from?" type="text" ng-model="$ctrl.state.meta.angularize_location" typeahead-min-length="3"
-            uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue" class="form-control">
+            uib-typeahead="c for c in $ctrl.city_names | filter:$viewValue" class="form-control">
     </div>
     <full-editor name="post-body-editor" class="long container" placeholder="Write your story here" text="$ctrl.state.content"></full-editor>
     <div class="angularize-container">
