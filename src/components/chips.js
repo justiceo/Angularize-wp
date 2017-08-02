@@ -23,7 +23,7 @@ export class ChipsCtrl {
 
 let Chips = {
     controller: ChipsCtrl,
-    templateUrl: 'editor/chips.html',
+    templateUrl: 'components/chips.html',
     bindings: {
         available: '=',
         selected: '=',

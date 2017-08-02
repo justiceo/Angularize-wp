@@ -244,7 +244,7 @@ export class NewPostCtrl {
 
 let NewPost = {
     controller: NewPostCtrl,
-    templateUrl: 'editor/new-post.html',
+    templateUrl: 'components/new-post.html',
     bindings: {
         postId: '@',
         test: '='

@@ -1,7 +1,31 @@
 
 export class UploadFileCtrl {
-    constructor(Upload) {
+    constructor(Upload, $timeout) {
         this.Upload = Upload;
+        this.$timeout = $timeout;
+    }
+
+    drop(event) {
+        console.log("drop event: ", event);
+    }
+
+    allowDrop(event) {
+        console.log("allow drop:", event)
+        event.preventDefault();
+    }
+
+    selectFile() {
+        console.log("clicked main")
+         angular.element(document).find('#angularize_img_selector').triggerHandler('click');
+        this.$timeout(function() {
+            let el = angular.element(document).find('#angularize_img_selector');
+            console.log("el: ", el);
+            el.triggerHandler('click')
+        });
+    }
+
+    _selectFile(event) {
+        console.log("select file: ", event, this.imgFile)
     }
 
     upload(file, alt_text = "", caption = "") {
@@ -38,7 +62,7 @@ export class UploadFileCtrl {
 
 let UploadFile = {
     controller: UploadFileCtrl,
-    templateUrl: 'editor/upload-file.html',
+    templateUrl: 'components/upload-file.html',
     transclude: true,
     bindings: {
         progress: '&',
