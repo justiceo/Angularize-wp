@@ -16,7 +16,6 @@ export class ImgUploadCtrl {
             keyboardCommands: false,
             toolbar: {
                 buttons: ['image'],
-                sticky: true,
                 static: true,
                 align: 'center',
                 updateOnEmptySelection: true, // keep it open always
@@ -31,8 +30,17 @@ export class ImgUploadCtrl {
             });
 
             this.editor.subscribe('editableDrop', (event,editable) => {
+                // if multiple images are not allowed, clear the dom element
+                if(!this.multiple)
+                    this.editor.setContent('');
+
                 setTimeout(() => {
-                    editable.removeAttribute('contentEditable')
+                    // grab the image src
+                    let img = angular.element(editable).find('img');
+                    // add image-response and image-center stuff
+                    img.addClass('img-responsive img-thumbnail');
+                    this.imgSrc = img[0].currentSrc;
+                    editable.removeAttribute('contentEditable'); // prevent adding text content
                 },100)
             })
         })
@@ -43,9 +51,11 @@ export class ImgUploadCtrl {
 
 let ImgUpload = {
     controller: ImgUploadCtrl,
-    template: '<div class="img-upload-editor" ng-class="$ctrl.name" style="outline:none; min-height: 250px; background: red"></div>',
+    template: '<div class="img-upload-editor" ng-class="$ctrl.name" style="outline:none; min-height: 250px; background: #eee; text-align: center"></div>',
     bindings: {
-        name: '@'
+        name: '@',
+        imgSrc: '=',
+        multiple: '='
     }
 }
 
