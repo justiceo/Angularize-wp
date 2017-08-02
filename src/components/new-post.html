@@ -7,8 +7,7 @@
         <input placeholder="where are you telling this story from?" type="text" ng-model="$ctrl.state.meta.angularize_location" typeahead-min-length="3"
             uib-typeahead="c for c in $ctrl.city_names | filter:$viewValue" class="form-control">
     </div>
-    <full-editor name="post-body-editor" class="long container" placeholder="Write your story here" text="$ctrl.state.content"></full-editor>
-    
+    <full-editor name="post-body-editor" class="long container" placeholder="Write your story here" text="$ctrl.state.content"></full-editor>    
     <div class="post-settings">
         <chips class="categories" empty-text="Search for Categories" some-text="Add more categories" available="$ctrl.chips.allCategories"
             selected="$ctrl.chips.categories" on-change="$ctrl.updateCategories($selected)"></chips>
@@ -17,9 +16,6 @@
             selected="$ctrl.chips.tags"></chips>
     </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
-<!-- todo: too much markup and too much css - move to bootstrap and uib bootsrap -->
-<!-- todo: remove simple-icons and find ways to make font-awesome thin via stroking -->
 
 <style scoped>
     new-post.cover-content {
@@ -34,7 +30,8 @@
     }
 
     .post-title-editor,
-    .post-excerpt-editor {
+    .post-excerpt-editor,
+    .post-author {
         padding: 15px;
         text-align: center;
     }
@@ -45,35 +42,9 @@
         outline: none;
     }
 
-    .post-author {
-        margin-top: 100px;
-        margin-bottom: 50px;
-    }
-
-    .cities input,
-    .cities input:focus {
-        border: none;
-        outline: none;
-        box-shadow: none;
-        padding: 5px 7px;
-        background: transparent;
-        border-bottom: 2px solid #222;
-        color: #222;
-    }
-
-    .cities input::placeholder {
-        color: #222;
-        font-style: normal;
-    }
-
-    .cities input:focus {
-        border-bottom: 2px solid #aaa;
-    }    
-
     .post-settings {
         background: #eee;
         padding: 30px;
-        position: relative;
     }
 
     .post-settings ul.dropdown-menu,
@@ -90,11 +61,6 @@
     .post-settings chips.categories {
         margin-bottom: 40px;
         display: block;
-    }
-
-    i.icons {
-        font-size: 40px;
-        line-height: 2;
     }
 
     .medium-editor-placeholder:after {

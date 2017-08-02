@@ -11,7 +11,7 @@ export class ChipsCtrl {
         this.selected.push(item);
         this.available = this.available.filter(e => e.id != item.id)
         this.placeholderText = this.someText;
-        this.model = null;
+        this.uibSelected = null;
         if(this.onChange) this.onChange({$selected: this.selected});
     }
 
