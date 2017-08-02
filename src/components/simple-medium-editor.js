@@ -8,6 +8,7 @@ export class SimpleEditorCtrl {
         let editorOptions = {
             disableReturn: true,
             disableExtraSpaces: true,
+            imageDragging: false,
             placeholder: {
                 text: this.placeholder,
                 hideOnClick: false

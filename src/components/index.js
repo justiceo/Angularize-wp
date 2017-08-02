@@ -3,6 +3,7 @@ import ngFileUpload from 'ng-file-upload';
 import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
 import FullEditor from './full-medium-editor';
+import ImgUpload from './image-upload';
 import UploadFile from './upload-file';
 import Chips from './chips';
 import RecentPosts from './recent-posts';
@@ -20,6 +21,7 @@ angularizeComponents
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
     .component('simpleEditor', SimpleEditor)
+    .component('imgUpload', ImgUpload)
     .component('fullEditor', FullEditor)
     .component('chips', Chips)
     .component('recentPosts', RecentPosts)
