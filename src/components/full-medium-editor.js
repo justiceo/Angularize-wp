@@ -32,8 +32,7 @@ export class FullEditorCtrl {
         this.$timeout(() => {
             let editorElem = document.getElementsByClassName('full-medium-editor ' + this.name)[0];
             this.editor = new MediumEditor(editorElem, editorOptions);
-            // update on loose focus not on every input please!
-            this.editor.subscribe('editableInput', () => {
+            this.editor.subscribe('editableBlur', () => {
                 // get content
                 this.text = this.editor.getContent();
             })

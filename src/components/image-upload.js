@@ -4,6 +4,7 @@ export class ImgUploadCtrl {
     constructor($timeout) {
         this.$timeout = $timeout;
     }
+    
     $onInit() {
         let editorOptions = {
             disableReturn: true,
@@ -44,8 +45,6 @@ let ImgUpload = {
     controller: ImgUploadCtrl,
     template: '<div class="img-upload-editor" ng-class="$ctrl.name" style="outline:none; min-height: 250px; background: red"></div>',
     bindings: {
-        placeholder: '@',
-        text: '=',
         name: '@'
     }
 }
