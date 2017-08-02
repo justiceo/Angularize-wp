@@ -5,31 +5,9 @@ export class UploadFileCtrl {
         this.$timeout = $timeout;
     }
 
-    drop(event) {
-        console.log("drop event: ", event);
-    }
-
-    allowDrop(event) {
-        console.log("allow drop:", event)
-        event.preventDefault();
-    }
-
-    selectFile() {
-        console.log("clicked main")
-         angular.element(document).find('#angularize_img_selector').triggerHandler('click');
-        this.$timeout(function() {
-            let el = angular.element(document).find('#angularize_img_selector');
-            console.log("el: ", el);
-            el.triggerHandler('click')
-        });
-    }
-
-    _selectFile(event) {
-        console.log("select file: ", event, this.imgFile)
-    }
-
     upload(file, alt_text = "", caption = "") {
-        let mediaUrl = window.location.origin + '/wp-json/wp/v2/media'
+        let mediaUrl = window.location.origin + '/wp-json/wp/v2/media';
+        console.log("uploader file: ", file);
         this.Upload.upload({
             url: mediaUrl,
             method: 'POST',

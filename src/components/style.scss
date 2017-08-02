@@ -1,9 +1,12 @@
 
-img-upload {
-    &.wide .img-upload-editor {
+upload-file {
+    &.wide .inner-container {
         display: block;
         background: #f1f1f1;
         min-height: 300px;
+    }
+    img {
+        width: 100%;
     }    
 }
 
