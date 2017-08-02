@@ -6,3 +6,10 @@ img-upload {
         min-height: 300px;
     }    
 }
+
+full-editor {
+    &.long .full-medium-editor {
+        min-height: 600px;
+        display: block;
+    }
+}

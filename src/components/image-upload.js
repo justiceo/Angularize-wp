@@ -6,6 +6,7 @@ export class ImgUploadCtrl {
     }
     // todo: add dragOver class
     // implement defer and multiple
+    // enable click to open file select
     $onInit() {
         let editorOptions = {
             disableReturn: true,
