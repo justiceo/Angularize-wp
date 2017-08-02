@@ -3,6 +3,8 @@ export class ChipsCtrl {
     $onInit() {
         //this.selected = this.selected || [];
         this.placeholderText = this.emptyText;
+
+        // todo: when given seletedIds, init from it
     }
         
     add(item, model, label, event) {
@@ -16,6 +18,7 @@ export class ChipsCtrl {
     removeChip(chip) {
         console.log("remove chip called");
         this.selected = this.selected.filter(s => s.id !== chip.id);
+        this.selectedIds = this.selected.map(s => s.id);
         this.available.push(chip);
         if(this.onChange) this.onChange({$selected: this.selected});
     }
@@ -27,6 +30,7 @@ let Chips = {
     bindings: {
         available: '=',
         selected: '=',
+        selectedIds: '=',
         onChange: '&',
         emptyText: '@',
         someText: '@'

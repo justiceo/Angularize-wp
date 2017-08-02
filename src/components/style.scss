@@ -13,3 +13,12 @@ full-editor {
         display: block;
     }
 }
+
+chips {
+    button {
+        span:last-child { display: none; }
+        &:hover span:last-child { display: inline; }
+        &:hover span:first-child { display: none; }
+    }
+    .btn-group { margin: 5px auto; }
+}
