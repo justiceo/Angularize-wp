@@ -1,5 +1,7 @@
 # Angularize WordPress
 
+[![Build Status](https://travis-ci.org/justiceo/Angularize-wp.svg?branch=dev)](https://travis-ci.org/justiceo/Angularize-wp)
+
 Super-charge your WordPress site with AngularJs components. 
 For example, loading all sidebar widgets, banners and sliders, ads, forms etc. 
 
