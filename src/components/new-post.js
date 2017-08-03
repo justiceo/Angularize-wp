@@ -257,7 +257,8 @@ export class NewPostCtrl {
     }
 
     publish() {
-        this.state.status = 'publish';
+        let author = window.angularize_server.currentUser.caps.author;
+        this.state.status = author ? 'pending' : 'publish';
         this.save();
     }
 

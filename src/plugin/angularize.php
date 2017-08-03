@@ -89,3 +89,13 @@ function init_angularize_endpoints() {
 	return $instance;
 }
 init_angularize_endpoints();
+
+
+// todo: not specific to this plugin
+function disable_authors_publish_cap() {
+    // Get author role object
+    $author = get_role( 'author' );
+    // Remove the post publishing capability
+    $author->remove_cap( 'publish_posts' );
+}
+add_action( 'init', 'disable_authors_publish_cap' );
