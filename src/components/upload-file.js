@@ -7,7 +7,7 @@ export class UploadFileCtrl {
 
     upload(file, alt_text = "", caption = "") {
         let mediaUrl = window.location.origin + '/wp-json/wp/v2/media';
-        console.log("uploader file: ", file);
+        this.newImage = true;
         this.Upload.upload({
             url: mediaUrl,
             method: 'POST',

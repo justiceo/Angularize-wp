@@ -7,9 +7,13 @@
   ngf-select="$ctrl.upload($file)" 
   ngf-pattern="'image/*'">
   <img 
-    class="img-responsive img-thumbnail" 
+    class="img-responsive img-thumbnail"
     ngf-thumbnail="$ctrl.file" 
     ngf-min-height="100" 
-    ngf-accept="'image/*'">  
+    ngf-accept="'image/*'">
+  <img 
+    class="img-responsive img-thumbnail"
+    ng-hide="$ctrl.newImage"
+    ng-src="{{ $ctrl.uploadUrl }}">
   <ng-transclude></ng-transclude>
 </div>

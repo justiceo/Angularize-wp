@@ -117,7 +117,7 @@ export class NewPostCtrl {
                     angular.extend(this.state, post.state);
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
                     
-                    this.featuredImage = this.state._embedded['wp:featuredmedia'][0].link;
+                    this.featuredImage = this.state._embedded['wp:featuredmedia'][0].source_url;
                     this.authorName = this.state._embedded["author"][0].name;
                     this.chips.categories = this.state._embedded['wp:term'].filter(t => t.taxonomy === 'category');
                     this.chips.tags = this.state._embedded['wp:term'].filter(t => t.taxonomy === 'post_tags');
