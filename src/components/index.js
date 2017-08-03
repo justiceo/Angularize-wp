@@ -8,7 +8,7 @@ import Chips from './chips';
 import RecentPosts from './recent-posts';
 import AuthorPopover from './author-popover';
 import BookFlight from './book-flight';
-import LikeDirective from './like';
+import Reaction from './reaction';
 import MyPosts from './my-posts';
 import Toolbar from './toolbar';
 import Editorial from './editorial';
@@ -30,7 +30,7 @@ angularizeComponents
     .component('bookFlight', BookFlight)
     .component('myPosts', MyPosts)
     .component('editorial', Editorial)
-    .directive('like', LikeDirective)
+    .directive('reaction', Reaction)
     .filter('timesince', function() {       
         function transform(date) { // date as number
             console.log(date);

@@ -5,7 +5,7 @@
  * Usage: <i class="fa fa-heart" like="213"></i>
  * where 213 is post id.
  */
-export class LikeDirectiveCtrl {
+export class ReactionCtrl {
     constructor(RestApi) {
         this.restrict = 'A';
         this.transclude = true;
@@ -56,9 +56,9 @@ export class LikeDirectiveCtrl {
     }
 }
 
-let LikeDirective = function(RestApi) {
+let Reaction = function(RestApi) {
     'ngInject';
-    return new LikeDirectiveCtrl(RestApi);
+    return new ReactionCtrl(RestApi);
 }
 
-export default LikeDirective;
+export default Reaction;
