@@ -22,8 +22,7 @@ export class UploadFileCtrl {
                 'caption': caption,
                 'alt_text': alt_text
             }
-        })
-            .then((resp) => {
+        }).then((resp) => {
                 this.uploadUrl = resp.data.source_url;
                 this.uploadId = resp.data.id;
                 if (this.onUploaded)
@@ -47,7 +46,6 @@ let UploadFile = {
         onUploaded: '&',
         uploadId: '=',
         uploadUrl: '=',
-        showPreview: '='
     }
 }
 
