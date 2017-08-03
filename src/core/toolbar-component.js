@@ -55,7 +55,7 @@ export class ToolbarCtrl {
         // when logged_in is defined as true - it's good for only logged in users
         // when logged_in is false - it's good for only logged_out users
         let isGood = (prop) => {
-           return (!(prop in b)) || (b[prop] == window.angularize_server[prop]); 
+           return true; // uncomment later (!(prop in b)) || (b[prop] == window.angularize_server[prop]); 
         }       
         let res = isGood('is_logged_in') && isGood('is_single') && isGood('is_archive') && isGood('is_edit_page');
         return res;
