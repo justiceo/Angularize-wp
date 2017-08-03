@@ -35,6 +35,17 @@ export class ToolbarCtrl {
         });
     }
 
+    $onInit() {
+        // some jquery to re-direct edit-links to new-post page
+        window.jQuery('a.post-edit-link').click((e) => {
+            e.preventDefault(); // do not re-direct
+            e.stopPropagation();
+            let url = new URL(window.jQuery(e.target).attr('href'));
+            let id = url.searchParams.get("post");
+            window.location.href = window.location.origin + '/new-post?id=' + id;
+        });
+    }
+
     open (size, component) {
         let modalInstance = this.$uibModal.open({
             component:  component

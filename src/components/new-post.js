@@ -51,7 +51,13 @@ export class NewPostCtrl {
                 
 
             }
-        )
+        );
+
+        if(!this.postId) { // check if post id was passed in URL
+            let url = new URL(window.location.href);
+            let id = url.searchParams.get("id");
+            if(id) this.postId = id;
+        }
         
         this.RestApi.ready().then(
             () => {
