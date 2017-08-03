@@ -30,7 +30,7 @@ angularizeComponents
     .component('bookFlight', BookFlight)
     .component('myPosts', MyPosts)
     .component('editorial', Editorial)
-    .directive('reaction', Reaction)
+    .component('reaction', Reaction)
     .filter('timesince', function() {       
         function transform(date) { // date as number
             console.log(date);

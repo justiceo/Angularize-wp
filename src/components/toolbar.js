@@ -36,13 +36,15 @@ export class ToolbarCtrl {
     }
 
     $onInit() {
-        // some jquery to re-direct edit-links to new-post page
-        window.jQuery('a.post-edit-link').click((e) => {
-            e.preventDefault(); // do not re-direct
-            e.stopPropagation();
-            let url = new URL(window.jQuery(e.target).attr('href'));
-            let id = url.searchParams.get("post");
-            window.location.href = window.location.origin + '/new-post?id=' + id;
+        // re-direct edit-links to new-post page
+        document.querySelectorAll('a.post-edit-link').forEach(b => {
+            b.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                let url = new URL(e.target.getAttribute('href'));
+                let id = url.searchParams.get("post");
+                window.location.href = window.location.origin + '/new-post?id=' + id;
+            }
         });
     }
 
