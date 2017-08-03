@@ -1,7 +1,6 @@
 import ToolbarService from './toolbar-service';
 import MockService from './mock-service';
 import RestApiService from './rest-api-service';
-import Toolbar from './toolbar-component';
 import TestComponent from './smoke-test/test-component';
 
 let angularizeCore = angular.module('angularizeCore', [])
@@ -14,7 +13,6 @@ console.debug = console.log;
 // https://i.stack.imgur.com/DFJBd.png
 
 angularizeCore
-  .component('toolbar', Toolbar)
   .component('test', TestComponent)
   .service('ToolbarService', ToolbarService)
   .service('RestApi', RestApiService)

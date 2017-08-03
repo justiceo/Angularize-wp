@@ -10,6 +10,7 @@ import AuthorPopover from './author-popover';
 import BookFlight from './book-flight';
 import LikeDirective from './like';
 import MyPosts from './my-posts';
+import Toolbar from './toolbar';
 
 let requires = ['ui.bootstrap', ngFileUpload];
 let angularizeComponents = angular.module('angularizeComponents', requires);
@@ -17,6 +18,7 @@ let angularizeComponents = angular.module('angularizeComponents', requires);
 // only load if we have wp front end editor enabled
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 angularizeComponents
+    .component('toolbar', Toolbar)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
     .component('simpleEditor', SimpleEditor)
