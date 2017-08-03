@@ -23,7 +23,12 @@ export class SimpleEditorCtrl {
         this.$timeout(() => {
             let editorElem = document.getElementsByClassName('simple-medium-editor ' + this.name)[0];
             this.editor = new MediumEditor(editorElem, editorOptions);
-            this.editor.subscribe('editableBlur', () => {
+
+            if(this.text) {
+                this.editor.setContent(this.text);
+            };
+
+            this.editor.subscribe('editableInput', () => {
                 // get content and strip any html tags
                 this.text = this.editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
             })

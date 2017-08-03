@@ -6,11 +6,12 @@ export class NewPostCtrl {
             '$scope': $scope, 'Upload': Upload, 'ToolbarService': ToolbarService,
             'RestApi': RestApi
         });
-        console.log("post id & test: ", this.postId, this.test)
         
     }
 
     $onInit() {
+
+        console.log("post id & test: ", this.postId, this.test)
         this.RestApi.ready('/angularize/v1').then(
             $angularize_v1 => {
                 let citiesWpObj = $angularize_v1.files().id('cities.json').get().then(
@@ -21,7 +22,7 @@ export class NewPostCtrl {
                             return { name: s[0], country: s[1], lat: s[2], lon: s[3] }
                         });
                         this.city_names = this.cities.map(s => s.name + ', ' + s.country);
-                        if(navigator.geolocation) {
+                        if(!this.state.meta.angularize_location && navigator.geolocation) {
                             // guess user location
                             navigator.geolocation.getCurrentPosition((position) => {
 
@@ -117,11 +118,13 @@ export class NewPostCtrl {
             allTags: []
         }; // holds data for md-chips
         if (this.postId) {
-            this.RestApi.$wp_v2.posts().id(postId).get({ embed: true }).then(
+            this.RestApi.$wp_v2.posts().id(this.postId).get({ _embed: true }).then(
                 post => {
                     angular.extend(this.state, post.state);
+                    angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
+                    
                     this.featuredImage = this.state._embedded['wp:featuredmedia'][0].link;
-                    this.authorName = this.state._embedded.author.name;
+                    this.authorName = this.state._embedded["author"][0].name;
                     this.chips.categories = this.state._embedded['wp:term'].filter(t => t.taxonomy === 'category');
                     this.chips.tags = this.state._embedded['wp:term'].filter(t => t.taxonomy === 'post_tags');
                 });
