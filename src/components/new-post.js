@@ -10,8 +10,6 @@ export class NewPostCtrl {
     }
 
     $onInit() {
-
-        console.log("post id & test: ", this.postId, this.test)
         this.RestApi.ready('/angularize/v1').then(
             $angularize_v1 => {
                 let citiesWpObj = $angularize_v1.files().id('cities.json').get().then(
@@ -72,10 +70,6 @@ export class NewPostCtrl {
         // important as it might be launched via modal
         console.log("new post destroy called")
         this.removeToolbarButtons();
-    }
-
-    progress(percent) {
-        console.log("progress: ", percent);
     }
 
     categorySearch(query) {
@@ -238,9 +232,7 @@ export class NewPostCtrl {
             });
         // todo: later: if there are no changes to discard, replace with delete button
     }
-    updateCategories(selected) { this.state.categories = selected.map(c => c.id); }
-    updateTags(selected) { this.state.tags = selected.map(t => t.id); }
-    
+        
 
     save() {  
         // todo: extract and upload all embed resources 

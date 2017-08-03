@@ -5,6 +5,9 @@ export class ChipsCtrl {
         this.placeholderText = this.emptyText;
 
         // todo: when given seletedIds, init from it
+        if(this.selectedIds) {
+            this.selected = this.available.filter(c => this.selectedIds.indexOf(c.id) !== -1);
+        }
     }
         
     add(item, model, label, event) {
