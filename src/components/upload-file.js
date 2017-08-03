@@ -5,6 +5,11 @@ export class UploadFileCtrl {
         this.$timeout = $timeout;
     }
 
+    $onInit() {
+        if(!this.uploadUrl)
+            this.newImage = true;
+    }
+
     upload(file, alt_text = "", caption = "") {
         let mediaUrl = window.location.origin + '/wp-json/wp/v2/media';
         this.newImage = true;

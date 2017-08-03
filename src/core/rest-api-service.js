@@ -1,6 +1,13 @@
 import AjaxService from './ajax-service';
 var $ajax = null; // make ajax available for WpObject & WpCollection
 
+/** 
+ * since there's the backbone js client exists and is quite attractive,
+ * focus on making this one particularly simple for the most common use case - 'post'
+ * and plugins 
+ * make two-way binding a breeze
+ * using $scope.$apply() anywhere means we're doing something wrong.
+ */
 export default class RestApiService {
     constructor($http, $q) {        
         $ajax = new AjaxService($http, $q);
