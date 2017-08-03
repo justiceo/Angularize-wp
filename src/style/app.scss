@@ -9,4 +9,5 @@ html {
     font-size: initial; // bootstrap sets this value forcing all subsequent sizes to be messed up
 }
 
+@import './emoji.css'; // for usage: https://afeld.github.io/emoji-css/
 @import '../components/style.scss';
