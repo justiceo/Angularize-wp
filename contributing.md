@@ -90,6 +90,7 @@ Contributors List
 * Justice Ogbonna (@justiceo)
 * Dumezweni Ndlovu (@dumendlovu)
 * Derek Baah (@derekbaah)
+* Emil Kitua (@emilkitua)
 
 For more information on forking and contributing see:
 ---------------
