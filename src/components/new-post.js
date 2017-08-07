@@ -107,6 +107,9 @@ export class NewPostCtrl {
 
     initState() {
         this.state = {
+            title: '', // holder for watchers
+            excerpt: '', 
+            content: '',
             categories: [],
             tags: [],
             meta: {}
@@ -122,7 +125,6 @@ export class NewPostCtrl {
                 post => {
                     angular.extend(this.state, post.state);
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
-                    
                     if(this.state._embedded['wp:featuredmedia']) // confirm there is actually a featured image present
                         this.featuredImage = this.state._embedded['wp:featuredmedia'][0].source_url;
 

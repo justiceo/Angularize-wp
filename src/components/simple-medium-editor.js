@@ -42,8 +42,15 @@ export class SimpleEditorCtrl {
                 editor.setContent(scope.text);
             };
 
+            let unwatch = scope.$watch('text', function(text) {
+                editor.setContent(text);
+                return unwatch;
+            })
+
             editor.subscribe('editableInput', () => {
                 // get content and strip any html tags
+                // also unwatch the text var once we start editing
+                unwatch();
                 scope.text = editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
             })
         });
