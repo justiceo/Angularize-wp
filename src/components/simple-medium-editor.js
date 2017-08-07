@@ -21,7 +21,6 @@ export class SimpleEditorCtrl {
     }
 
     link(scope, editorElem, attr) {
-        console.log("link called...", scope.placeholder);
         let editorOptions = {
             disableReturn: true,
             disableExtraSpaces: true,
@@ -38,16 +37,14 @@ export class SimpleEditorCtrl {
             }
         }
         this.$timeout(() => {
-            console.log("initing editor")
-            this.editor = new MediumEditor(editorElem, editorOptions);
-
+            let editor = new MediumEditor(editorElem, editorOptions);
             if(scope.text) {
-                this.editor.setContent(scope.text);
+                editor.setContent(scope.text);
             };
 
-            this.editor.subscribe('editableInput', () => {
+            editor.subscribe('editableInput', () => {
                 // get content and strip any html tags
-                scope.text = this.editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
+                scope.text = editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
             })
         });
     }
