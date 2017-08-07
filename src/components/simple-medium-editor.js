@@ -3,14 +3,31 @@ import MediumEditor from 'medium-editor';
 export class SimpleEditorCtrl {
     constructor($timeout) {
         this.$timeout = $timeout;
+        this.restrict = 'EA';
+        this.transclude = true;
+        this.scope= {
+            placeholder: "@placeholder",
+            text: "=text"
+        };
+        /*
+        this.templated = function( element, attrs ) {
+            // for transparent tempplate
+            var tag = element[0].nodeName;
+            return '<' +tag+ ' style="outline:none" data-ng-transclude ng-*=""></'+tag+'>';
+
+            // for new template
+            return '<div class="simple-medium-editor" ng-class="$ctrl.name" style="outline:none"></div>';
+        };*/
     }
-    $onInit() {
+
+    link(scope, editorElem, attr) {
+        console.log("link called...", scope.placeholder);
         let editorOptions = {
             disableReturn: true,
             disableExtraSpaces: true,
             imageDragging: false,
             placeholder: {
-                text: this.placeholder,
+                text: scope.placeholder || '',
                 hideOnClick: false
             },
             paste: {
@@ -21,31 +38,23 @@ export class SimpleEditorCtrl {
             }
         }
         this.$timeout(() => {
-            let editorElem = document.getElementsByClassName('simple-medium-editor ' + this.name)[0];
+            console.log("initing editor")
             this.editor = new MediumEditor(editorElem, editorOptions);
 
-            if(this.text) {
-                this.editor.setContent(this.text);
+            if(scope.text) {
+                this.editor.setContent(scope.text);
             };
 
             this.editor.subscribe('editableInput', () => {
                 // get content and strip any html tags
-                this.text = this.editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
+                scope.text = this.editor.getContent().replace(/<(?:.|\n)*?>/gm, '');
             })
-        })
+        });
     }
-
-
 }
 
-let SimpleEditor = {
-    controller: SimpleEditorCtrl,
-    template: '<div class="simple-medium-editor" ng-class="$ctrl.name" style="outline:none"></div>',
-    bindings: {
-        placeholder: '@',
-        text: '=',
-        name: '@'
-    }
+let SimpleEditor = function($timeout) {
+  return new SimpleEditorCtrl($timeout);
 }
 
 export default SimpleEditor;

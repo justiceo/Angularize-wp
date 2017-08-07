@@ -1,7 +1,7 @@
 <div>
     <upload-file class="wide" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage"><i class="fa fa-camera fa-5x"></i></upload-file>
-    <simple-editor name="post-title-editor" class="h2" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></simple-editor>
-    <simple-editor name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
+    <h2 simple-editor class="post-title-editor" class="h2" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></h2>
+    <simple-editor class="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
     <p class="post-author">{{ $ctrl.authorName }}</p>
     <div class="cities">
         <input placeholder="where are you telling this story from?" type="text" ng-model="$ctrl.state.meta.angularize_location" typeahead-min-length="3"

@@ -22,7 +22,7 @@ angularizeComponents
     .component('toolbar', Toolbar)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
-    .component('simpleEditor', SimpleEditor)
+    .directive('simpleEditor', SimpleEditor)
     .component('fullEditor', FullEditor)
     .component('chips', Chips)
     .component('recentPosts', RecentPosts)
