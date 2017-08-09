@@ -91,6 +91,7 @@ Contributors List
 * Dumezweni Ndlovu (@dumendlovu)
 * Derek Baah (@derekbaah)
 * Emil Kitua (@emilkitua)
+* Cameron Spencer (@chuckle123)
 
 For more information on forking and contributing see:
 ---------------
