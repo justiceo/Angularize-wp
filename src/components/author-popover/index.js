@@ -7,12 +7,15 @@ export class AuthorPopoverCtrl {
     // - create the author popover template
     // - add the hover trigger
     constructor(RestApi){
-        /*RestApi.ready().then(
+        RestApi.ready().then(
             user => {
                 this.user = $wp_v2.users(RestApi.$server.users().ID)
                 this.user.get()    
-            }
-        )*/
+            },
+
+            this.posts = RestApi.$wp_v2.posts({ author: RestApi.$server.currentUser.ID }),
+            this.posts.get()
+        )
     }
 
 }
@@ -23,19 +26,24 @@ let AuthorPopover = {
     template: `
     
     <div class="a-popover">
-  <div class="author-avatar">
-    <a href="#"><img src="https://dev.kasomafrica.com/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"></a>
-  </div>
-  <span class="a-name"><h3><a href="#">John Doe</a></h3></span>
-    <span class="bio"><p>All round cool guy</p></span>
+    <div class="author-avatar">
+      <a href="{{ $ctrl.user.attr('link') }}"><img src="{{ $ctrl.user.attr('avatar_urls')['24'] }}"></a>
+    </div>
+    <span class="a-name"><h3><a href="{{ $ctrl.user.attr('link') }}">{{ $ctrl.user.attr('name') }}</a></h3></span>
+      <span class="bio"><p>{{ $ctrl.user.attr('description') }}</p></span>
     
      <div class="a-stories">
-    <h5>MY STORIES</h5>
-      <ul>
-        <li><a href="#">Jollof Wars: Why Ghana Keeps Winning</a></li>
-        <li><a href="#">The Rise and Fall of Idi Amin</a></li>
-        <li><a href="#">My Dream African Tour</a></li>
-    </ul>
+    <h5 class="panel-title">MY STORIES</h5>
+      
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="list-group">
+            <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.posts">
+                <span class="badge">{{ post.attr('date') | timesince }} ago</span>
+                {{ post.attr('title') }}            
+            </a>
+        </div>
+    </div>
     
   </div>
   
