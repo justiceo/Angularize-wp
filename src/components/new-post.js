@@ -228,6 +228,8 @@ export class NewPostCtrl {
      * Will do both, if there are changes then discard otherwise delete
      */
     discard() {
+        // todo: we moved from $mdDialog to $uibModal
+        // for an example: see toolbar.js
         var confirm = this.$mdDialog.confirm()
             .title('Irreparable Damage Ahead')
             .textContent('Are you positively absolutely certain you want to discard all changes?')
@@ -258,6 +260,11 @@ export class NewPostCtrl {
                     angular.extend(this.state, post.state);
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
                     this.postId = this.state.id;
+                    // todo: show toast success message "Post have been saved"
+                },
+                (error) => {
+                    console.error(error);
+                    // todo: show toast error "Error saving post"
                 }
             )
         }
