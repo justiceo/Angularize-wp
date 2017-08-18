@@ -29,9 +29,23 @@ export class ToolbarCtrl {
                 let elem = $compile('<new-post post-id="2" test="3"></new-post>')($rootScope)
                 angular.element('body').prepend(elem);*/
 
-                this.open('lg', 'myPosts')
+                this.open('md', 'myPosts')
             }
         });
+
+        if(true) {
+            // user is editor
+            ToolbarService.add({
+            id: 'angularize_editorial_component',
+            title: 'Editorial Dashboard',
+            icon: 'fa fa-2x fa-list-alt',
+            position: 3,
+            is_logged_in: true,
+            handler: () => {
+                this.open('lg', 'editorial');
+            }
+        });
+        }
     }
 
     $onInit() {
@@ -49,7 +63,8 @@ export class ToolbarCtrl {
 
     open (size, component) {
         let modalInstance = this.$uibModal.open({
-            component:  component
+            component:  component,
+            size: size
         });
 
         modalInstance.result.then(function (selectedItem) {

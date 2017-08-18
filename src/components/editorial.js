@@ -1,7 +1,11 @@
 
 export class EditorialCtrl {
     constructor(RestApi) {
-        // code here
+        RestApi.ready().then(() => {
+                this.posts = RestApi.$wp_v2.posts({ author: RestApi.$server.currentUser.ID })
+                this.posts.get()
+            }
+        )
     }
 }
 
