@@ -16,6 +16,7 @@ import MyPosts from './my-posts';
 import Toolbar from './toolbar';
 import Editorial from './editorial';
 import PostStatus from './post-status';
+import Tutorial from './tutorial';
 
 let requires = [ngSanitize, ngAnimate, 'ui.bootstrap', 'toaster', ngFileUpload];
 let angularizeComponents = angular.module('angularizeComponents', requires);
@@ -34,6 +35,7 @@ angularizeComponents
     .component('myPosts', MyPosts)
     .component('editorial', Editorial)
     .component('reaction', Reaction)
+    .component('tutorial', Tutorial)
     .directive('simpleEditor', SimpleEditor)
     .directive('fullEditor', FullEditor)
     .filter('timesince', function() {       
