@@ -1,12 +1,12 @@
 import MediumEditor from 'medium-editor';
 
 export class NewPostCtrl {
-    constructor($scope, Upload, ToolbarService, RestApi, toast, $uibModal) {
+    constructor($scope, Upload, ToolbarService, RestApi, toaster, $uibModal) {
         angular.extend(this, {
             '$scope': $scope, 'Upload': Upload, 'ToolbarService': ToolbarService,
-            'RestApi': RestApi, 'toast': toast, '$uibModal' : $uibModal
+            'RestApi': RestApi, 'toaster': toaster, '$uibModal' : $uibModal
         });
-        
+         toaster.pop('success', "title", "text");
     }
 
     $onInit() {
@@ -254,40 +254,21 @@ export class NewPostCtrl {
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
                     this.postId = this.state.id;
                     // todo: show toast success message "Post have been saved"
-					toast({
-						duration  : 5000,
-						message   : "Your post has been saved!",
-						className : "alert-success"
-					});
+					this.toaster.pop({
+                        type: 'success',
+                        title: 'Post updated!',
+                    });
                 },
                 (error) => {
                     console.error(error);
                     // todo: show toast error "Error saving post"
-					toast({
-						duration  : 5000,
-						message   : "Error!! Your post hasn't been posted!",
-						className : "alert-warning"
-					});
+					this.toaster.pop({
+                        type: 'error',
+                        title: 'Error saving post'
+                    });
                 }
             )
         }
-    }
-
-    publish() {
-        let author = window.angularize_server.currentUser.caps.author;
-        this.state.status = author ? 'pending' : 'publish';
-        this.save();
-    }
-
-    transformChip(chip) {
-        // If it is an object, it's already a known chip
-        if (angular.isObject(chip)) {
-            return chip;
-        }
-
-        // Otherwise, create a new one
-        // todo: ensure new chips have ids upon save
-        return { name: chip, slug: chip.toLowerCase() }
     }
 }
 

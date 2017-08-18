@@ -24,7 +24,7 @@
     "angular-aria": "^1.6.5",
     "angular-sanitize": "^1.6.5",
     "angular-ui-bootstrap": "^2.5.0",
-    "angularjs-toast": "^1.0.7",
+    "angularjs-toaster": "^2.1.0",
     "bootstrap": "^3.3.7",
     "medium-editor": "^5.23.0",
     "ng-file-upload": "^12.2.13"
