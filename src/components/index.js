@@ -27,8 +27,6 @@ angularizeComponents
     .component('postStatus', PostStatus)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
-    .directive('simpleEditor', SimpleEditor)
-    .component('fullEditor', FullEditor)
     .component('chips', Chips)
     .component('recentPosts', RecentPosts)
     .component('authorPopover', AuthorPopover)
@@ -36,6 +34,8 @@ angularizeComponents
     .component('myPosts', MyPosts)
     .component('editorial', Editorial)
     .component('reaction', Reaction)
+    .directive('simpleEditor', SimpleEditor)
+    .directive('fullEditor', FullEditor)
     .filter('timesince', function() {       
         function transform(date) { // date as number
             console.log(date);
