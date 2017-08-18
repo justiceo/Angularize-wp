@@ -14,12 +14,11 @@ export class FullEditorCtrl {
                 hideOnClick: false
             },
             extensions: {
-                'auotlist': new AutoList()
+                'auotlist': new AutoList(),
             },
             autoLink: true,
-            imageDragging: true,
-            toolbar: {
-                buttons: ['h3', 'h4', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image',
+            toolbar: { // image icon removed until fixed
+                buttons: ['h3', 'h4', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor',
                     'orderedlist', 'unorderedlist'],
                 sticky: true,
                 static: true,
