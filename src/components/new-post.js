@@ -110,6 +110,7 @@ export class NewPostCtrl {
             title: '', // holder for watchers
             excerpt: '', 
             content: '',
+            status: 'draft',
             categories: [],
             tags: [],
             meta: {}

@@ -15,6 +15,7 @@ import Reaction from './reaction';
 import MyPosts from './my-posts';
 import Toolbar from './toolbar';
 import Editorial from './editorial';
+import PostStatus from './post-status';
 
 let requires = [ngSanitize, ngAnimate, 'ui.bootstrap', 'angularjsToast', ngFileUpload];
 let angularizeComponents = angular.module('angularizeComponents', requires);
@@ -23,6 +24,7 @@ let angularizeComponents = angular.module('angularizeComponents', requires);
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 angularizeComponents
     .component('toolbar', Toolbar)
+    .component('postStatus', PostStatus)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
     .directive('simpleEditor', SimpleEditor)

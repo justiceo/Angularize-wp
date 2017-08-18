@@ -22,6 +22,8 @@
             available="$ctrl.chips.allTags" 
             selected-ids="$ctrl.state.tags"
             selected="$ctrl.chips.tags"></chips>
+
+        <post-status status="$ctrl.state.status"></post-status>
     </div>
 </div>
 
@@ -66,7 +68,7 @@
         border-top: none;
     }
 
-    .post-settings chips.categories {
+    .post-settings chips {
         margin-bottom: 40px;
         display: block;
     }
