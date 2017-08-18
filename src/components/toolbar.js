@@ -33,19 +33,34 @@ export class ToolbarCtrl {
             }
         });
 
-        if(true) {
-            // user is editor
+        let roles = window.angularize_server.currentUser.roles;
+        if(roles.indexOf('editor') || roles.indexOf('administrator')) {
             ToolbarService.add({
-            id: 'angularize_editorial_component',
-            title: 'Editorial Dashboard',
-            icon: 'fa fa-2x fa-list-alt',
+                id: 'angularize_editorial_component',
+                title: 'Editorial Dashboard',
+                icon: 'fa fa-2x fa-list-alt',
+                position: 2,
+                is_logged_in: true,
+                handler: () => {
+                    this.open('lg', 'editorial');
+                }
+            });
+        }
+
+        let hasSeen = false;
+        if(!hasSeen) {
+            this.open('lg', 'tutorial');
+            // todo: save to localStorage
+        }
+        ToolbarService.add({
+            id: 'angularize_tutorial_component',
+            title: 'Display tutorial',
+            icon: 'fa fa-2x fa-info',
             position: 2,
-            is_logged_in: true,
             handler: () => {
-                this.open('lg', 'editorial');
+                this.open('lg', 'tutorial');
             }
         });
-        }
     }
 
     $onInit() {
