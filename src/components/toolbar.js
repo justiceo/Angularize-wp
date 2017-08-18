@@ -1,6 +1,6 @@
 
 export class ToolbarCtrl {
-    constructor($rootScope, $compile, $uibModal, ToolbarService) {
+    constructor($rootScope, $compile, $window, $uibModal, ToolbarService) {
         this.$uibModal = $uibModal;
         this.buttons = ToolbarService.getButtons();
 
@@ -47,11 +47,12 @@ export class ToolbarCtrl {
             });
         }
 
-        let hasSeen = false;
+        let hasSeen = $window.localStorage.getItem("hasSeenTutorial");
         if(!hasSeen) {
             this.open('lg', 'tutorial');
-            // todo: save to localStorage
+            $window.localStorage.setItem("hasSeenTutorial", true);
         }
+        
         ToolbarService.add({
             id: 'angularize_tutorial_component',
             title: 'Display tutorial',
