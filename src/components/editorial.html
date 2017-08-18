@@ -3,14 +3,19 @@
       <uib-tabset active="active" type="pills">
         <uib-tab index="0" heading="Pending Review">
             <div class="list-group">
-                <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.posts">
+                <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.pendingPosts">
                             <span class="badge">{{ post.attr('date') | timesince }} ago</span>
                             {{ post.attr('title') }}            
                         </a>
             </div>
         </uib-tab>
         <uib-tab index="1" heading="Draft">
-            <p>Draft posts will be listed here</p>
+            <div class="list-group">
+                <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.draftPosts">
+                            <span class="badge">{{ post.attr('date') | timesince }} ago</span>
+                            {{ post.attr('title') }}            
+                        </a>
+            </div>
         </uib-tab>
     </uib-tabset>
     
