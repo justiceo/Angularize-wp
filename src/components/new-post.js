@@ -230,9 +230,8 @@ export class NewPostCtrl {
     discard() {
         // todo: we moved from $mdDialog to $uibModal
         // for an example: see toolbar.js
-        var confirm = $uibModal.open({
+        var confirm = this.$uibModal.open({
             animation: this.animationsEnabled,
-            component: 'modalComponent',
             template: `
                 <div class="modal-header">
                     <h3 class="modal-title" id="modal-title">Irreparable Damage Ahead!</h3>
@@ -245,7 +244,7 @@ export class NewPostCtrl {
                     <button class="btn btn-warning" type="button" ng-click="confirm.cancel()">Cancel</button>
                 </div>
             `,
-        }).then(function() {
+        }).result.then(function() {
             console.log("content: ", this.titleEditor.getContent(), this.titleEditor.serialize())
             this.titleEditor.resetContent();
             this.excerptEditor.resetContent();

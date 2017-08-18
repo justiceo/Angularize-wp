@@ -1,4 +1,7 @@
 import 'angular-ui-bootstrap';
+import 'angularjs-toast/dist/angularjs-toast.min';
+import ngSanitize from 'angular-sanitize';
+import ngAnimate from 'angular-animate';
 import ngFileUpload from 'ng-file-upload';
 import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
@@ -13,7 +16,7 @@ import MyPosts from './my-posts';
 import Toolbar from './toolbar';
 import Editorial from './editorial';
 
-let requires = ['ui.bootstrap', ngFileUpload];
+let requires = [ngSanitize, ngAnimate, 'ui.bootstrap', 'angularjsToast', ngFileUpload];
 let angularizeComponents = angular.module('angularizeComponents', requires);
 
 // only load if we have wp front end editor enabled
