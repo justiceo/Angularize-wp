@@ -39,7 +39,7 @@ export class ToolbarCtrl {
             id: 'angularize_editorial_component',
             title: 'Editorial Dashboard',
             icon: 'fa fa-2x fa-list-alt',
-            position: 3,
+            position: 2,
             is_logged_in: true,
             handler: () => {
                 this.open('lg', 'editorial');
