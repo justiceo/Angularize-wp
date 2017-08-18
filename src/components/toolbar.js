@@ -51,8 +51,9 @@ export class ToolbarCtrl {
         if(!hasSeen) {
             this.open('lg', 'tutorial');
             $window.localStorage.setItem("hasSeenTutorial", true);
+            // todo: save as meta in db
         }
-        
+
         ToolbarService.add({
             id: 'angularize_tutorial_component',
             title: 'Display tutorial',

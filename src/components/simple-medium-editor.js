@@ -9,15 +9,15 @@ export class SimpleEditorCtrl {
             placeholder: "@placeholder",
             text: "=text"
         };
-        /*
-        this.templated = function( element, attrs ) {
+        
+        this.template = ( element, attrs ) => {
             // for transparent tempplate
             var tag = element[0].nodeName;
             return '<' +tag+ ' style="outline:none" data-ng-transclude ng-*=""></'+tag+'>';
 
             // for new template
-            return '<div class="simple-medium-editor" ng-class="$ctrl.name" style="outline:none"></div>';
-        };*/
+            //return '<div class="simple-medium-editor" ng-class="$ctrl.name" style="outline:none"></div>';
+        };
     }
 
     link(scope, editorElem, attr) {
