@@ -140,47 +140,9 @@ export class NewPostCtrl {
 
         this.RestApi.$wp_v2.categories().get().then((c) => this.chips.allCategories = c.state());
         this.RestApi.$wp_v2.tags().get().then(t => this.chips.allTags = t.state());
-
-        /* testing the RestApi
-        let test = this.RestApi.$wp_v2.categories().get();
-        this.RestApi.$wp_v2.settings.get().then(
-            s => console.log("settings: ", s)
-        )
-
-        this.RestApi.$wp_v2.posts().get().then(p => {
-            let first = p[0];
-            console.log("first route: ", first.route)
-            first.revisions().get().then(
-                r => console.log("first revisions: ", r)
-            )
-            first.save({'meta': {"test": "value"}});
-        })
-
-        console.log("angularize: ", this.RestApi.$angularize_v1);
-        console.log("wp_v2: ", this.RestApi.$wp_v2);
-        this.RestApi.$angularize_v1.auth.login.get({"username": "justice", "password": "x"}).then(
-            res => console.log("user login: ", res)
-        )*/
     }
 
     addToolbarButtons() {
-
-        let deleteButton = {
-            id: 'angularize_editor_delete',
-            title: 'Delete Post',
-            icon: 'fa fa-2x fa-trash-o',
-            position: 1,
-            is_logged_in: true,
-            handler: () => this.discard()
-        };
-        let cancelButton = {
-            id: 'angularize_editor_cancel',
-            title: 'Discard Changes',
-            icon: 'fa fa-2x fa-times',
-            position: 1,
-            is_logged_in: true,
-            handler: () => this.discard()
-        };
         let saveButton = {
             id: 'angularize_editor_save',
             title: 'Save',
@@ -190,57 +152,13 @@ export class NewPostCtrl {
             handler: () => this.save()
         };
 
-        angular.extend(this, deleteButton, cancelButton, saveButton)
         // todo: add a ToolbarService.create("id", "title", "icon", 1) function
-        this.ToolbarService.add(cancelButton);
-        this.ToolbarService.add(saveButton);
-
-        // we can only delete a post that has been created
-        this.$scope.$watch(() => this.postId, (newValue) => {
-            if(newValue != null && newValue != undefined )
-                this.ToolbarService.add(deleteButton);
-        });        
+        this.ToolbarService.add(saveButton);              
     }
 
     removeToolbarButtons() {
-        this.ToolbarService.removeById('angularize_editor_delete');
-        this.ToolbarService.removeById('angularize_editor_cancel');
         this.ToolbarService.removeById('angularize_editor_save');
     }
-
-    /**
-     * No changes are post to the server, but do we restore previous changes?
-     * Is this like a delete function?
-     * Will do both, if there are changes then discard otherwise delete
-     */
-    discard() {
-        // todo: we moved from $mdDialog to $uibModal
-        // for an example: see toolbar.js
-        this.modalInstance = this.$uibModal.open({
-            animation: this.animationsEnabled,
-            template: `
-                <div class="modal-header">
-                    <h3 class="modal-title" id="modal-title">Irreparable Damage Ahead!</h3>
-                </div>
-                <div class="modal-body" id="modal-body">
-                    <p>Are you positively absolutely certain you want to discard all changes?</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" ng-click="$close('accepted')">OK</button>
-                    <button class="btn btn-warning" type="button" ng-click="$dismiss('rejected')">Cancel</button>
-                </div>
-            `,
-        });
-        
-        this.modalInstance.result.then(() => {
-            // todo: fix scope is lost when modal returns
-            console.log("content: ", this.titleEditor.getContent(), this.titleEditor.serialize())
-            this.titleEditor.resetContent();
-            this.excerptEditor.resetContent();
-            this.contentEditor.resetContent();
-        });
-    }
-        
 
     save() {  
         // todo: extract and upload all embed resources 
