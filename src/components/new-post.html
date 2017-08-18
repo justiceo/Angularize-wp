@@ -1,13 +1,13 @@
 <div>
     <upload-file class="wide" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage"><i class="fa fa-camera fa-5x"></i></upload-file>
     <h2 simple-editor class="post-title-editor" class="h2" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></h2>
-    <simple-editor class="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
+    <p simple-editor class="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></p>
     <p class="post-author">{{ $ctrl.authorName }}</p>
     <div class="cities">
         <input placeholder="where are you telling this story from?" type="text" ng-model="$ctrl.state.meta.angularize_location" typeahead-min-length="3"
             uib-typeahead="c for c in $ctrl.city_names | filter:$viewValue" class="form-control">
     </div>
-    <full-editor name="post-body-editor" class="long container" placeholder="Write your story here" text="$ctrl.state.content"></full-editor>    
+    <div full-editor name="post-body-editor full-medium-editor" placeholder="Write your story here" text="$ctrl.state.content"></div>    
     <div class="post-settings">
         <chips class="categories" 
             empty-text="Search for Categories" 
