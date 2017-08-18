@@ -25,8 +25,16 @@ html {
 .modal-content {
     box-shadow: none;
     border-radius: 2px;
+    border: none;
 }
 }
 button {
     outline: none !important;
+}
+.padding-sm {
+    padding: 30px 20px;
+}
+.dark {
+    background: #333;
+    color: #f1f1f1;
 }
