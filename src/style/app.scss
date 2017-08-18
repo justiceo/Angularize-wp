@@ -10,3 +10,19 @@ html {
 }
 
 @import '../components/style.scss';
+
+/** put these in custom bootstrap for kasoma theme */
+
+
+.modal-open .modal-backdrop.in {
+    opacity: .7;
+}
+.modal {
+.modal-dialog {
+    margin-top: 150px;
+}
+.modal-content {
+    box-shadow: none;
+    border-radius: 2px;
+}
+}

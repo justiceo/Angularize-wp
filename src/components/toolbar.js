@@ -11,7 +11,6 @@ export class ToolbarCtrl {
             icon: 'fa fa-2x fa-sticky-note-o',
             position: 1,
             is_logged_in: true,
-            is_edit_page: false,
             handler: () => {
                 window.location.href = window.location.origin + '/new-post';
                 //this.open('lg', 'newPost')

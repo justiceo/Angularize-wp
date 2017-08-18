@@ -230,7 +230,7 @@ export class NewPostCtrl {
     discard() {
         // todo: we moved from $mdDialog to $uibModal
         // for an example: see toolbar.js
-        var confirm = this.$uibModal.open({
+        this.modalInstance = this.$uibModal.open({
             animation: this.animationsEnabled,
             template: `
                 <div class="modal-header">
@@ -240,34 +240,19 @@ export class NewPostCtrl {
                     <p>Are you positively absolutely certain you want to discard all changes?</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" ng-click="confirm.ok()">OK</button>
-                    <button class="btn btn-warning" type="button" ng-click="confirm.cancel()">Cancel</button>
+                    <button class="btn btn-primary" type="button" ng-click="$close('accepted')">OK</button>
+                    <button class="btn btn-warning" type="button" ng-click="$dismiss('rejected')">Cancel</button>
                 </div>
             `,
-        }).result.then(function() {
+        });
+        
+        this.modalInstance.result.then(() => {
+            // todo: fix scope is lost when modal returns
             console.log("content: ", this.titleEditor.getContent(), this.titleEditor.serialize())
             this.titleEditor.resetContent();
             this.excerptEditor.resetContent();
             this.contentEditor.resetContent();
         });
-        // return confirm.result;
-
-        // var confirm = this.$mdDialog.confirm()
-        //     .title('Irreparable Damage Ahead')
-        //     .textContent('Are you positively absolutely certain you want to discard all changes?')
-        //     .ariaLabel('Confirm discard')
-        //     .ok('Please do it!')
-        //     .cancel('No, I changed my mind');
-        // this.$mdDialog.show(confirm).then(
-        //     () => { // user agreed
-        //         console.log("content: ", this.titleEditor.getContent(), this.titleEditor.serialize())
-        //         this.titleEditor.resetContent();
-        //         this.excerptEditor.resetContent();
-        //         this.contentEditor.resetContent();
-        //     }, () => { // user changed their mind
-        //         // do nothing
-        //     });
-        // todo: later: if there are no changes to discard, replace with delete button
     }
         
 
