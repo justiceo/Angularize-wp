@@ -189,15 +189,8 @@ export class NewPostCtrl {
             is_logged_in: true,
             handler: () => this.save()
         };
-        let publishButton = {
-            id: 'angularize_editor_publish',
-            title: 'Save & Publish',
-            icon: 'fa fa-2x fa-thumbs-o-up',
-            position: 3,
-            is_logged_in: true,
-            handler: () => this.publish()
-        };
-        angular.extend(this, deleteButton, cancelButton, saveButton, publishButton)
+
+        angular.extend(this, deleteButton, cancelButton, saveButton)
         // todo: add a ToolbarService.create("id", "title", "icon", 1) function
         this.ToolbarService.add(cancelButton);
         this.ToolbarService.add(saveButton);
@@ -206,21 +199,13 @@ export class NewPostCtrl {
         this.$scope.$watch(() => this.postId, (newValue) => {
             if(newValue != null && newValue != undefined )
                 this.ToolbarService.add(deleteButton);
-        });
-
-        // only add publish button when post is not published
-        this.$scope.$watch(() => this.state.status, (newValue) => {
-            if(newValue !== 'publish')
-                this.ToolbarService.add(publishButton);
-            else this.ToolbarService.remove(publishButton);
-        });
+        });        
     }
 
     removeToolbarButtons() {
         this.ToolbarService.removeById('angularize_editor_delete');
         this.ToolbarService.removeById('angularize_editor_cancel');
         this.ToolbarService.removeById('angularize_editor_save');
-        this.ToolbarService.removeById('angularize_editor_publish');
     }
 
     /**
