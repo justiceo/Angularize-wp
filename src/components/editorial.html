@@ -1,2 +1,62 @@
-<p>editorial html here</p>
-<h4>testing new content</h4>
+<div class="row">
+	<div class="col-md-8">
+		<h2 simple-editor class="post-title-editor" class="h2" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></h2>
+    	<simple-editor class="form-control" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
+    	<div class="cities">
+	        <input placeholder="where are you telling this story from?" type="text" class="form-control">
+	    </div>
+    	<full-editor name="post-body-editor" class="long container" placeholder="Write your story here" ></full-editor>
+	</div>
+	<div class="col-md-6">
+		<div class="author">
+    		<p class="post-status"><!-- Post Status i.e if published, a draft etc --></p>
+    		<p class="post-author"><!-- author name --></p>
+		</div>
+		<div class="submit">
+			<div class="col-sm-2"><button type="submit" ng-model=""><span class="fa fa-edit"></span>Edit</button></div>
+			<div class="col-sm-2"><button type="submit" ng-model=""><span class="fa fa-send"></span>Send</button></div>
+		</div>
+		<div class="post-settings">
+	        <chips class="categories" 
+	            empty-text="Search for Categories" 
+	            some-text="Add more categories" 
+	            available="$ctrl.chips.allCategories"
+	            selected-ids="$ctrl.state.categories"
+	            selected="$ctrl.chip.categories"></chips>
+	        
+	        <chips 
+	            empty-text="Search for Tags" 
+	            some-text="Add more tags" 
+	            available="$ctrl.chips.allTags" 
+	            selected-ids="$ctrl.state.tags"
+	            selected="$ctrl.chips.tags"></chips>
+	    </div>
+	</div>
+</div>
+
+<style type="text/css" scoped>
+	.post-author,
+	.post-status {
+        padding: 15px;
+        text-align: center;
+    }
+	.post-settings {
+        background: #eee;
+        padding: 30px;
+    }
+    .post-settings ul.dropdown-menu,
+    .cities ul.dropdown-menu {
+        position: absolute;
+        background: white;
+        z-index: 999;
+        padding: 10px 15px;
+        list-style: none;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
+    .post-settings chips.categories {
+        margin-bottom: 40px;
+        display: block;
+    }
+</style>
