@@ -8,3 +8,5 @@
 html {
     font-size: initial; // bootstrap sets this value forcing all subsequent sizes to be messed up
 }
+
+@import '../components/style.scss';

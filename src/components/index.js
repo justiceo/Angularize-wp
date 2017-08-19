@@ -3,14 +3,15 @@ import ngFileUpload from 'ng-file-upload';
 import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
 import FullEditor from './full-medium-editor';
-import ImgUpload from './image-upload';
 import UploadFile from './upload-file';
 import Chips from './chips';
 import RecentPosts from './recent-posts';
 import AuthorPopover from './author-popover';
 import BookFlight from './book-flight';
-import LikeDirective from './like';
+import Reaction from './reaction';
 import MyPosts from './my-posts';
+import Toolbar from './toolbar';
+import Editorial from './editorial';
 
 let requires = ['ui.bootstrap', ngFileUpload];
 let angularizeComponents = angular.module('angularizeComponents', requires);
@@ -18,17 +19,18 @@ let angularizeComponents = angular.module('angularizeComponents', requires);
 // only load if we have wp front end editor enabled
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 angularizeComponents
+    .component('toolbar', Toolbar)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
-    .component('simpleEditor', SimpleEditor)
-    .component('imgUpload', ImgUpload)
+    .directive('simpleEditor', SimpleEditor)
     .component('fullEditor', FullEditor)
     .component('chips', Chips)
     .component('recentPosts', RecentPosts)
     .component('authorPopover', AuthorPopover)
     .component('bookFlight', BookFlight)
     .component('myPosts', MyPosts)
-    .directive('like', LikeDirective)
+    .component('editorial', Editorial)
+    .component('reaction', Reaction)
     .filter('timesince', function() {       
         function transform(date) { // date as number
             console.log(date);

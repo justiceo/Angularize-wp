@@ -33,7 +33,19 @@ export class ToolbarCtrl {
                 this.open('lg', 'myPosts')
             }
         });
+    }
 
+    $onInit() {
+        // re-direct edit-links to new-post page
+        document.querySelectorAll('a.post-edit-link').forEach(b => {
+            b.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                let url = new URL(e.target.getAttribute('href'));
+                let id = url.searchParams.get("post");
+                window.location.href = window.location.origin + '/new-post?id=' + id;
+            }
+        });
     }
 
     open (size, component) {
@@ -67,50 +79,7 @@ let Toolbar = {
     bindings: {
         placement: '@'
     },
-    template: `    
-    <div class="angularize-toolbar toolbar-wrapper bottom">
-        <ul>
-            <li ng-repeat="button in $ctrl.buttons | filter:$ctrl.show">
-                <button 
-                    ng-class="[button.class, button.icon]" 
-                    ng-click="button.handler()"
-                    data-id="{{ button.id }}"
-                    aria-label="{{ button.title }}"
-                    uib-tooltip="{{ button.title }}"
-                    tooltip-placement="top"
-                    ng-disabled="button.disabled"></button>
-            </li>
-        </ul>
-    </div>
-    <style scoped>
-        .angularize-toolbar { 
-            position: fixed;
-            bottom: 40px;
-            width: 100%;
-        }
-        .angularize-toolbar li {
-            list-style: none;
-            float: left;
-            margin: 0 10px;
-            outline: none;
-        }
-        .angularize-toolbar li button {
-            color: #222;
-            background: white;
-            border-radius: 50%;
-            border: 1px solid #bbb;
-            box-shadow: 1px 0 8px rgba(0,0,0,0.2);
-            padding: 20px 22px;
-            outline: none;
-            transition: background 0.8s, color 0.8s;
-        }
-        .angularize-toolbar li button:hover {
-            background: #222;
-            color: white;           
-        }
-        /* todo: animate hover, add icons, add tooltip, proper centering */
-    </style>
-    `
+    templateUrl: 'components/toolbar.html'
 };
 
 export default Toolbar;

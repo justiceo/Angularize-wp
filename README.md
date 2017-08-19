@@ -1,5 +1,7 @@
 # Angularize WordPress
 
+[![Build Status](https://travis-ci.org/justiceo/Angularize-wp.svg?branch=dev)](https://travis-ci.org/justiceo/Angularize-wp)
+
 Super-charge your WordPress site with AngularJs components. 
 For example, loading all sidebar widgets, banners and sliders, ads, forms etc. 
 
@@ -37,6 +39,11 @@ $ git update-index --assume-unchanged src/core/app.templates.js
 
 # start the server
 $ npm start
+```
+
+Alternatively, use the install script
+```
+$ ./install.sh
 ```
 
 go to [http://localhost:3000](http://localhost:3000) in your browser.

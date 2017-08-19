@@ -1,0 +1,55 @@
+
+upload-file {
+    &.wide .inner-container {
+        display: block;
+        background: #f1f1f1;
+        min-height: 300px;
+        position:relative;
+    }
+    img {
+        width: 100%;
+    } 
+    ng-transclude {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        color: #aaa;
+        transform: translateX(-50%) translateY(-50%);
+    }
+}
+
+full-editor {
+    &.long .full-medium-editor {
+        min-height: 600px;
+        display: block;
+    }
+}
+
+chips {
+    button {
+        span:last-child { display: none; }
+        &:hover span:last-child { display: inline; }
+        &:hover span:first-child { display: none; }
+    }
+    .btn-group { margin: 5px auto; }
+}
+
+toolbar {
+    position: fixed;
+    bottom: 40px;
+    left: 20px;
+    width: 100%;
+}
+
+new-post {
+    .cities {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+}
+
+reaction {
+    .em {
+        font-size: 200%;
+    }
+}

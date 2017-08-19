@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# todo: make this a smoke-test only (saves time)
+# the goal is to prevent anyone from pushing code that can't even compile or that breaks build in too-obvious manner.
+
+CMD="npm test" 
+protected_branch='master'
+
+# Check if we actually have commits to push
+commits=`git log @{u}..`
+if [ -z "$commits" ]; then
+    exit 0
+fi
+
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+$CMD
+RESULT=$?
+if [ $RESULT -ne 0 ]; then 
+    echo -e "\n\n***failed $CMD"
+    exit 1
+fi
+
+# otherwise we're good to go
+exit 0

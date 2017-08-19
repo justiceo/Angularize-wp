@@ -1,37 +1,29 @@
-<div class="post-header" style="background-image: url({{ $ctrl.featuredImage }})">
-    <upload-file progress="$ctrl.progress($uploadPercent)" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage">
-        <simple-editor class="angularize-container lg" name="post-title-editor" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></simple-editor>        
-        <simple-editor class="angularize-container" name="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>        
-        <p class="post-author">{{ $ctrl.authorName }}</p>
-        <div class="cities">
-            <input placeholder="where are you telling this story from?" 
-            type="text" ng-model="$ctrl.state.meta.angularize_location"
-            typeahead-min-length="3"
-            uib-typeahead="c for c in $ctrl.ALL_CITIES | filter:$viewValue"
-                class="form-control">
-        </div>
-    </upload-file>
-</div>
-<div class="angularize-container">
-    <div class="post-body"></div>
-</div>
-<div class="angularize-container">
+<div>
+    <upload-file class="wide" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage"><i class="fa fa-camera fa-5x"></i></upload-file>
+    <h2 simple-editor class="post-title-editor" class="h2" placeholder="Enter the Title of Your Story" text="$ctrl.state.title"></h2>
+    <simple-editor class="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt"></simple-editor>
+    <p class="post-author">{{ $ctrl.authorName }}</p>
+    <div class="cities">
+        <input placeholder="where are you telling this story from?" type="text" ng-model="$ctrl.state.meta.angularize_location" typeahead-min-length="3"
+            uib-typeahead="c for c in $ctrl.city_names | filter:$viewValue" class="form-control">
+    </div>
+    <full-editor name="post-body-editor" class="long container" placeholder="Write your story here" text="$ctrl.state.content"></full-editor>    
     <div class="post-settings">
-        <label>Categories</label>
-        <chips class="categories" empty-text="Search for Categories" some-text="Add more categories" 
-            available="$ctrl.chips.allCategories" 
-            selected="$ctrl.chips.categories"
-            on-change="$ctrl.updateCategories($selected)"></chips>
-        <label>Tags</label>
-        <chips empty-text="Search for Tags" some-text="Add more tags" 
-        available="$ctrl.chips.allTags"        
-        on-change="$ctrl.updateTags($selected)"
-        selected="$ctrl.chips.tags"></chips>    
+        <chips class="categories" 
+            empty-text="Search for Categories" 
+            some-text="Add more categories" 
+            available="$ctrl.chips.allCategories"
+            selected-ids="$ctrl.state.categories"
+            selected="$ctrl.chip.categories"></chips>
+        
+        <chips 
+            empty-text="Search for Tags" 
+            some-text="Add more tags" 
+            available="$ctrl.chips.allTags" 
+            selected-ids="$ctrl.state.tags"
+            selected="$ctrl.chips.tags"></chips>
     </div>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
-<!-- todo: too much markup and too much css - move to bootstrap and uib bootsrap -->
-<!-- todo: remove simple-icons and find ways to make font-awesome thin via stroking -->
 
 <style scoped>
     new-post.cover-content {
@@ -41,101 +33,26 @@
         right: 0;
     }
 
-    .angularize-container {
-        display: block;
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .angularize-container.lg {
-        max-width: 1200px;
-    }
-
-    .post-header {
-        min-height: 80vh;
-        text-align: center;
-        background: orange;
-        color: #222;
-        background-size: cover;
-    }
-
     .featured-image {
-        margin-top: 200px;
-        margin-bottom: 40px;
-    }
-
-    .post-title-editor {
-        max-width: 90%;
-        margin: 0px auto;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        font-size: 70px;
-        font-weight: bold;
-    }
-
-    .post-excerpt-editor {
-        margin: 0 auto;
-        max-width: 70%;
+        margin: 40px auto;
     }
 
     .post-title-editor,
     .post-excerpt-editor,
-    .post-body {
-        outline: none;
-    }
-
     .post-author {
-        margin-top: 100px;
-        margin-bottom: 50px;
+        padding: 15px;
+        text-align: center;
     }
 
-    .cities {
-        position: absolute;
-        right: 10px;
-        bottom: -24px;
-        z-index: 1;
-        font-size: 90%;
-    }
-
-    .cities input, .cities input:focus {
-        border: none; 
+    .post-title-editor,
+    .post-excerpt-editor,
+    .post-body-editor {
         outline: none;
-        padding: 5px 7px;     
-        background: transparent;
-        border-bottom: 2px solid #222;
-        font-size: 90%;
-        color: #222;
-    }
-    .cities input::placeholder {
-        color: #222;
-        font-style: normal;
-    }
-    .cities input:focus {
-        border-bottom: 2px solid #aaa;
-    }
-
-    .post-body {
-        min-height: 400px;
-        margin: 0 auto 100px;
-        padding: 50px 30px;
     }
 
     .post-settings {
         background: #eee;
         padding: 30px;
-        position: relative;
-    }
-
-    .post-settings label {
-        background: white;
-        padding: 10px 18px;
-        border: 1px solid #ccc;
-        border-bottom: none;
-        background: #f3f3f3;
-        text-transform: uppercase;
-        font-family: sans-serif;
-        font-size: 70%;
-        font-weight: 600;
     }
 
     .post-settings ul.dropdown-menu,
@@ -152,11 +69,6 @@
     .post-settings chips.categories {
         margin-bottom: 40px;
         display: block;
-    }
-
-    i.icons {
-        font-size: 40px;
-        line-height: 2;
     }
 
     .medium-editor-placeholder:after {

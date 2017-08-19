@@ -32,7 +32,11 @@ export class FullEditorCtrl {
         this.$timeout(() => {
             let editorElem = document.getElementsByClassName('full-medium-editor ' + this.name)[0];
             this.editor = new MediumEditor(editorElem, editorOptions);
-            this.editor.subscribe('editableBlur', () => {
+
+            if(this.text)
+                this.editor.setContent(this.text);
+            
+            this.editor.subscribe('editableInput', () => {
                 // get content
                 this.text = this.editor.getContent();
             })
