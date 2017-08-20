@@ -1,8 +1,8 @@
 <div>
     <upload-file class="wide" upload-id="$ctrl.state.featured_media" upload-url="$ctrl.featuredImage"><i class="fa fa-camera fa-5x"></i></upload-file>
-    <h2 simple-editor class="post-title-editor" class="h2" placeholder="Enter the Title of Your Story" text="$ctrl.state.title">Pre text here</h2>
-    <p simple-editor class="post-excerpt-editor" placeholder="Write a short introduction" text="$ctrl.state.excerpt">sdfadfd dfad</p>
-    <p class="post-author">{{ $ctrl.authorName }}</p>
+    <h2 simple-editor class="text-center" placeholder="Enter the Title of Your Story" text="$ctrl.state.title">Pre text here</h2>
+    <p simple-editor class="text-center" placeholder="Write a short introduction" text="$ctrl.state.excerpt">sdfadfd dfad</p>
+    <p class="text-center" ng-bind="$ctrl.authorName"></p>
     <div class="cities">
         <input placeholder="where are you telling this story from?" type="text" ng-model="$ctrl.state.meta.angularize_location" typeahead-min-length="3"
             uib-typeahead="c for c in $ctrl.city_names | filter:$viewValue" class="form-control">
@@ -40,19 +40,6 @@
         margin: 40px auto;
     }
 
-    .post-title-editor,
-    .post-excerpt-editor,
-    .post-author {
-        padding: 15px;
-        text-align: center;
-    }
-
-    .post-title-editor,
-    .post-excerpt-editor,
-    .post-body-editor {
-        outline: none;
-    }
-
     .post-settings {
         background: #eee;
         padding: 30px;
@@ -74,10 +61,4 @@
         display: block;
     }
 
-    .medium-editor-placeholder:after {
-        color: #444;
-        font-style: normal;
-        width: 100%;
-        margin: 0 auto;
-    }
 </style>

@@ -18,10 +18,24 @@ upload-file {
     }
 }
 
-[full-editor].medium-editor-element {
+.medium-editor-element[full-editor] {
     min-height: 600px;
-    display: block;
+}
+
+.medium-editor-element {
+    padding: 20px 30px 0;
+    min-height: 70px;
     outline: none;
+}
+.medium-editor-element[data-medium-focused="true"] {
+    background: #f5f5f5;
+}
+
+// for centering placeholder [ make this a class ]
+.medium-editor-placeholder:after {
+    color: #444;
+    width: 100%;
+    margin: 0 auto;
 }
 
 
