@@ -49,8 +49,8 @@ export class ToolbarCtrl {
 
         let hasSeen = $window.localStorage.getItem("hasSeenTutorial");
         if(!hasSeen) {
-            this.open('lg', 'tutorial');
-            $window.localStorage.setItem("hasSeenTutorial", true);
+            // this.open('lg', 'tutorial');
+            // $window.localStorage.setItem("hasSeenTutorial", true);
             // todo: save as meta in db
         }
 
