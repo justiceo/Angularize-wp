@@ -5,7 +5,8 @@
             <div class="list-group">
                 <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.pendingPosts">
                             <span class="badge">{{ post.attr('date') | timesince }} ago</span>
-                            {{ post.attr('title') }}            
+                            <h6 ng-bind="post.attr('title')"></h6>
+                            <p ng-bind="post.authorName"></p>
                         </a>
             </div>
         </uib-tab>

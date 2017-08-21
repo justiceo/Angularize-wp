@@ -176,6 +176,7 @@ export class NewPostCtrl {
                         type: 'success',
                         title: 'Post updated!',
                     });
+                    console.log("successfully updated post");
                 },
                 (error) => {
                     console.error(error);
