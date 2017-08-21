@@ -37,7 +37,10 @@ $ npm install
 # Ignore updates to app.templates.js
 $ git update-index --assume-unchanged src/core/app.templates.js
 
-# start the server
+# Generate plugin files
+$ gulp gen-plugin
+
+# or start the server and test locally
 $ npm start
 ```
 

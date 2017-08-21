@@ -19,10 +19,15 @@ import PostStatus from './post-status';
 import Tutorial from './tutorial';
 
 let requires = [ngSanitize, ngAnimate, 'ui.bootstrap', 'toaster', ngFileUpload];
+
 let angularizeComponents = angular.module('angularizeComponents', requires);
 
 // only load if we have wp front end editor enabled
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
+
+let roles = window.angularize_server.currentUser.roles;
+let canSee = roles.indexOf('editor') >= 0 || roles.indexOf('administrator') >= 0;
+if(canSee) 
 angularizeComponents
     .component('toolbar', Toolbar)
     .component('postStatus', PostStatus)
