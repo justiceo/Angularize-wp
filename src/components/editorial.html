@@ -1,2 +1,22 @@
-<p>editorial html here</p>
-<h4>testing new content</h4>
+<div>
+    <h3 class="padding-sm dark">Editorial Component</h3>
+      <uib-tabset active="active" type="pills">
+        <uib-tab index="0" heading="Pending Review">
+            <div class="list-group">
+                <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.pendingPosts">
+                            <span class="badge">{{ post.attr('date') | timesince }} ago</span>
+                            {{ post.attr('title') }}            
+                        </a>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Draft">
+            <div class="list-group">
+                <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.draftPosts">
+                            <span class="badge">{{ post.attr('date') | timesince }} ago</span>
+                            {{ post.attr('title') }}            
+                        </a>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    
+</div>

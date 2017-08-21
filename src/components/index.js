@@ -1,4 +1,7 @@
 import 'angular-ui-bootstrap';
+import 'angularjs-toaster';
+import ngSanitize from 'angular-sanitize';
+import ngAnimate from 'angular-animate';
 import ngFileUpload from 'ng-file-upload';
 import NewPost from './new-post';
 import SimpleEditor from './simple-medium-editor';
@@ -12,18 +15,19 @@ import Reaction from './reaction';
 import MyPosts from './my-posts';
 import Toolbar from './toolbar';
 import Editorial from './editorial';
+import PostStatus from './post-status';
+import Tutorial from './tutorial';
 
-let requires = ['ui.bootstrap', ngFileUpload];
+let requires = [ngSanitize, ngAnimate, 'ui.bootstrap', 'toaster', ngFileUpload];
 let angularizeComponents = angular.module('angularizeComponents', requires);
 
 // only load if we have wp front end editor enabled
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 angularizeComponents
     .component('toolbar', Toolbar)
+    .component('postStatus', PostStatus)
     .component('newPost', NewPost)
     .component('uploadFile', UploadFile)
-    .directive('simpleEditor', SimpleEditor)
-    .component('fullEditor', FullEditor)
     .component('chips', Chips)
     .component('recentPosts', RecentPosts)
     .component('authorPopover', AuthorPopover)
@@ -31,6 +35,9 @@ angularizeComponents
     .component('myPosts', MyPosts)
     .component('editorial', Editorial)
     .component('reaction', Reaction)
+    .component('tutorial', Tutorial)
+    .directive('simpleEditor', SimpleEditor)
+    .directive('fullEditor', FullEditor)
     .filter('timesince', function() {       
         function transform(date) { // date as number
             console.log(date);

@@ -1,7 +1,14 @@
 
 export class EditorialCtrl {
     constructor(RestApi) {
-        // code here
+        RestApi.ready().then(() => {
+                this.pendingPosts = RestApi.$wp_v2.posts({ 'status': 'pending' })
+                this.pendingPosts.get();
+
+                this.draftPosts = RestApi.$wp_v2.posts({ 'status': 'draft' })
+                this.draftPosts.get()
+            }
+        )
     }
 }
 

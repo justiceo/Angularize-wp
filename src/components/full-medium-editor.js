@@ -4,8 +4,15 @@ import AutoList from './autolist';
 export class FullEditorCtrl {
     constructor($timeout) {
         this.$timeout = $timeout;
+        this.restrict = 'EA';
+        this.transclude = true;
+        this.scope= {
+            placeholder: "@placeholder",
+            text: "=text"
+        };
     }
-    $onInit() {
+
+    link(scope, editorElem, attr) {
         let editorOptions = {
             buttonLabels: 'fontawesome',
             targetBlank: true,
@@ -14,12 +21,11 @@ export class FullEditorCtrl {
                 hideOnClick: false
             },
             extensions: {
-                'auotlist': new AutoList()
+                'auotlist': new AutoList(),
             },
             autoLink: true,
-            imageDragging: true,
-            toolbar: {
-                buttons: ['h3', 'h4', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor', 'image',
+            toolbar: { // image icon removed until fixed
+                buttons: ['h3', 'h4', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor',
                     'orderedlist', 'unorderedlist'],
                 sticky: true,
                 static: true,
@@ -30,15 +36,22 @@ export class FullEditorCtrl {
         };
 
         this.$timeout(() => {
-            let editorElem = document.getElementsByClassName('full-medium-editor ' + this.name)[0];
-            this.editor = new MediumEditor(editorElem, editorOptions);
+            let editor = new MediumEditor(editorElem, editorOptions);
 
-            if(this.text)
-                this.editor.setContent(this.text);
+            if(scope.text) {
+                editor.setContent(scope.text);
+            };
+
+            // watch for update via code/ajax until user dirties value
+            let unwatch = scope.$watch('text', function(text) {
+                editor.setContent(text);
+                return unwatch;
+            })
             
-            this.editor.subscribe('editableInput', () => {
+            editor.subscribe('editableInput', () => {
                 // get content
-                this.text = this.editor.getContent();
+                unwatch();
+                scope.text = editor.getContent();
             })
         });
     }
@@ -46,14 +59,8 @@ export class FullEditorCtrl {
 
 }
 
-let FullEditor = {
-    controller: FullEditorCtrl,
-    template: '<div class="full-medium-editor" ng-class="$ctrl.name" style="outline:none"></div>',
-    bindings: {
-        placeholder: '@',
-        text: '=',
-        name: '@'
-    }
+let FullEditor = function($timeout) {
+    return new FullEditorCtrl($timeout)
 }
 
 export default FullEditor;

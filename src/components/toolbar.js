@@ -1,6 +1,6 @@
 
 export class ToolbarCtrl {
-    constructor($rootScope, $compile, $uibModal, ToolbarService) {
+    constructor($rootScope, $compile, $window, $uibModal, ToolbarService) {
         this.$uibModal = $uibModal;
         this.buttons = ToolbarService.getButtons();
 
@@ -11,7 +11,6 @@ export class ToolbarCtrl {
             icon: 'fa fa-2x fa-sticky-note-o',
             position: 1,
             is_logged_in: true,
-            is_edit_page: false,
             handler: () => {
                 window.location.href = window.location.origin + '/new-post';
                 //this.open('lg', 'newPost')
@@ -30,7 +29,38 @@ export class ToolbarCtrl {
                 let elem = $compile('<new-post post-id="2" test="3"></new-post>')($rootScope)
                 angular.element('body').prepend(elem);*/
 
-                this.open('lg', 'myPosts')
+                this.open('md', 'myPosts')
+            }
+        });
+
+        let roles = window.angularize_server.currentUser.roles;
+        if(roles.indexOf('editor') || roles.indexOf('administrator')) {
+            ToolbarService.add({
+                id: 'angularize_editorial_component',
+                title: 'Editorial Dashboard',
+                icon: 'fa fa-2x fa-list-alt',
+                position: 2,
+                is_logged_in: true,
+                handler: () => {
+                    this.open('lg', 'editorial');
+                }
+            });
+        }
+
+        let hasSeen = $window.localStorage.getItem("hasSeenTutorial");
+        if(!hasSeen) {
+            this.open('lg', 'tutorial');
+            $window.localStorage.setItem("hasSeenTutorial", true);
+            // todo: save as meta in db
+        }
+
+        ToolbarService.add({
+            id: 'angularize_tutorial_component',
+            title: 'Display tutorial',
+            icon: 'fa fa-2x fa-info',
+            position: 2,
+            handler: () => {
+                this.open('lg', 'tutorial');
             }
         });
     }
@@ -50,7 +80,8 @@ export class ToolbarCtrl {
 
     open (size, component) {
         let modalInstance = this.$uibModal.open({
-            component:  component
+            component:  component,
+            size: size
         });
 
         modalInstance.result.then(function (selectedItem) {

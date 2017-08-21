@@ -18,12 +18,12 @@ upload-file {
     }
 }
 
-full-editor {
-    &.long .full-medium-editor {
-        min-height: 600px;
-        display: block;
-    }
+[full-editor].medium-editor-element {
+    min-height: 600px;
+    display: block;
+    outline: none;
 }
+
 
 chips {
     button {

@@ -1,0 +1,15 @@
+<div>
+    <h3 class="padding-sm dark">My Posts</h3>
+    <div class="list-group">
+        <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.posts">
+                    <span class="badge">{{ post.attr('date') | timesince }} ago</span>
+                    {{ post.attr('title') }}            
+                </a>
+
+                <!-- extend this mark up to display the category the post was published.
+                    - display the post status after category
+                    - display date after post status
+                    - on right (where date is) display a button to edit post
+                    --> 
+    </div>
+</div>

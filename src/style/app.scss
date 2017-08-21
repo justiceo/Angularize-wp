@@ -4,9 +4,37 @@
 @import '../../node_modules/medium-editor/dist/css/medium-editor.min.css';
 @import '../../node_modules/medium-editor/dist/css/themes/tim.min.css';
 @import '../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css';
+@import '../../node_modules/angularjs-toaster/toaster.min.css';
 
 html {
     font-size: initial; // bootstrap sets this value forcing all subsequent sizes to be messed up
 }
 
 @import '../components/style.scss';
+
+/** put these in custom bootstrap for kasoma theme */
+
+
+.modal-open .modal-backdrop.in {
+    opacity: .7;
+}
+.modal {
+.modal-dialog {
+    margin-top: 150px;
+}
+.modal-content {
+    box-shadow: none;
+    border-radius: 2px;
+    border: none;
+}
+}
+button {
+    outline: none !important;
+}
+.padding-sm {
+    padding: 30px 20px;
+}
+.dark {
+    background: #333;
+    color: #f1f1f1;
+}

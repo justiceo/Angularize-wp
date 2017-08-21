@@ -1,12 +1,12 @@
 import MediumEditor from 'medium-editor';
 
 export class NewPostCtrl {
-    constructor($scope, Upload, ToolbarService, RestApi) {
+    constructor($scope, Upload, ToolbarService, RestApi, toaster, $uibModal) {
         angular.extend(this, {
             '$scope': $scope, 'Upload': Upload, 'ToolbarService': ToolbarService,
-            'RestApi': RestApi
+            'RestApi': RestApi, 'toaster': toaster, '$uibModal' : $uibModal
         });
-        
+         toaster.pop('success', "title", "text");
     }
 
     $onInit() {
@@ -110,6 +110,7 @@ export class NewPostCtrl {
             title: '', // holder for watchers
             excerpt: '', 
             content: '',
+            status: 'draft',
             categories: [],
             tags: [],
             meta: {}
@@ -139,47 +140,9 @@ export class NewPostCtrl {
 
         this.RestApi.$wp_v2.categories().get().then((c) => this.chips.allCategories = c.state());
         this.RestApi.$wp_v2.tags().get().then(t => this.chips.allTags = t.state());
-
-        /* testing the RestApi
-        let test = this.RestApi.$wp_v2.categories().get();
-        this.RestApi.$wp_v2.settings.get().then(
-            s => console.log("settings: ", s)
-        )
-
-        this.RestApi.$wp_v2.posts().get().then(p => {
-            let first = p[0];
-            console.log("first route: ", first.route)
-            first.revisions().get().then(
-                r => console.log("first revisions: ", r)
-            )
-            first.save({'meta': {"test": "value"}});
-        })
-
-        console.log("angularize: ", this.RestApi.$angularize_v1);
-        console.log("wp_v2: ", this.RestApi.$wp_v2);
-        this.RestApi.$angularize_v1.auth.login.get({"username": "justice", "password": "x"}).then(
-            res => console.log("user login: ", res)
-        )*/
     }
 
     addToolbarButtons() {
-
-        let deleteButton = {
-            id: 'angularize_editor_delete',
-            title: 'Delete Post',
-            icon: 'fa fa-2x fa-trash-o',
-            position: 1,
-            is_logged_in: true,
-            handler: () => this.discard()
-        };
-        let cancelButton = {
-            id: 'angularize_editor_cancel',
-            title: 'Discard Changes',
-            icon: 'fa fa-2x fa-times',
-            position: 1,
-            is_logged_in: true,
-            handler: () => this.discard()
-        };
         let saveButton = {
             id: 'angularize_editor_save',
             title: 'Save',
@@ -188,64 +151,14 @@ export class NewPostCtrl {
             is_logged_in: true,
             handler: () => this.save()
         };
-        let publishButton = {
-            id: 'angularize_editor_publish',
-            title: 'Save & Publish',
-            icon: 'fa fa-2x fa-thumbs-o-up',
-            position: 3,
-            is_logged_in: true,
-            handler: () => this.publish()
-        };
-        angular.extend(this, deleteButton, cancelButton, saveButton, publishButton)
+
         // todo: add a ToolbarService.create("id", "title", "icon", 1) function
-        this.ToolbarService.add(cancelButton);
-        this.ToolbarService.add(saveButton);
-
-        // we can only delete a post that has been created
-        this.$scope.$watch(() => this.postId, (newValue) => {
-            if(newValue != null && newValue != undefined )
-                this.ToolbarService.add(deleteButton);
-        });
-
-        // only add publish button when post is not published
-        this.$scope.$watch(() => this.state.status, (newValue) => {
-            if(newValue !== 'publish')
-                this.ToolbarService.add(publishButton);
-            else this.ToolbarService.remove(publishButton);
-        });
+        this.ToolbarService.add(saveButton);              
     }
 
     removeToolbarButtons() {
-        this.ToolbarService.removeById('angularize_editor_delete');
-        this.ToolbarService.removeById('angularize_editor_cancel');
         this.ToolbarService.removeById('angularize_editor_save');
-        this.ToolbarService.removeById('angularize_editor_publish');
     }
-
-    /**
-     * No changes are post to the server, but do we restore previous changes?
-     * Is this like a delete function?
-     * Will do both, if there are changes then discard otherwise delete
-     */
-    discard() {
-        var confirm = this.$mdDialog.confirm()
-            .title('Irreparable Damage Ahead')
-            .textContent('Are you positively absolutely certain you want to discard all changes?')
-            .ariaLabel('Confirm discard')
-            .ok('Please do it!')
-            .cancel('No, I changed my mind');
-        this.$mdDialog.show(confirm).then(
-            () => { // user agreed
-                console.log("content: ", this.titleEditor.getContent(), this.titleEditor.serialize())
-                this.titleEditor.resetContent();
-                this.excerptEditor.resetContent();
-                this.contentEditor.resetContent();
-            }, () => { // user changed their mind
-                // do nothing
-            });
-        // todo: later: if there are no changes to discard, replace with delete button
-    }
-        
 
     save() {  
         // todo: extract and upload all embed resources 
@@ -258,26 +171,22 @@ export class NewPostCtrl {
                     angular.extend(this.state, post.state);
                     angular.extend(this.state, { title: this.state.title.rendered, excerpt: this.state.excerpt.rendered, content: this.state.content.rendered })
                     this.postId = this.state.id;
+                    // todo: show toast success message "Post have been saved"
+					this.toaster.pop({
+                        type: 'success',
+                        title: 'Post updated!',
+                    });
+                },
+                (error) => {
+                    console.error(error);
+                    // todo: show toast error "Error saving post"
+					this.toaster.pop({
+                        type: 'error',
+                        title: 'Error saving post'
+                    });
                 }
             )
         }
-    }
-
-    publish() {
-        let author = window.angularize_server.currentUser.caps.author;
-        this.state.status = author ? 'pending' : 'publish';
-        this.save();
-    }
-
-    transformChip(chip) {
-        // If it is an object, it's already a known chip
-        if (angular.isObject(chip)) {
-            return chip;
-        }
-
-        // Otherwise, create a new one
-        // todo: ensure new chips have ids upon save
-        return { name: chip, slug: chip.toLowerCase() }
     }
 }
 
