@@ -3,6 +3,7 @@
 // todo: ui-bootstrap needs angular-animate for some dependencies - add it please
 @import '../../node_modules/medium-editor/dist/css/medium-editor.min.css';
 @import '../../node_modules/medium-editor/dist/css/themes/tim.min.css';
+@import '../../node_modules/medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css';
 @import '../../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css';
 @import '../../node_modules/angularjs-toaster/toaster.min.css';
 
@@ -44,4 +45,9 @@ button {
 
 editorial .media-left {
     min-width: 150px;
+}
+
+.medium-editor-insert-plugin .medium-insert-buttons {
+    margin-left: -50px;
+    margin-top: -5px;
 }
