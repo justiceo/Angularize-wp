@@ -94,6 +94,10 @@ class WpObject {
         )
     }
 
+    delete() {
+        return $ajax.delete(this.endpoint);
+    }
+
     /**
      * Returns the value of the property on this model.
      * If the property has a rendered extension, return the rendered extension

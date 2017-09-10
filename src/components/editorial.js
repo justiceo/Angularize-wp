@@ -40,6 +40,7 @@ export class EditorialCtrl {
         console.log("deleting post with id:", postId);
         this.RestApi.$wp_v2.posts().id(postId).delete().then(
             success => {
+                this.pendingPosts = this.pendingPosts.filter(p => p.attr('id') != postId);
                 console.log("successfully deleted: show toast");
             },
             err => {
