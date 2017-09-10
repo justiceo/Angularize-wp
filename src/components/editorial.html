@@ -1,14 +1,31 @@
-<div>
-    <h3 class="padding-sm dark">Editorial Component</h3>
-      <uib-tabset active="active" type="pills">
-        <uib-tab index="0" heading="Pending Review">
-            <div class="list-group">
-                <a href="{{ post.attr('link') }}" class="list-group-item" ng-repeat="post in $ctrl.pendingPosts">
-                            <span class="badge">{{ post.attr('date') | timesince }} ago</span>
-                            <h6 ng-bind="post.attr('title')"></h6>
-                            <p ng-bind="post.authorName"></p>
+<div class="panel panel-default">
+    <h3 class="panel-heading panel-title">Editorial Component</h3>
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="Pending Review">            
+            <ul class="media-list" style="overflow-y: scroll; max-height:500px">
+                <li class="media" ng-repeat="post in $ctrl.pendingPosts">
+                    <div class="media-left" style="min-width:150px">
+                        <a href="{{ post.attr('link') }}">
+                            <img class="media-object" ng-src="{{ post.featuredImage }}" alt="Featured Image">
                         </a>
-            </div>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="{{ post.attr('link') }}" ng-bind="post.attr('title')"></a></h4>
+                        <p ng-bind="post.attr('excerpt')"></p>
+                        <p>Created by {{ post.authorName }} about {{ post.attr('date') | timesince }} ago</p>
+                        <post-status status="post.state.status"></post-status>
+                        <p>
+                            <button class="btn btn-default">Message Author</button>
+                            <button class="btn btn-default">Edit Post</button>
+                            <button class="btn btn-danger">Delete Post</button>
+                        </p>
+                    </div>
+                    <div class="media-right">
+                        <p>score card</p>
+                        <p>editorial tag?</p>
+                    </div>
+                </li>
+            </ul>
         </uib-tab>
         <uib-tab index="1" heading="Draft">
             <div class="list-group">
@@ -19,5 +36,7 @@
             </div>
         </uib-tab>
     </uib-tabset>
-    
+    <div class="panel-footer">
+        <button class="btn btn-primary">close</button>
+    </div>
 </div>
