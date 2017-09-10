@@ -1,5 +1,7 @@
 import MediumEditor from 'medium-editor';
 import AutoList from './autolist';
+var $ = require('jquery');
+var mediumInsert = require('medium-editor-insert-plugin')($);
 
 export class FullEditorCtrl {
     constructor($timeout) {
@@ -52,7 +54,13 @@ export class FullEditorCtrl {
                 // get content
                 unwatch();
                 scope.text = editor.getContent();
-            })
+            });
+
+            $(function () {
+                $(editorElem).mediumInsert({
+                    editor: editor
+                });
+            });
         });
     }
 
