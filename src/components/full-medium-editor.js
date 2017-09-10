@@ -1,6 +1,7 @@
 import MediumEditor from 'medium-editor';
 import AutoList from './autolist';
 var $ = require('jquery');
+$.fn.load = function(callback){ $(window).on("load", callback) };
 var mediumInsert = require('medium-editor-insert-plugin')($);
 
 export class FullEditorCtrl {
