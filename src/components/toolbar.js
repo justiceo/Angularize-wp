@@ -29,7 +29,7 @@ export class ToolbarCtrl {
                 let elem = $compile('<new-post post-id="2" test="3"></new-post>')($rootScope)
                 angular.element('body').prepend(elem);*/
 
-                this.open('md', 'myPosts')
+                this.open('lg', 'myPosts')
             }
         });
 

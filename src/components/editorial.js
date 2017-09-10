@@ -52,6 +52,10 @@ export class EditorialCtrl {
     editorPick(postId) {
         console.log("marking as editor pick: ", postId);
     }
+
+    refresh() {
+        console.log("refresh clicked");
+    }
 }
 
 let Editorial = {
