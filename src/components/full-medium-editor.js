@@ -1,5 +1,7 @@
 import MediumEditor from 'medium-editor';
 import AutoList from './autolist';
+import Suggest from './suggest';
+
 var $ = require('jquery');
 $.fn.load = function(callback){ $(window).on("load", callback) };
 var mediumInsert = require('medium-editor-insert-plugin')($);
@@ -25,11 +27,12 @@ export class FullEditorCtrl {
             },
             extensions: {
                 'auotlist': new AutoList(),
+                'suggest': new Suggest()
             },
             autoLink: true,
             toolbar: { // image icon removed until fixed
                 buttons: ['h3', 'h4', 'bold', 'italic', 'underline', 'strikethrough', 'quote', 'anchor',
-                    'orderedlist', 'unorderedlist'],
+                    'orderedlist', 'unorderedlist', 'suggest'],
                 sticky: true,
                 static: true,
                 align: 'center',
