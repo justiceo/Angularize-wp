@@ -1,16 +1,32 @@
 import MediumEditor from 'medium-editor';
+import rangy from 'rangy';
 
-let Suggest = MediumEditor.extensions.button.extend({
+rangy.init();
+
+var Suggest = MediumEditor.extensions.button.extend({
     name: 'suggest',
+    action: 'highlight',
+    aria: 'suggest',
     tagNames: ['mark'],
     contentDefault: '<b>S</b>',
     contentFA: '<i class="fa fa-paint-brush"></i>',
-    aria: 'Suggest',
-    action: 'suggest',
+    //parent: true,
 
-    init: function() {
-       MediumEditor.extensions.button.prototype.init.call(this); 
+    init: function () {
+        MediumEditor.extensions.button.prototype.init.call(this);
+        console.log("rangy:", rangy);
+        this.classApplier = rangy.createClassApplier('highlight', {
+        elementTagName: 'mark',
+        normalize: true
+        });
+    },
+
+    handleClick: function(event) {
+        console.log("suggest click:", event);
+        this.classApplier.toggleSelection();
+        this.base.checkContentChanged();
     }
+    
 });
 
 export default Suggest
