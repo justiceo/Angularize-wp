@@ -34,7 +34,13 @@ export class EditorialCtrl {
 
 let Editorial = {
     controller: EditorialCtrl,
-    templateUrl: 'components/editorial.html'
+    templateUrl: 'components/editorial.html',
+    bindings: {
+        modalInstance: '<',
+        resolve: '<',
+        close: '&',
+        dismiss: '&'
+    }
 }
 
 export default Editorial;
