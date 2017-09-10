@@ -10,7 +10,6 @@ import UploadFile from './upload-file';
 import Chips from './chips';
 import RecentPosts from './recent-posts';
 import AuthorPopover from './author-popover';
-import BookFlight from './book-flight';
 import Reaction from './reaction';
 import MyPosts from './my-posts';
 import Toolbar from './toolbar';
@@ -36,7 +35,6 @@ angularizeComponents
     .component('chips', Chips)
     .component('recentPosts', RecentPosts)
     .component('authorPopover', AuthorPopover)
-    .component('bookFlight', BookFlight)
     .component('myPosts', MyPosts)
     .component('editorial', Editorial)
     .component('reaction', Reaction)
