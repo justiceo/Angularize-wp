@@ -3,26 +3,24 @@
     <uib-tabset active="active">
         <uib-tab index="0" heading="Pending Review">            
             <ul class="media-list" style="overflow-y: scroll; max-height:500px">
-                <li class="media" ng-repeat="post in $ctrl.pendingPosts">
-                    <div class="media-left" style="min-width:150px">
-                        <a href="{{ post.attr('link') }}">
-                            <img class="media-object" ng-src="{{ post.featuredImage }}" alt="Featured Image">
+                <li class="media padding-sm" ng-repeat="post in $ctrl.pendingPosts">
+                    <div class="media-left">
+                        <a class="img-border" href="{{ post.attr('link') }}">
+                            <img class="media-object" width="180px" ng-src="{{ post.featuredImage }}" alt="Featured Image">
                         </a>
                     </div>
-                    <div class="media-body">
+                    <div class="media-body underline">
                         <h4 class="media-heading"><a href="{{ post.attr('link') }}" ng-bind="post.attr('title')"></a></h4>
                         <p ng-bind="post.attr('excerpt')"></p>
-                        <p>Created by {{ post.authorName }} about {{ post.attr('date') | timesince }} ago</p>
-                        <post-status status="post.state.status"></post-status>
-                        <p>
-                            <button class="btn btn-default">Message Author</button>
-                            <button class="btn btn-default">Edit Post</button>
-                            <button class="btn btn-danger">Delete Post</button>
-                        </p>
+                        <p>Created by <a href="{{ post.authorLink }}"><u>{{ post.authorName }}</u></a> about {{ post.attr('date') | timesince }} ago</p>
+                        <p>Post category? view count? score card? </p>
+                        <post-status status="post.state.status" style="margin-top:30px; display:block"></post-status>
                     </div>
                     <div class="media-right">
-                        <p>score card</p>
-                        <p>editorial tag?</p>
+                        <button class="btn btn-primary btn-block">Message Author</button>
+                        <a href="{{ post.editLink }}" class="btn btn-primary btn-block">Edit Post</a>
+                        <button class="btn btn-danger btn-block">Delete Post</button>
+                        <button class="btn btn-primary btn-block">I LOVE this post!</button> 
                     </div>
                 </li>
             </ul>
