@@ -7,7 +7,7 @@ export default class AjaxService {
     constructor($http, $q) {
         this.$http = $http;
         this.$q = $q;
-        this.storage = window.localStorage;
+        this.storage = window.sessionStorage;
 
         this.never_cache = [
             '/users/me'
