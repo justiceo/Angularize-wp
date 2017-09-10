@@ -12,15 +12,15 @@
                     <div class="media-body underline">
                         <h4 class="media-heading"><a href="{{ post.attr('link') }}" ng-bind="post.attr('title')"></a></h4>
                         <p ng-bind="post.attr('excerpt')"></p>
-                        <p>Created by <a href="{{ post.authorLink }}"><u>{{ post.authorName }}</u></a> about {{ post.attr('date') | timesince }} ago</p>
+                        <p>Created by <a href="{{ post.authorLink }}">{{ post.authorName }}</a> about {{ post.attr('date') | timesince }} ago</p>
                         <p>Post category? view count? score card? </p>
                         <post-status status="post.state.status" style="margin-top:30px; display:block"></post-status>
                     </div>
                     <div class="media-right">
-                        <button class="btn btn-primary btn-block">Message Author</button>
+                        <button ng-click="$ctrl.messageAuthor(post.attr('author'))" class="btn btn-primary btn-block">Message Author</button>
                         <a href="{{ post.editLink }}" class="btn btn-primary btn-block">Edit Post</a>
-                        <button class="btn btn-danger btn-block">Delete Post</button>
-                        <button class="btn btn-primary btn-block">I LOVE this post!</button> 
+                        <button ng-click="$ctrl.delete(post.attr('id'))" class="btn btn-danger btn-block">Delete Post</button>
+                        <button ng-click="$ctrl.editorPick(post.attr('id'))" class="btn btn-primary btn-block">I LOVE this post!</button> 
                     </div>
                 </li>
             </ul>
