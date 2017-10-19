@@ -24,7 +24,14 @@ let angularizeComponents = angular.module('angularizeComponents', requires);
 // only load if we have wp front end editor enabled
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 
-let roles = window.angularize_server.currentUser.roles;
+let roles = [];
+if (window.angularize_server 
+        && window.angularize_server.currentUser
+        && window.angularize_server.currentUser.roles) {
+
+    roles = window.angularize_server.currentUser.roles
+}
+
 let canSee = roles.indexOf('editor') >= 0 || roles.indexOf('administrator') >= 0;
 if(canSee) 
 angularizeComponents
