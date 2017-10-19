@@ -24,30 +24,13 @@ let angularizeComponents = angular.module('angularizeComponents', requires);
 // only load if we have wp front end editor enabled
 //if(window.angularize_server.WpRestApiEnabled && window.angularize_server.FrontEndEditorEnabled)
 
-let roles = [];
-if (window.angularize_server 
-        && window.angularize_server.currentUser
-        && window.angularize_server.currentUser.roles) {
-
-    roles = window.angularize_server.currentUser.roles
-}
-
-let canSee = roles.indexOf('editor') >= 0 || roles.indexOf('administrator') >= 0;
-if(canSee) 
+// Load public components
 angularizeComponents
-    .component('toolbar', Toolbar)
-    .component('postStatus', PostStatus)
-    .component('newPost', NewPost)
-    .component('uploadFile', UploadFile)
-    .component('chips', Chips)
-    .component('recentPosts', RecentPosts)
-    .component('authorPopover', AuthorPopover)
-    .component('myPosts', MyPosts)
-    .component('editorial', Editorial)
-    .component('reaction', Reaction)
     .component('tutorial', Tutorial)
-    .directive('simpleEditor', SimpleEditor)
-    .directive('fullEditor', FullEditor)
+    .component('reaction', Reaction)
+    .component('authorPopover', AuthorPopover)
+    .component('recentPosts', RecentPosts)
+    .component('chips', Chips)
     .filter('timesince', function() {       
         function transform(date) { // date as number
             console.log(date);
@@ -81,5 +64,51 @@ angularizeComponents
 
         return transform;
     });
+
+
+// Load author-level components
+if(isUserAtLeast("author"))
+angularizeComponents
+    .component('toolbar', Toolbar)
+    .component('postStatus', PostStatus)
+    .component('newPost', NewPost)
+    .component('uploadFile', UploadFile)
+    .component('myPosts', MyPosts)
+    .directive('simpleEditor', SimpleEditor)
+    .directive('fullEditor', FullEditor);
+
+
+// Load editor-level components
+if(isUserAtLeast("editor"))
+angularizeComponents
+    .component('editorial', Editorial)
+
+    
+/**
+ * Returns true if user has current role or a role superior
+ * @param {*} role 
+ */
+function isUserAtLeast(role) {
+    if(!role) {
+        // TODO: log.warn - no role specified
+        return false;
+    }
+    let roles = getCurrentUserRoles(window);
+    // TODO: check for superior roles
+    return roles.indexOf(role) >= 0;
+}
+
+/**
+ * @return string[] roles
+ */
+function getCurrentUserRoles(window) {
+    if (window.angularize_server 
+            && window.angularize_server.currentUser
+            && window.angularize_server.currentUser.roles) {
+
+        return window.angularize_server.currentUser.roles
+    }
+    return [];
+}
 
 export default angularizeComponents.name;
