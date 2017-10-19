@@ -13,7 +13,7 @@ export class UploadFileCtrl {
     upload(file, alt_text = "", caption = "") {
         let mediaUrl = window.location.origin + '/wp-json/wp/v2/media';
         this.newImage = true;
-        this.Upload.upload({
+        let uploadOptions = {
             url: mediaUrl,
             method: 'POST',
             file: file,
@@ -27,7 +27,9 @@ export class UploadFileCtrl {
                 'caption': caption,
                 'alt_text': alt_text
             }
-        }).then((resp) => {
+        };
+
+        this.Upload.upload(uploadOptions).then((resp) => {
                 this.uploadUrl = resp.data.source_url;
                 this.uploadId = resp.data.id;
                 if (this.onUploaded)
@@ -40,6 +42,7 @@ export class UploadFileCtrl {
                     this.progress({ $uploadPercent: this.progressPercentage });
             });
     }
+
 }
 
 let UploadFile = {
