@@ -1,6 +1,6 @@
 
 export class UploadFileCtrl {
-    constructor(Upload, $timeout) {
+    constructor($log, Upload, $timeout) {
         this.Upload = Upload;
         this.$timeout = $timeout;
     }

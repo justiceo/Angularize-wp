@@ -17,7 +17,7 @@ angularizeCore
   .service('ToolbarService', ToolbarService)
   .service('RestApi', RestApiService)
   .service('MockService', MockService)
-  .factory('httpRequestInterceptor', function ($q, MockService) {
+  .factory('httpRequestInterceptor', function ($log, $q, MockService) {
     return {
       request: function (config) {
         if(window.angularize_server)        
@@ -35,7 +35,7 @@ angularizeCore
     };
   })
   .config(function ($httpProvider) {
-    $httpProvider.interceptors.push('$q', 'MockService', 'httpRequestInterceptor');
+    $httpProvider.interceptors.push('$log', '$q', 'MockService', 'httpRequestInterceptor');
   });
 
   export default angularizeCore.name;

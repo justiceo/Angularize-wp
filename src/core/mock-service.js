@@ -3,7 +3,7 @@
  * [NOTE] This class cannot depened on $http or any class that depends on it as it is an $httpRequestInterceptor
  */
 export default class MockService {
-    constructor($q){
+    constructor($log, $q){
         this.$q = $q;
         this.init();
     }

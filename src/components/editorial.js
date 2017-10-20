@@ -1,6 +1,6 @@
 
 export class EditorialCtrl {
-    constructor(RestApi) {
+    constructor($log, RestApi) {
         this.RestApi = RestApi;
         RestApi.ready().then(() => {
                 this.pendingPosts = RestApi.$wp_v2.posts({ 'status': 'pending', '_embed': true })

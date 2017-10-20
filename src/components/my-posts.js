@@ -1,6 +1,6 @@
 
 export class MyPostsCtrl {
-    constructor(RestApi) {
+    constructor($log, RestApi) {
         this.RestApi = RestApi;
 
         let extractEmbeddedFields = (p) => {

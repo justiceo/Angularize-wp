@@ -6,7 +6,7 @@ export class AuthorPopoverCtrl {
     // - install ui-bootstrap
     // - create the author popover template
     // - add the hover trigger
-    constructor(RestApi){
+    constructor($log, RestApi){
         RestApi.ready().then(
             () => {
                 this.user = RestApi.$wp_v2.users().id("me");

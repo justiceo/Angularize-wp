@@ -1,9 +1,10 @@
 
 export default class ToolbarService {
 
-    constructor() {
+    constructor($log) {
         this.buttons = [];
         this.$wp = window.angularize_server;
+        $log.info("Initiazed ToolbarService");
     }
 
     getButtons() { 

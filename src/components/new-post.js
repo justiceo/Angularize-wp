@@ -1,7 +1,7 @@
 import MediumEditor from 'medium-editor';
 
 export class NewPostCtrl {
-    constructor($scope, Upload, ToolbarService, RestApi, toaster, $uibModal) {
+    constructor($log, $scope, Upload, ToolbarService, RestApi, toaster, $uibModal) {
         angular.extend(this, {
             '$scope': $scope, 'Upload': Upload, 'ToolbarService': ToolbarService,
             'RestApi': RestApi, 'toaster': toaster, '$uibModal' : $uibModal
