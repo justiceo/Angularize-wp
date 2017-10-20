@@ -9,8 +9,8 @@ var $ajax = null; // make ajax available for WpObject & WpCollection
  * using $scope.$apply() anywhere means we're doing something wrong.
  */
 export default class RestApiService {
-    constructor($http, $q) {        
-        $ajax = new AjaxService($http, $q);
+    constructor($log, $http, $q) {        
+        $ajax = new AjaxService($log, $http, $q);
         this.$server = window.angularize_server;
         this.ready = (namespace = '/wp/v2') => { 
             return $ajax.get(namespace).then(

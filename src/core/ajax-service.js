@@ -4,10 +4,12 @@
  * with caching to reduce hits
  */
 export default class AjaxService {
-    constructor($http, $q) {
+    constructor($log, $http, $q) {
         this.$http = $http;
         this.$q = $q;
         this.storage = window.sessionStorage;
+
+        $log.info("Initialized AjaxService");
 
         this.never_cache = [
             '/users/me'
