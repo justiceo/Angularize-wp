@@ -3,6 +3,7 @@ import MockService from './mock-service';
 import RestApiService from './rest-api-service';
 import Toolbar from './toolbar-component';
 import TestComponent from './smoke-test/test-component';
+import Models from './models';
 
 let angularizeCore = angular.module('angularizeCore', [])
 
@@ -19,6 +20,7 @@ angularizeCore
   .service('ToolbarService', ToolbarService)
   .service('RestApi', RestApiService)
   .service('MockService', MockService)
+  .service('Models', Models)
   .factory('httpRequestInterceptor', function ($q, MockService) {
     return {
       request: function (config) {
