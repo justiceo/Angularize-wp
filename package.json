@@ -35,7 +35,7 @@
     "browserify": "^14.4.0",
     "browserify-ngannotate": "^2.0.0",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-notify": "^3.0.0",
